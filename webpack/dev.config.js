@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import writeStats from './utils/write-stats';
 import startExpress from './utils/start-express';
 
@@ -48,45 +49,53 @@ export default {
         }, {
           test: /\.css$/,
           exclude: /node_modules/,
-          use: [
-            'style-loader',
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1
-              }
-            }, {
-              loader: 'postcss-loader',
-              options: {
-                plugins: function () {
-                  return [
-                    require('postcss-import')({ addDependencyTo: webpack }),
-                    require('postcss-for'),
-                    require('postcss-calc'),
-                    require('postcss-url')(),
-                    require('postcss-mixins'),
-                    require('postcss-simple-vars'),
-                    require('postcss-nested'),
-                    require('precss')(),
-                    require('autoprefixer')({ browsers: ['last 4 versions'] })
-                  ];
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  importLoaders: 1
+                }
+              }, {
+                loader: 'postcss-loader',
+                options: {
+                  plugins: function () {
+                    return [
+                      require('postcss-import')({ addDependencyTo: webpack }),
+                      require('postcss-for'),
+                      require('postcss-calc'),
+                      require('postcss-url')(),
+                      require('postcss-mixins'),
+                      require('postcss-simple-vars'),
+                      require('postcss-nested'),
+                      require('precss')(),
+                      require('autoprefixer')({ browsers: ['last 4 versions'] })
+                    ];
+                  }
                 }
               }
-            }
-          ]
+            ]
+          })
         }, {
           test: /\.(jpe?g|png|gif|svg|woff|woff2|eot|otf|ttf)(\?v=[0-9].[0-9].[0-9])?$/,
           exclude: /node_modules\/(?!font-awesome)/,
           use: {
             loader: 'file-loader',
             query: {
-              name: 'file?name=[sha512:hash:base64:7].[ext]'
+              name: '[sha512:hash:base64:7].[ext]'
             }
           }
         }
       ]
     },
     plugins: [
+      new ExtractTextPlugin({
+        filename: '[name]-[chunkhash].css',
+        disable: false,
+        allChunks: true
+      }),
+
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),

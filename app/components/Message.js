@@ -7,7 +7,7 @@ class Message extends Component {
 
     return (
       <div className="Message">
-        <h1 className="Message-text">OK! Cool!!!</h1>
+        <h1 className="Message-text">OK! Cool!</h1>
       </div>
     );
   }
