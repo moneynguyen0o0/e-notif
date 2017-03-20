@@ -9,9 +9,6 @@ const { port } = config;
 
 if (env === 'production') {
   // TODO: Implement later
-} else {
-  // const compiler = require('webpack')(require('../webpack/dev.config').default);
-  // app.use(require('webpack-dev-middleware')(compiler));
 }
 
 const stylesheetHtml = links => {
@@ -21,7 +18,9 @@ const stylesheetHtml = links => {
 const renderTemplate = () => {
   const assets = require('./webpack-stats.json');
 
-  delete require.cache[require.resolve('./webpack-stats.json')];
+  if (env === 'development') {
+    delete require.cache[require.resolve('./webpack-stats.json')];
+  }
 
   return `
     <!DOCTYPE html>
@@ -48,5 +47,7 @@ app.listen(port, () => {
   logger.info(`Application started on port ${port}`);
 });
 
-// Tell parent process koa-server is started
-if (process.send) process.send('online');
+if (env === 'development') {
+  // Tell parent process koa-server is started
+  if (process.send) process.send('online');
+}

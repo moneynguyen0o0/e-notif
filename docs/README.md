@@ -19,3 +19,6 @@ https://github.com/ModusCreateOrg/budgeting-sample-app-webpack2/blob/master/webp
 https://github.com/gokulkrishh/how-to-setup-webpack-2
 
 https://github.com/postcss/postcss-loader
+
+# Deploying React + Redux to Heroku
+http://www.thegreatcodeadventure.com/deploying-react-redux-to-heroku/
