@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import logger from 'winston';
 import config from './config';
@@ -8,7 +9,7 @@ const env = process.env.NODE_ENV;
 const { port } = config;
 
 if (env === 'production') {
-  // TODO: Implement later
+  app.use('/assets', express.static(path.join(__dirname, '../dist'), { maxAge: 86400000 }));
 }
 
 const stylesheetHtml = links => {
