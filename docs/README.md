@@ -22,3 +22,6 @@ https://github.com/postcss/postcss-loader
 
 # Deploying React + Redux to Heroku
 http://www.thegreatcodeadventure.com/deploying-react-redux-to-heroku/
+
+#
+http://stackoverflow.com/questions/32642685/babel-cli-copy-nonjs-files
