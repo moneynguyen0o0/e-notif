@@ -36,8 +36,8 @@ export default {
     },
     output: {
       path: path.resolve(__dirname, '../dist'),
-      filename: '[name]-[hash].js',
-      chunkFilename: '[name]-[hash].js',
+      filename: '[hash].js',
+      chunkFilename: '[hash].js',
       publicPath: PUBLIC_PATH
     },
     module: {
@@ -91,7 +91,7 @@ export default {
     },
     plugins: [
       new ExtractTextPlugin({
-        filename: '[name]-[chunkhash].css',
+        filename: '[chunkhash].css',
         disable: false,
         allChunks: true
       }),
