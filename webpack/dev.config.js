@@ -3,9 +3,9 @@ import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import writeStats from './utils/write-stats';
 import startExpress from './utils/start-express';
+import { HOST, PORT as PORT_CONFIG } from '../config/env';
 
-const PORT = parseInt(process.env.PORT, 10) + 1 || 3001;
-const HOST = process.env.HOST || 'localhost';
+const PORT = PORT_CONFIG + 1;
 
 const PUBLIC_PATH = `http://${HOST}:${PORT}/assets/`;
 
@@ -78,7 +78,7 @@ export default {
             ]
           })
         }, {
-          test: /\.(jpe?g|png|gif|svg|woff|woff2|eot|otf|ttf)(\?v=[0-9].[0-9].[0-9])?$/,
+          test: /\.(ico|jpe?g|png|gif|svg|woff|woff2|eot|otf|ttf)(\?v=[0-9].[0-9].[0-9])?$/,
           exclude: /node_modules\/(?!font-awesome)/,
           use: {
             loader: 'file-loader',

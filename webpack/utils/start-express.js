@@ -2,7 +2,6 @@ import cp from 'child_process';
 import path from 'path';
 import watch from 'node-watch';
 import { noop } from 'lodash';
-import logger from 'winston';
 
 let server;
 let started;
@@ -12,7 +11,7 @@ const EXPRESS_PATH = path.join(__dirname, '../../server/index');
 const startServer = () => {
   // Define `restartServer`
   const restartServer = () => {
-    logger.info('Restarting express application');
+    console.info('Restarting SERVER');
     server.kill('SIGTERM');
     return startServer();
   };
@@ -28,7 +27,7 @@ const startServer = () => {
         started = true;
 
         // Listen for `rs` in stdin to restart server
-        logger.info('Type `rs` in console for restarting express application');
+        console.info('\x1b[36m%s\x1b[0m', '===> TYPE `rs` in console for restarting SERVER !!!');
 
         process.stdin.setEncoding('utf8');
         process.stdin.on('data', data => {

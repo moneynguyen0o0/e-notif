@@ -53,7 +53,7 @@ export default {
           ]
         })
       }, {
-        test: /\.(jpe?g|png|gif|svg|woff|woff2|eot|otf|ttf)(\?v=[0-9].[0-9].[0-9])?$/,
+        test: /\.(ico|jpe?g|png|gif|svg|woff|woff2|eot|otf|ttf)(\?v=[0-9].[0-9].[0-9])?$/,
         exclude: /node_modules\/(?!font-awesome)/,
         use: {
           loader: 'file-loader',
