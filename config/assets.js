@@ -9,17 +9,8 @@ const metaAssets = () => {
 };
 
 const linkAssets = () => {
-  let iconLink;
-
-  if (isClient) {
-    iconLink = { rel: 'icon', href: require('../app/images/favicon.ico') };
-  }
-
-  const links = [
-    iconLink
+  return [
   ];
-
-  return links.filter(l => l);
 };
 
 export const title = 'ENotif';

@@ -2,8 +2,6 @@ import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 
 const isFetching = (state = false, action) => {
-  console.log("===== ACTION STORE =====");
-  console.log(action);
   return state;
 };
 

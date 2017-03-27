@@ -3,6 +3,9 @@ import express from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import bodyParser from 'body-parser';
+import compression from 'compression';
+import helmet from 'helmet';
+import favicon from 'serve-favicon';
 import renderLayout from './middleware/renderLayout';
 import { PORT, ENV } from '../config/env';
 import { isProduction, isDevelopment } from '../config/app';
@@ -10,11 +13,18 @@ import { sessionSecret } from '../config/secrets';
 
 const app = express();
 
+if (isProduction) {
+  app.use(compression());
+  app.use(helmet());
+}
+
+app.use(favicon(path.join(__dirname, '..', 'app', 'images', 'favicon.ico')));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 if (isProduction) {
-  app.use('/assets', express.static(path.join(__dirname, '../dist'), { maxAge: 86400000 }));
+  app.use('/assets', express.static(path.join(__dirname, '..', 'dist'), { maxAge: 86400000 }));
 }
 
 app.use(session({

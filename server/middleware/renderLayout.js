@@ -13,6 +13,7 @@ const renderHtml = (content, initialState, assets, helmet) => {
     <!DOCTYPE html>
     <html lang="em">
       <head>
+        <link rel="shortcut icon" href="/favicon.ico" />
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
         ${helmet.link.toString()}

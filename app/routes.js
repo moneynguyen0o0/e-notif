@@ -8,9 +8,6 @@ import { App, Home, About, NotFoundPage } from './pages';
  * state from the store after it has been authenticated.
  */
 export default (store) => {
-  console.log("=== STORE ===");
-  console.log(store);
-  
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
