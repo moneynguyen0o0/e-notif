@@ -3,15 +3,12 @@ import express from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import bodyParser from 'body-parser';
-// import favicon from 'serve-favicon';
 import renderLayout from './middleware/renderLayout';
 import { PORT, ENV } from '../config/env';
 import { isProduction, isDevelopment } from '../config/app';
 import { sessionSecret } from '../config/secrets';
 
 const app = express();
-
-// app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded

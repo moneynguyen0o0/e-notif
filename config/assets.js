@@ -1,4 +1,4 @@
-import favicon from '../app/images/favicon.ico';
+import { isClient } from './app';
 
 const metaAssets = () => {
   return [
@@ -9,9 +9,17 @@ const metaAssets = () => {
 };
 
 const linkAssets = () => {
-  return [
-    { rel: 'icon', href: favicon }
+  let iconLink;
+
+  if (isClient) {
+    iconLink = { rel: 'icon', href: require('../app/images/favicon.ico') };
+  }
+
+  const links = [
+    iconLink
   ];
+
+  return links.filter(l => l);
 };
 
 export const title = 'ENotif';
