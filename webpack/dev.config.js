@@ -27,7 +27,7 @@ export default {
     }
   },
   webpack: {
-    devtool: 'source-map',
+    devtool: 'cheap-module-source-map',
     entry: {
       app: [
         `webpack-hot-middleware/client?path=//${HOST}:${PORT}/__webpack_hmr`,

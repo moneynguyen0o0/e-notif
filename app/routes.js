@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { App, Home, About, NotFoundPage } from './pages';
+import { Page, Home, About, NotFoundPage } from './pages';
 
 /*
  * @param {Redux Store}
@@ -9,7 +9,7 @@ import { App, Home, About, NotFoundPage } from './pages';
  */
 export default (store) => {
   return (
-    <Route path="/" component={App}>
+    <Route path="/" component={Page}>
       <IndexRoute component={Home}/>
       <Route path="about" component={About} />
       <Route path="*" component={NotFoundPage} />

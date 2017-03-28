@@ -1,34 +1,13 @@
 import React, { Component } from 'react';
-import Page from '../components/Page';
+import Helmet from 'react-helmet';
 
 class About extends Component {
-  getMetaData() {
-    return {
-      title: this.pageTitle(),
-      meta: this.pageMeta(),
-      link: this.pageLink()
-    };
-  }
-
-  pageTitle() {
-    return 'About | ENotif';
-  }
-
-  pageMeta() {
-    return [
-      { name: 'description', content: 'About Page' }
-    ];
-  }
-
-  pageLink() {
-    return [];
-  }
-
   render() {
     return (
-      <Page {...this.getMetaData()}>
-        <h1>About</h1>
-      </Page>
+      <div className="about">
+        <Helmet title="About | ENotif"/>
+        <h3>About</h3>
+      </div>
     );
   }
 }

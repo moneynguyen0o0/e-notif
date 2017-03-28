@@ -1,11 +1,12 @@
 import path from 'path';
-import express from 'express';
+import express, { Router } from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import helmet from 'helmet';
 import favicon from 'serve-favicon';
+import api from './api';
 import renderLayout from './middleware/renderLayout';
 import { PORT, ENV } from '../config/env';
 import { isProduction, isDevelopment } from '../config/app';
@@ -43,6 +44,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/api', api(Router()));
 
 app.use(renderLayout());
 
