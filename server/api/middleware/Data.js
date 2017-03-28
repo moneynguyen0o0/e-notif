@@ -1,5 +1,5 @@
-import { version } from '../../../package.json';
+import data from '../../../data/data.json';
 
 export const getData = (res) => {
-  res.json(version);
+  res.json(data);
 };
