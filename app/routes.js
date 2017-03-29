@@ -21,15 +21,33 @@ const requireAuth = (nextState, replace, callback) => {
  * state from the store after it has been authenticated.
  */
 export default (store) => {
-  // const { user: { authenticated } } = store.getState();
-  // console.log('authenticated: ' + authenticated);
+  const { user: { authenticated }} = store.getState();
+
+  const requireAuth = (nextState, replace, callback) => {
+    if (!authenticated) {
+      replace({
+        pathname: '/login',
+        state: { nextPathname: nextState.location.pathname }
+      });
+    }
+    callback();
+  };
+
+  const redirectAuth = (nextState, replace, callback) => {
+    if (authenticated) {
+      replace({
+        pathname: '/'
+      });
+    }
+    callback();
+  };
 
   return (
     <Route path="/" component={Page}>
       <IndexRoute component={Home}/>
       <Route path="about" component={About} />
-      <Route path="login" component={Login} />
-      <Route path="profile/:username" component={Profile} onEnter={requireAuth}/>
+      <Route path="login" component={Login} onEnter={redirectAuth} />
+      <Route path="profile/:username" component={Profile} onEnter={requireAuth} />
       <Route path="*" component={NotFoundPage} />
     </Route>
   );
