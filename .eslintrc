@@ -1,0 +1,42 @@
+{
+  "parser": "babel-eslint",
+  "extends": "eslint-config-airbnb",
+  "plugins": ["react"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "react/no-did-mount-set-state": 2,
+    "react/no-did-update-set-state": 2,
+    "react/no-multi-comp": 0,
+    "react/no-unknown-property": 2,
+    "react/prop-types": 2,
+    "react/require-extension": 2,
+    "react/self-closing-comp": 2,
+    "react/wrap-multilines": 2,
+    "react/sort-comp": 2,
+
+    "camelcase": 0,
+    "spaced-comment": 0,
+    "space-before-blocks": 0,
+    "dot-notation": 0,
+    "quotes": [0, "single", "avoid-escape"],
+    "comma-dangle": [0, "never"],
+    "indent": [0, 2],
+    "object-curly-spacing": [0, "always"],
+    "array-bracket-spacing": [0, "always"],
+    "no-undef": 2,
+    "no-underscore-dangle": 0,
+    "no-trailing-spaces": 0,
+    "func-names": 0,
+    "no-else-return": 0,
+    "no-console": 0,
+    "no-throw-literal": 0,
+    "id-length": 0,
+    "no-unused-expressions": 0,
+    "prefer-const": 0,
+    "space-before-function-paren": 0
+  }
+}

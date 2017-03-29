@@ -26,3 +26,6 @@ http://www.thegreatcodeadventure.com/deploying-react-redux-to-heroku/
 # Hits
 http://stackoverflow.com/questions/32642685/babel-cli-copy-nonjs-files
 http://stackoverflow.com/questions/37013851/error-when-running-babel-node
+
+# Eslint
+https://www.robinwieruch.de/react-eslint-webpack-babel/
