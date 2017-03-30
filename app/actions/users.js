@@ -1,5 +1,8 @@
+import { push } from 'react-router-redux';
 import fetch from '../utils/fetch';
 import * as types from '../constants/types';
+
+const getMessage = res => res.response && res.response.data && res.response.data.message;
 
 // Log In Action Creators
 export const beginLogin = () => {
@@ -41,7 +44,7 @@ export const signUpSuccess = (message) => {
 
 // Log Out Action Creators
 export const beginLogout = () => {
-  return { type: types.LOGOUT_USER};
+  return { type: types.LOGOUT_USER };
 };
 
 export const logoutSuccess = () => {
@@ -56,12 +59,12 @@ export const toggleLoginMode = () => {
   return { type: types.TOGGLE_LOGIN_MODE };
 };
 
-export const manualLogin = (data) => {
-  return dispatch => {
+export const login = (data) => {
+  return (dispatch) => {
     dispatch(beginLogin());
 
     return fetch({ method: 'post', url: '/login', data })
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           dispatch(loginSuccess(response.data.message));
           dispatch(push('/'));
@@ -69,18 +72,18 @@ export const manualLogin = (data) => {
           dispatch(loginError('Oops! Something went wrong!'));
         }
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch(loginError(getMessage(err)));
       });
   };
 };
 
 export const signUp = (data) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(beginSignUp());
 
     return fetch({ method: 'post', url: '/signup', data })
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           dispatch(signUpSuccess(response.data.message));
           dispatch(push('/'));
@@ -88,18 +91,18 @@ export const signUp = (data) => {
           dispatch(signUpError('Oops! Something went wrong'));
         }
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch(signUpError(getMessage(err)));
       });
   };
 };
 
 export const logOut = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(beginLogout());
 
     return fetch({ method: 'post', url: '/logout' })
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           dispatch(logoutSuccess());
         } else {
