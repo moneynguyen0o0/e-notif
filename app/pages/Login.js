@@ -5,7 +5,7 @@ class Login extends Component {
   render() {
     return (
       <div className="login">
-        <Helmet title="Login | ENotif"/>
+        <Helmet title="Login | ENotif" />
         <h3>Login</h3>
       </div>
     );

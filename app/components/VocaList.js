@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import API from '../utils/api';
-import Spinner from './Spinner'
+import Spinner from './Spinner';
 
-export default class VocaList extends Component {
+class VocaList extends Component {
   state = {
     data: null
   }
 
   componentDidMount() {
     setTimeout(() => {
-      API.getVocaList().then(data => {
+      API.getVocaList().then((data) => {
         console.log(data);
         this.setState({ data });
       }).catch(err => console.log(err));
@@ -46,3 +46,5 @@ export default class VocaList extends Component {
     );
   }
 }
+
+export default VocaList;

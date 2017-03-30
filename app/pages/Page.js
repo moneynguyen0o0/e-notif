@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import Navigation from '../components/Navigation';
 import { title, meta, link } from '../../config/assets';
@@ -9,6 +9,10 @@ if (isClient) {
 }
 
 class Page extends Component {
+  static propTypes = {
+    children: PropTypes.element.isRequired
+  }
+
   render() {
     return (
       <div className="page">

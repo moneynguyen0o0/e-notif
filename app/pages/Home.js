@@ -6,7 +6,7 @@ class Home extends Component {
   render() {
     return (
       <div className="home">
-        <Helmet title="Home | ENotif"/>
+        <Helmet title="Home | ENotif" />
         <VocaList />
       </div>
     );

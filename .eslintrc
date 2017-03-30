@@ -1,6 +1,6 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb-base",
+  "extends": "airbnb",
   "plugins": ["react"],
   "env": {
     "browser": true,
@@ -8,6 +8,19 @@
     "es6": true
   },
   "rules": {
+    "react/jsx-filename-extension": 0,
+    "react/prefer-stateless-function": 0,
+    "react/no-array-index-key": 0,
+
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": 0,
+    "arrow-body-style": 0,
+    "indent": 0,
+    "no-param-reassign": 0,
+    "no-throw-literal": 0,
+    "comma-dangle": 0,
+    "max-len": 0,
+    "global-require": 0,
     "no-underscore-dangle": 0
   }
 }

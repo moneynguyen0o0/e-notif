@@ -5,7 +5,7 @@ class Profile extends Component {
   render() {
     return (
       <div className="profile">
-        <Helmet title="Profile | ENotif"/>
+        <Helmet title="Profile | ENotif" />
         <h3>My profile</h3>
       </div>
     );

@@ -1,5 +1,3 @@
-import { isClient } from './app';
-
 const metaAssets = () => {
   return [
     { charset: 'utf-8' },

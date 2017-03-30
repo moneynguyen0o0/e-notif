@@ -5,7 +5,7 @@ class About extends Component {
   render() {
     return (
       <div className="about">
-        <Helmet title="About | ENotif"/>
+        <Helmet title="About | ENotif" />
         <h3>About</h3>
       </div>
     );
