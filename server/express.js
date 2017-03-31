@@ -8,11 +8,14 @@ import helmet from 'helmet';
 import favicon from 'serve-favicon';
 import api from './api';
 import renderLayout from './middleware/renderLayout';
+import authentication from './middleware/authentication';
 import { PORT, ENV } from '../config/env';
 import { isProduction, isDevelopment } from '../config/app';
 import { sessionSecret } from '../config/secrets';
 
 const app = express();
+
+authentication(passport);
 
 if (isProduction) {
   app.use(compression());

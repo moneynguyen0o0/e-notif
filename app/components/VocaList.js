@@ -8,12 +8,9 @@ class VocaList extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      API.getVocaList().then((data) => {
-        console.log(data);
-        this.setState({ data });
-      }).catch(err => console.log(err));
-    }, 3000);
+    API.getVocaList().then((data) => {
+      this.setState({ data });
+    });
   }
 
   render() {

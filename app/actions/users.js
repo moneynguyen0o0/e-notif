@@ -1,4 +1,5 @@
-import fetch from '../utils/fetch';
+import { push } from 'react-router-redux';
+import { fetch } from '../utils/fetch';
 import * as types from '../constants/types';
 
 // Log In Action Creators
@@ -41,7 +42,7 @@ export const signUpSuccess = (message) => {
 
 // Log Out Action Creators
 export const beginLogout = () => {
-  return { type: types.LOGOUT_USER};
+  return { type: types.LOGOUT_USER };
 };
 
 export const logoutSuccess = () => {
@@ -56,31 +57,33 @@ export const toggleLoginMode = () => {
   return { type: types.TOGGLE_LOGIN_MODE };
 };
 
-export const manualLogin = (data) => {
-  return dispatch => {
+export const login = (data) => {
+  return (dispatch) => {
     dispatch(beginLogin());
 
     return fetch({ method: 'post', url: '/login', data })
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(loginSuccess(response.data.message));
+      .then((response) => {
+        const { status, message } = response;
+
+        if (status === 200) {
+          dispatch(loginSuccess(message));
           dispatch(push('/'));
         } else {
-          dispatch(loginError('Oops! Something went wrong!'));
+          dispatch(loginError(message));
         }
       })
-      .catch(err => {
-        dispatch(loginError(getMessage(err)));
+      .catch(() => {
+        dispatch(push('/500'));
       });
   };
 };
 
 export const signUp = (data) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(beginSignUp());
 
     return fetch({ method: 'post', url: '/signup', data })
-      .then(response => {
+      .then((response) => {
         if (response.status === 200) {
           dispatch(signUpSuccess(response.data.message));
           dispatch(push('/'));
@@ -88,23 +91,23 @@ export const signUp = (data) => {
           dispatch(signUpError('Oops! Something went wrong'));
         }
       })
-      .catch(err => {
-        dispatch(signUpError(getMessage(err)));
+      .catch(() => {
+        dispatch(push('/500'));
       });
   };
 };
 
 export const logOut = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(beginLogout());
 
-    return fetch({ method: 'post', url: '/logout' })
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(logoutSuccess());
-        } else {
-          dispatch(logoutError());
-        }
+    return fetch({ url: '/logout' })
+      .then(() => {
+        dispatch(logoutSuccess());
+      })
+      .catch(() => {
+        dispatch(logoutError());
+        dispatch(push('/500'));
       });
   };
 };
