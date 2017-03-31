@@ -4,7 +4,7 @@ import { login as loginAction, toggleLoginMode as toggleLoginModeAction } from '
 import Spinner from './Spinner';
 
 class Login extends Component {
-  static PropTypes = {
+  static propTypes = {
     user: PropTypes.object,
     login: PropTypes.func.isRequired,
     toggleLoginMode: PropTypes.func.isRequired
@@ -15,7 +15,7 @@ class Login extends Component {
 
     const { login } = this.props;
     const email = 'money@gmail.com';
-    const password = 'money123';
+    const password = 'money';
 
     login({ email, password });
   }
@@ -26,7 +26,9 @@ class Login extends Component {
       toggleLoginMode
     } = this.props;
 
-    if (!isWaiting) {
+    console.log(toggleLoginMode);
+
+    if (isWaiting) {
       return <Spinner />;
     }
 
@@ -36,10 +38,9 @@ class Login extends Component {
         <form onSubmit={(e) => this._handleOnSubmit(e)}>
           <input type="email" placeholder="email" />
           <input type="password" placeholder="password" />
-          <p>{message}</p>
           <input type="submit" value="Login" />
+          <a onClick={toggleLoginMode}>Register an Account</a>
         </form>
-        <a onClick={toggleLoginMode}>Register an Account</a>
       </div>
     );
   }
@@ -54,4 +55,4 @@ const mapStateToProps = ({ user }) => {
 // Connects React component to the redux store
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
-export default connect(mapStateToProps, { loginAction, toggleLoginModeAction })(Login);
+export default connect(mapStateToProps, { login: loginAction, toggleLoginMode: toggleLoginModeAction })(Login);

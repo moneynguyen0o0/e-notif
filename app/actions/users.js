@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import fetch from '../utils/fetch';
+import { fetch } from '../utils/fetch';
 import * as types from '../constants/types';
 
 const getMessage = res => res.response && res.response.data && res.response.data.message;
@@ -65,12 +65,8 @@ export const login = (data) => {
 
     return fetch({ method: 'post', url: '/login', data })
       .then((response) => {
-        if (response.status === 200) {
-          dispatch(loginSuccess(response.data.message));
-          dispatch(push('/'));
-        } else {
-          dispatch(loginError('Oops! Something went wrong!'));
-        }
+        dispatch(loginSuccess(response.data.message));
+        dispatch(push('/'));
       })
       .catch((err) => {
         dispatch(loginError(getMessage(err)));
