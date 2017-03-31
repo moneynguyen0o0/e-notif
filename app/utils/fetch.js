@@ -20,17 +20,7 @@ const fetch = async (config = {}) => {
 
     return data;
   } catch (error) {
-    // Convert to client friendly error
-    if (error.response) {
-      throw _.pick(error.response, ['data', 'status', 'statusText']);
-    } else {
-      throw {
-        status: 0,
-        data: {
-          message: error.message
-        }
-      };
-    }
+    throw (error && error.response && error.response.message) || error.stack;
   }
 };
 

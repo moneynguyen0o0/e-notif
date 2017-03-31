@@ -5,7 +5,7 @@ import { login, logout } from './middleware/User';
 export default (router) => {
   router.get('/data', (req, res) => getData(res));
   router.post('/login', (req, res, next) => login(req, res, next));
-  router.post('/logout', (req, res) => login(req, res));
+  router.get('/logout', (req, res) => logout(req, res));
 
   return router;
 }

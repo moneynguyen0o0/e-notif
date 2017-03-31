@@ -2,8 +2,6 @@ import { push } from 'react-router-redux';
 import { fetch } from '../utils/fetch';
 import * as types from '../constants/types';
 
-const getMessage = res => res.response && res.response.data && res.response.data.message;
-
 // Log In Action Creators
 export const beginLogin = () => {
   return { type: types.MANUAL_LOGIN_USER };
@@ -65,11 +63,17 @@ export const login = (data) => {
 
     return fetch({ method: 'post', url: '/login', data })
       .then((response) => {
-        dispatch(loginSuccess(response.data.message));
-        dispatch(push('/'));
+        const { status, message } = response;
+
+        if (status === 200) {
+          dispatch(loginSuccess(message));
+          dispatch(push('/'));
+        } else {
+          dispatch(loginError(message));
+        }
       })
-      .catch((err) => {
-        dispatch(loginError(getMessage(err)));
+      .catch(() => {
+        dispatch(push('/500'));
       });
   };
 };
@@ -87,8 +91,8 @@ export const signUp = (data) => {
           dispatch(signUpError('Oops! Something went wrong'));
         }
       })
-      .catch((err) => {
-        dispatch(signUpError(getMessage(err)));
+      .catch(() => {
+        dispatch(push('/500'));
       });
   };
 };
@@ -97,13 +101,13 @@ export const logOut = () => {
   return (dispatch) => {
     dispatch(beginLogout());
 
-    return fetch({ method: 'post', url: '/logout' })
-      .then((response) => {
-        if (response.status === 200) {
-          dispatch(logoutSuccess());
-        } else {
-          dispatch(logoutError());
-        }
+    return fetch({ url: '/logout' })
+      .then(() => {
+        dispatch(logoutSuccess());
+      })
+      .catch(() => {
+        dispatch(logoutError());
+        dispatch(push('/500'));
       });
   };
 };

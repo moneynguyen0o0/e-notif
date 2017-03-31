@@ -26,8 +26,6 @@ class Login extends Component {
       toggleLoginMode
     } = this.props;
 
-    console.log(toggleLoginMode);
-
     if (isWaiting) {
       return <Spinner />;
     }
@@ -39,7 +37,7 @@ class Login extends Component {
           <input type="email" placeholder="email" />
           <input type="password" placeholder="password" />
           <input type="submit" value="Login" />
-          <a onClick={toggleLoginMode}>Register an Account</a>
+          <a onClick={() => toggleLoginMode()}>Register an Account</a>
         </form>
       </div>
     );

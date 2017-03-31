@@ -8,15 +8,13 @@ export const login = (req, res, next) => {
   passport.authenticate('local', (authErr, user) => {
     if (authErr) return next(authErr);
     if (!user) {
-      return res.status(401).json({ message: 'Email or Password is invalid.' });
+      return res.json({ status: 401, message: 'Email or Password is invalid.' });
     }
     // Passport exposes a login() const on req (also aliased as
     // logIn()) that can be used to establish a login session
     return req.logIn(user, (loginErr) => {
-      if (loginErr) return res.status(401).json({ message: loginErr });
-      return res.status(200).json({
-        message: 'You have been successfully logged in.'
-      });
+      if (loginErr) return next(loginErr);
+      return res.json({ status: 200, message: 'You have been successfully logged in.' });
     });
   })(req, res, next);
 };
