@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import Navigation from '../components/Navigation';
-import { title, meta, link } from '../../config/assets';
+import { title, meta } from '../../config/assets';
 import { isClient } from '../../config/app';
 
 if (isClient) {
@@ -16,7 +16,7 @@ class Page extends Component {
   render() {
     return (
       <div className="page">
-        <Helmet title={title} link={link} meta={meta} />
+        <Helmet title={title} meta={meta} />
         <Navigation />
         {this.props.children}
       </div>

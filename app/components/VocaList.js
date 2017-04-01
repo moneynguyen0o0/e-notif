@@ -20,25 +20,36 @@ class VocaList extends Component {
       return <Spinner />;
     }
 
+    const content = data.map((item, index) => {
+      const {
+        word,
+        pronunciation,
+        pos,
+        definitions,
+        examples
+      } = item;
+
+      const definitionContents = definitions.map(definition => {
+        return <div>{definition}</div>;
+      });
+      const exampleContents = examples.map(example => {
+        return <div>{example}</div>;
+      });
+
+      return (
+        <div key={index}>
+          <h3>{word}</h3>
+          <div><i>/{pronunciation}/</i></div>
+          <h5>{pos}</h5>
+          <div>{definitionContents}</div>
+          <div>{exampleContents}</div>
+        </div>
+      );
+    });
+
     return (
       <div className="voca-list">
-        {
-          data.map((item, index) => {
-            const {
-              word,
-              pronunciation,
-              pos
-            } = item;
-
-            return (
-              <div key={index}>
-                <h3>{word}</h3>
-                <div><i>/{pronunciation}/</i></div>
-                <h5>{pos}</h5>
-              </div>
-            );
-          })
-        }
+        {content}
       </div>
     );
   }
