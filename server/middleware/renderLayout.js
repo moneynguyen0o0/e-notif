@@ -13,11 +13,15 @@ const renderHtml = (content, initialState, assets, helmet) => {
     <!DOCTYPE html>
     <html lang="em">
       <head>
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+        <link rel="shortcut icon" href="/favicon.ico">
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
-        ${helmet.link.toString()}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         ${assets.style.map(href => `<link href=${href} rel="stylesheet" type="text/css">`).join('\n')}
+        <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       </head>
       <body>
         <div id="content">${content}</div>
