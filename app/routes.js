@@ -1,6 +1,14 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { Page, Home, About, Login, Profile, NotFoundPage } from './pages';
+import {
+  Page,
+  Home,
+  AddVoca,
+  About,
+  Login,
+  Profile,
+  NotFoundPage
+} from './pages';
 
 /*
  * @param {Redux Store}
@@ -32,6 +40,7 @@ export default (store) => {
   return (
     <Route path="/" component={Page}>
       <IndexRoute component={Home} />
+      <Route path="add-voca" component={AddVoca} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth} />
       <Route path="profile/:username" component={Profile} onEnter={requireAuth} />

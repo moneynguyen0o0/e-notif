@@ -1,9 +1,9 @@
-import { fetch } from './fetch';
+import { request } from './request';
 
-const getVocaList = () => {
-  return fetch({ url: '/data' });
+export const getVocas = () => {
+  return request({ url: '/vocas' });
 };
 
-export default {
-  getVocaList
+export const saveVoca = (data) => {
+  return request({ method: 'post', url: '/voca/save', data });
 };

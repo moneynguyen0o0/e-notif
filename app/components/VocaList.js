@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import API from '../utils/api';
+import { getVocas } from '../utils/api';
 import Spinner from './Spinner';
 
 class VocaList extends Component {
@@ -8,7 +8,7 @@ class VocaList extends Component {
   }
 
   componentDidMount() {
-    API.getVocaList().then((data) => {
+    getVocas().then((data) => {
       this.setState({ data });
     });
   }
@@ -29,11 +29,11 @@ class VocaList extends Component {
         examples
       } = item;
 
-      const definitionContents = definitions.map(definition => {
-        return <div>{definition}</div>;
+      const definitionContents = definitions.map((definition, i) => {
+        return <div key={i}>{definition}</div>;
       });
-      const exampleContents = examples.map(example => {
-        return <div>{example}</div>;
+      const exampleContents = examples.map((example, i) => {
+        return <div key={i}>{example}</div>;
       });
 
       return (
