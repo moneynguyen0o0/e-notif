@@ -16,6 +16,7 @@ class Navigation extends Component {
     return (
       <nav role="navigation">
         <Link to="/">Home</Link>
+        <Link to="/add-voca">Add voca</Link>
         <Link to="/about">About</Link>
         <Link><Bell /></Link>
         { user.authenticated ? <Link onClick={() => logOut()} to="/">Logout</Link> : <Link to="/login">Login</Link> }

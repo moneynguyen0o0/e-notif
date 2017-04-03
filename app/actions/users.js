@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import { fetch } from '../utils/fetch';
+import { request } from '../utils/request';
 import * as types from '../constants/types';
 
 // Log In Action Creators
@@ -61,7 +61,7 @@ export const login = (data) => {
   return (dispatch) => {
     dispatch(beginLogin());
 
-    return fetch({ method: 'post', url: '/login', data })
+    return request({ method: 'post', url: '/login', data })
       .then((response) => {
         const { status, message } = response;
 
@@ -82,7 +82,7 @@ export const signUp = (data) => {
   return (dispatch) => {
     dispatch(beginSignUp());
 
-    return fetch({ method: 'post', url: '/signup', data })
+    return request({ method: 'post', url: '/signup', data })
       .then((response) => {
         if (response.status === 200) {
           dispatch(signUpSuccess(response.data.message));
@@ -101,7 +101,7 @@ export const logOut = () => {
   return (dispatch) => {
     dispatch(beginLogout());
 
-    return fetch({ url: '/logout' })
+    return request({ url: '/logout' })
       .then(() => {
         dispatch(logoutSuccess());
       })

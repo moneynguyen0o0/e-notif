@@ -1,3 +1,6 @@
+# TODO
+- Update API (CSRF token, catch -> best practice)
+
 https://developer.mozilla.org/en-US/docs/Web/API/notification
 
 # Basic configuration
@@ -29,3 +32,7 @@ http://stackoverflow.com/questions/37013851/error-when-running-babel-node
 
 # Eslint
 https://www.robinwieruch.de/react-eslint-webpack-babel/
+
+# React form validation
+https://medium.com/@KozhukharenkoN/react-form-validation-with-mobx-8ce00233ae27
+https://github.com/lorenseanstewart/react-controlled-form-components

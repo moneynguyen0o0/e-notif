@@ -14,7 +14,7 @@ const getConfig = (config = {}) => {
   return config;
 };
 
-const fetch = async (config = {}) => {
+const request = async (config = {}) => {
   try {
     const { data } = await axios(getConfig(config));
 
@@ -24,4 +24,4 @@ const fetch = async (config = {}) => {
   }
 };
 
-export default { fetch };
+export default { request };

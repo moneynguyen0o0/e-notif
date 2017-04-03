@@ -1,0 +1,19 @@
+{
+  "vocas": [
+    {
+      "id": "1",
+      "word": "routine",
+      "pronunciation": "ruːˈtiːn",
+      "pos": "noun",
+      "definitions": [
+        "a usual or fixed way of doing things",
+        "a regular series of movements, jokes, or similar things used in a performance",
+        "a part of a computer program that does a particular operation"
+      ],
+      "examples": [
+        "He checks under the car for bombs as a matter of routine",
+        "He went into his usual \"I'm the head of the family\" routine (= usual way of speaking)."
+      ]
+    }
+  ]
+}
