@@ -1,13 +1,15 @@
 import path from 'path';
 import fs from 'fs';
+import _ from 'lodash';
 import tdb from '../../../data/tdb.json';
 
 const dbPath = process.cwd() + '/data/tdb.json';
 
 export const getVocas = (res) => {
   const vocas = tdb.vocas;
+  const sortedVocas = _.orderBy(vocas, ['id'], ['desc']);
 
-  res.json(vocas);
+  res.json(sortedVocas);
 };
 
 export const saveVoca = (req, res) => {
