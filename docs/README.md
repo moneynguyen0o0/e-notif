@@ -1,6 +1,6 @@
 # TODO
 - Update API (CSRF token, catch -> best practice)
-
+# Notification
 https://developer.mozilla.org/en-US/docs/Web/API/notification
 
 # Basic configuration

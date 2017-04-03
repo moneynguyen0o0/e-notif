@@ -4,30 +4,30 @@ import Spinner from './Spinner';
 
 class VocaList extends Component {
   state = {
-    data: null
+    vocas: null
   }
 
   componentDidMount() {
-    getVocas().then((data) => {
-      this.setState({ data });
+    getVocas().then((vocas) => {
+      this.setState({ vocas });
     });
   }
 
   render() {
-    const { data } = this.state;
+    const { vocas } = this.state;
 
-    if (!data) {
+    if (!vocas) {
       return <Spinner />;
     }
 
-    const content = data.map((item, index) => {
+    const content = vocas.map((voca, index) => {
       const {
         word,
         pronunciation,
         pos,
         definitions,
         examples
-      } = item;
+      } = voca;
 
       const definitionContents = definitions.map((definition, i) => {
         return <div key={i}>{definition}</div>;
@@ -41,7 +41,9 @@ class VocaList extends Component {
           <h3>{word}</h3>
           <div><i>/{pronunciation}/</i></div>
           <h5>{pos}</h5>
+          <h6>Definitions</h6>
           <div>{definitionContents}</div>
+          <h6>Exmaples</h6>
           <div>{exampleContents}</div>
         </div>
       );
