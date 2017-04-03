@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import { notify, close as closeNotification } from '../utils/notify';
+import { searchVocas } from '../utils/api';
 
-export default class Spinner extends Component {
+export default class Notificaton extends Component {
   state = {
-    ring: true
+    ring: true,
+    vocas: [],
+    vocaIndex: 0,
   }
 
   componentDidMount() {
-    if (this.state.ring) {
-      this._startNotificationInterval();
-    }
+    const start = 0; // TODO: local storage
+
+    searchVocas({ start }).then((vocas) => {
+      this.setState({ vocas });
+    });
+
+    this._startNotificationInterval();
   }
 
   componentWillUnmount() {
@@ -43,13 +50,28 @@ export default class Spinner extends Component {
   }
 
   _notifyVoca() {
-    this.notificationVoca = notify('Hey', {
-      body: 'How are you?'
-    }, {
-      onclick: () => {
-        console.log('Clicked');
-      }
-    });
+    const { vocas, vocaIndex } = this.state;
+
+    if (vocas.length) {
+      const voca = vocas[vocaIndex];
+
+      const {
+        word,
+        definitions
+      } = voca;
+
+      this.notificationVoca = notify(word, {
+        icon: '/favicon.ico',
+        body: definitions.toString()
+      }, {
+        onclick: () => {
+          console.log('Clicked');
+        }
+      });
+
+      // Not need to rerender
+      this.state.vocaIndex = vocaIndex === vocas.length - 1 ? 0 : vocaIndex + 1;
+    }
   }
 
   render() {
