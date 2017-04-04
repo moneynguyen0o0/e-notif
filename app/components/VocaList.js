@@ -1,26 +1,19 @@
-import React, { Component } from 'react';
-import { getVocas } from '../utils/api';
+import React, { Component, PropTypes } from 'react';
 import Spinner from './Spinner';
 
 class VocaList extends Component {
-  state = {
-    vocas: null
-  }
-
-  componentDidMount() {
-    getVocas().then((vocas) => {
-      this.setState({ vocas });
-    });
+  static propTypes = {
+    data: PropTypes.array
   }
 
   render() {
-    const { vocas } = this.state;
+    const { data } = this.props;
 
-    if (!vocas) {
+    if (!data.length) {
       return <Spinner />;
     }
 
-    const content = vocas.map((voca, index) => {
+    const content = data.map((voca, index) => {
       const {
         word,
         pronunciation,

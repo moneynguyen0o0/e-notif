@@ -1,22 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Spinner from './Spinner';
-import { findVoca } from '../utils/api';
 
 export default class Vocabulary extends Component {
-  state = {
-    voca: null
-  }
-
-  componentDidMount() {
-    findVoca().then((voca) => {
-      this.setState({ voca });
-    });
+  static propTypes = {
+    data: PropTypes.object
   }
 
   render() {
-    const { voca } = this.state;
+    const { data } = this.props;
 
-    if (!voca) {
+    if (!data) {
       return <Spinner />;
     }
 
@@ -26,10 +19,17 @@ export default class Vocabulary extends Component {
       pos,
       definitions,
       examples
-    } = voca;
+    } = data;
+
+    const definitionContents = definitions.map((definition, i) => {
+      return <div key={i}>{definition}</div>;
+    });
+    const exampleContents = examples.map((example, i) => {
+      return <div key={i}>{example}</div>;
+    });
 
     return (
-      <div key={index}>
+      <div>
         <h3>{word}</h3>
         <div><i>/{pronunciation}/</i></div>
         <h5>{pos}</h5>

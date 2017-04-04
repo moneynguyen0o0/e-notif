@@ -10,7 +10,7 @@ export default class Notificaton extends Component {
   }
 
   componentDidMount() {
-    const start = 0; // TODO: local storage
+    const start = 0; // TODO: local storage (start, notify)
 
     searchVocas({ start }).then((vocas) => {
       this.setState({ vocas });
@@ -56,6 +56,7 @@ export default class Notificaton extends Component {
       const voca = vocas[vocaIndex];
 
       const {
+        id,
         word,
         definitions
       } = voca;
@@ -65,7 +66,7 @@ export default class Notificaton extends Component {
         body: definitions.toString()
       }, {
         onclick: () => {
-          console.log('Clicked');
+          window.open(`${location.protocol}//${location.host}/vocas/${id}`, '_blank');
         }
       });
 
