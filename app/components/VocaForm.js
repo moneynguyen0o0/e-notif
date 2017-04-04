@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { reduxForm, propTypes as reduxFormPropTypes, Field, FieldArray } from 'redux-form';
+import { reduxForm, propTypes as reduxFormPropTypes, Field, FieldArray, SubmissionError } from 'redux-form';
 import { saveVoca } from '../utils/api';
 
 const validate = (voca) => {
@@ -44,7 +45,11 @@ const validate = (voca) => {
     errors.examples = exampleErrors;
   }
 
-  return errors;
+  if (!_.isEmpty(errors)) {
+    throw new SubmissionError(errors);
+  } else {
+    saveVoca({ voca });
+  }
 };
 
 class VocaForm extends Component {
@@ -102,7 +107,7 @@ class VocaForm extends Component {
     const { handleSubmit, submitting } = this.props;
 
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(validate)}>
         <Field name="word" type="text" component={this._renderField} label="Word" />
         <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
         <div>
@@ -125,26 +130,11 @@ class VocaForm extends Component {
   }
 }
 
-const ComponentContainer = reduxForm({
+export default reduxForm({
   form: 'vocaForm',  // a unique identifier for this form
   initialValues: {
     pos: 'noun',
     definitions: [null],
     examples: [null]
-  },
-  validate
+  }
 })(VocaForm);
-
-class VocaFormWrapper extends Component {
-  _submit = (voca) => {
-    saveVoca({ voca });
-  }
-
-  render() {
-    return (
-      <ComponentContainer onSubmit={this._submit} />
-    );
-  }
-}
-
-export default VocaFormWrapper;
