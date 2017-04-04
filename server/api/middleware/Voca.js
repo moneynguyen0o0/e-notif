@@ -16,7 +16,7 @@ export const find = (req, res) => {
 
   const vocas = tdb.vocas;
 
-  const voca = vocas.find(voca => voca.id === id);
+  const voca = vocas.find(voca => voca.id == id);
 
   res.json(voca);
 };

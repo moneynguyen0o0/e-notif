@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import {
   Page,
   Home,
+  VocaDetail,
   AddVoca,
   About,
   Login,
@@ -40,6 +41,7 @@ export default (store) => {
   return (
     <Route path="/" component={Page}>
       <IndexRoute component={Home} />
+      <Route path="vocas/:id" component={VocaDetail} />
       <Route path="add-voca" component={AddVoca} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth} />
