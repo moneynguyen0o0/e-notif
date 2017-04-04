@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field, FieldArray, SubmissionError } from 'redux-form';
 import { saveVoca } from '../utils/api';
 
-const validate = (voca) => {
+const validate = (vocabulary) => {
   const {
     word,
     pronunciation,
     definitions,
     examples
-  } = voca;
+  } = vocabulary;
 
   const errors = {};
 
@@ -48,7 +48,7 @@ const validate = (voca) => {
   if (!_.isEmpty(errors)) {
     throw new SubmissionError(errors);
   } else {
-    saveVoca({ voca });
+    saveVoca({ vocabulary });
   }
 };
 
@@ -131,7 +131,7 @@ class VocaForm extends Component {
 }
 
 export default reduxForm({
-  form: 'vocaForm',  // a unique identifier for this form
+  form: 'vocabularyForm',  // a unique identifier for this form
   initialValues: {
     pos: 'noun',
     definitions: [null],

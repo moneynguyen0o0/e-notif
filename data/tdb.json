@@ -1,5 +1,5 @@
 {
-  "vocas": [
+  "vocabularies": [
     {
       "id": 0,
       "word": "routine",
@@ -38,6 +38,18 @@
       "word": "test",
       "pronunciation": "test",
       "id": 2
+    },
+    {
+      "pos": "noun",
+      "definitions": [
+        "demo"
+      ],
+      "examples": [
+        "demo"
+      ],
+      "word": "demo",
+      "pronunciation": "demo",
+      "id": 3
     }
   ]
 }

@@ -1,11 +1,11 @@
 import { request } from './request';
 
 export const getVocas = () => {
-  return request({ url: '/vocas' });
+  return request({ url: '/vocabularies' });
 };
 
 export const findVoca = (id) => {
-  return request({ url: `/vocas/${id}` });
+  return request({ url: `/vocabularies/${id}` });
 };
 
 export const searchVocas = (params) => {
@@ -18,9 +18,9 @@ export const searchVocas = (params) => {
     paramString += `${key}=${params[key]}`;
   });
 
-  return request({ url: `/vocas/search?${paramString}` });
+  return request({ url: `/vocabularies/search?${paramString}` });
 };
 
 export const saveVoca = (data) => {
-  return request({ method: 'post', url: '/voca/save', data });
+  return request({ method: 'post', url: '/vocabulary/save', data });
 };

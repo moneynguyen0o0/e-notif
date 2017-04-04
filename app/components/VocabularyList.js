@@ -13,14 +13,14 @@ class VocaList extends Component {
       return <Spinner />;
     }
 
-    const content = data.map((voca, index) => {
+    const content = data.map((vocabulary, index) => {
       const {
         word,
         pronunciation,
         pos,
         definitions,
         examples
-      } = voca;
+      } = vocabulary;
 
       const definitionContents = definitions.map((definition, i) => {
         return <div key={i}>{definition}</div>;
@@ -43,7 +43,7 @@ class VocaList extends Component {
     });
 
     return (
-      <div className="voca-list">
+      <div className="vocabulary-list">
         {content}
       </div>
     );

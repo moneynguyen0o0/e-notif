@@ -6,36 +6,36 @@ import tdb from '../../../data/tdb.json';
 const dbPath = process.cwd() + '/data/tdb.json';
 
 export const getAll = (res) => {
-  const vocas = _.orderBy(tdb.vocas, ['id'], ['desc']);
+  const vocabularies = _.orderBy(tdb.vocabularies, ['id'], ['desc']);
 
-  res.json(vocas);
+  res.json(vocabularies);
 };
 
 export const find = (req, res) => {
   const { params: { id } } = req;
 
-  const vocas = tdb.vocas;
+  const vocabularies = tdb.vocabularies;
 
-  const voca = vocas.find(voca => voca.id == id);
+  const vocabulary = vocabularies.find(voca => voca.id == id);
 
-  res.json(voca);
+  res.json(vocabulary);
 };
 
 export const search = (req, res) => {
-  const vocas = tdb.vocas;
-  const { query: { start = 0, end = vocas.length } } = req;
+  const vocabularies = tdb.vocabularies;
+  const { query: { start = 0, end = vocabularies.length } } = req;
 
-  const orderedVocas = _.orderBy(tdb.vocas, ['id'], ['desc']);
+  const orderedVocas = _.orderBy(tdb.vocabularies, ['id'], ['desc']);
   const filteredVocas = orderedVocas.slice(start, end);
 
   res.json(filteredVocas);
 };
 
 export const save = (req, res) => {
-  const { voca } = req.body;
-  voca.id = tdb.vocas.length;
+  const { vocabulary } = req.body;
+  vocabulary.id = tdb.vocabularies.length;
 
-  tdb.vocas.push(voca);
+  tdb.vocabularies.push(vocabulary);
 
   fs.unlinkSync(dbPath);
   fs.writeFile(dbPath, JSON.stringify(tdb, null, 2), (err) => {
