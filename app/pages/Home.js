@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { getVocas } from '../utils/api';
-import VocaList from '../components/VocaList';
+import VocabularyList from '../components/VocabularyList';
 
 class Home extends Component {
   state = {
-    vocas: []
+    vocabularies: []
   }
 
   componentDidMount() {
-    getVocas().then((vocas) => {
-      this.setState({ vocas });
+    getVocas().then((vocabularies) => {
+      this.setState({ vocabularies });
     });
   }
   render() {
-    const { vocas } = this.state;
+    const { vocabularies } = this.state;
 
     return (
       <div className="home">
         <Helmet title="Home | ENotif" />
-        <VocaList data={vocas} />
+        <VocabularyList data={vocabularies} />
       </div>
     );
   }

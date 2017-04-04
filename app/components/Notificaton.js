@@ -5,15 +5,15 @@ import { searchVocas } from '../utils/api';
 export default class Notificaton extends Component {
   state = {
     ring: true,
-    vocas: [],
-    vocaIndex: 0,
+    vocabularies: [],
+    vocabularyIndex: 0,
   }
 
   componentDidMount() {
     const start = 0; // TODO: local storage (start, notify)
 
-    searchVocas({ start }).then((vocas) => {
-      this.setState({ vocas });
+    searchVocas({ start }).then((vocabularies) => {
+      this.setState({ vocabularies });
     });
 
     this._startNotificationInterval();
@@ -50,28 +50,28 @@ export default class Notificaton extends Component {
   }
 
   _notifyVoca() {
-    const { vocas, vocaIndex } = this.state;
+    const { vocabularies, vocabularyIndex } = this.state;
 
-    if (vocas.length) {
-      const voca = vocas[vocaIndex];
+    if (vocabularies.length) {
+      const vocabulary = vocabularies[vocabularyIndex];
 
       const {
         id,
         word,
         definitions
-      } = voca;
+      } = vocabulary;
 
       this.notificationVoca = notify(word, {
         icon: '/favicon.ico',
         body: definitions.toString()
       }, {
         onclick: () => {
-          window.open(`${location.protocol}//${location.host}/vocas/${id}`, '_blank');
+          window.open(`${location.protocol}//${location.host}/vocabularies/${id}`, '_blank');
         }
       });
 
       // Not need to rerender
-      this.state.vocaIndex = vocaIndex === vocas.length - 1 ? 0 : vocaIndex + 1;
+      this.state.vocabularyIndex = vocabularyIndex === vocabularies.length - 1 ? 0 : vocabularyIndex + 1;
     }
   }
 

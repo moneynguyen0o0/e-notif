@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { findVoca } from '../utils/api';
 import Vocabulary from '../components/Vocabulary';
 
-class VocaDetail extends Component {
+class VocabularyDetail extends Component {
   static propTypes = {
     params: PropTypes.object
   }
@@ -34,4 +34,4 @@ class VocaDetail extends Component {
   }
 }
 
-export default VocaDetail;
+export default VocabularyDetail;

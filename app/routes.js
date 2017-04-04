@@ -3,8 +3,8 @@ import { Route, IndexRoute } from 'react-router';
 import {
   Page,
   Home,
-  VocaDetail,
-  AddVoca,
+  VocabularyDetail,
+  NewVocabulary,
   About,
   Login,
   Profile,
@@ -41,8 +41,8 @@ export default (store) => {
   return (
     <Route path="/" component={Page}>
       <IndexRoute component={Home} />
-      <Route path="vocas/:id" component={VocaDetail} />
-      <Route path="add-voca" component={AddVoca} />
+      <Route path="vocabularies/:id" component={VocabularyDetail} />
+      <Route path="vocabulary/create" component={NewVocabulary} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth} />
       <Route path="profile/:username" component={Profile} onEnter={requireAuth} />
