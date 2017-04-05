@@ -1,7 +1,14 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field, FieldArray, SubmissionError } from 'redux-form';
 import { saveVoca } from '../utils/api';
+
+// TODO: fetch from db
+const POS = {
+  noun: 'Noun',
+  verb: 'Verd',
+  adjective: 'Adjective'
+};
 
 const validate = (vocabulary) => {
   const {
@@ -52,7 +59,7 @@ const validate = (vocabulary) => {
   }
 };
 
-class VocaForm extends Component {
+class VocabularyForm extends Component {
   static propTypes = {
     ...reduxFormPropTypes
   }
@@ -104,37 +111,67 @@ class VocaForm extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, initialValues } = this.props;
+    const { id, pos } = initialValues;
+
+    const posPptions = Object.keys(POS).map((item, index) => {
+      return (
+        <option key={index} value={item} selected={item === pos}>{POS[item]}</option>
+      );
+    });
 
     return (
       <form onSubmit={handleSubmit(validate)}>
+        {id && <input name="id" type="hidden" value={initialValues.id} />}
         <Field name="word" type="text" component={this._renderField} label="Word" />
         <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
         <div>
           <label htmlFor="pos">P O S</label>
           <div>
             <Field name="pos" component="select">
-              <option value="noun">Noun</option>
-              <option value="verb">Verd</option>
-              <option value="adjective">Adjective</option>
+              {posPptions}
             </Field>
           </div>
           <FieldArray name="definitions" component={this._renderDefinitions} />
           <FieldArray name="examples" component={this._renderExamples} />
         </div>
         <div>
-          <button type="submit" disabled={submitting}>Add new</button>
+          <button type="submit" disabled={submitting}>Save</button>
         </div>
       </form>
     );
   }
 }
 
-export default reduxForm({
-  form: 'vocabularyForm',  // a unique identifier for this form
-  initialValues: {
-    pos: 'noun',
-    definitions: [null],
-    examples: [null]
+class VocabularyFormWrapper extends Component {
+  static propTypes = {
+    data: PropTypes.object
   }
-})(VocaForm);
+
+  render() {
+    const { data } = this.props;
+
+    const newVocabulary = {
+      pos: 'noun',
+      definitions: [null],
+      examples: [null]
+    };
+
+    let initialVocabulary = newVocabulary;
+
+    if (data) {
+      initialVocabulary = data;
+    }
+
+    const VocabularyFormContainer = reduxForm({
+      form: 'vocabularyForm',  // a unique identifier for this form
+      initialValues: initialVocabulary
+    })(VocabularyForm);
+
+    return (
+      <VocabularyFormContainer />
+    );
+  }
+}
+
+export default VocabularyFormWrapper;
