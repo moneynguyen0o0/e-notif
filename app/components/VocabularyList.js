@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import Spinner from './Spinner';
 
 class VocaList extends Component {
@@ -15,6 +16,7 @@ class VocaList extends Component {
 
     const content = data.map((vocabulary, index) => {
       const {
+        id,
         word,
         pronunciation,
         pos,
@@ -38,6 +40,7 @@ class VocaList extends Component {
           <div>{definitionContents}</div>
           <h6>Exmaples</h6>
           <div>{exampleContents}</div>
+          <div><Link to={`/vocabulary/edit/${id}`}>Edit</Link></div>
         </div>
       );
     });
