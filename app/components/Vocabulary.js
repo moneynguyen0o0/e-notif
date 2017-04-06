@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Spinner from './Spinner';
+import Spinner from './icons/Spinner';
 
 export default class Vocabulary extends Component {
   static propTypes = {

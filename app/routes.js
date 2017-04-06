@@ -4,8 +4,6 @@ import {
   Page,
   Home,
   VocabularyDetail,
-  NewVocabulary,
-  EditedVocabulary,
   About,
   Login,
   Profile,
@@ -43,8 +41,6 @@ export default (store) => {
     <Route path="/" component={Page}>
       <IndexRoute component={Home} />
       <Route path="vocabularies/:id" component={VocabularyDetail} />
-      <Route path="vocabulary/create" component={NewVocabulary} />
-      <Route path="vocabulary/edit/:id" component={EditedVocabulary} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth} />
       <Route path="profile/:username" component={Profile} onEnter={requireAuth} />

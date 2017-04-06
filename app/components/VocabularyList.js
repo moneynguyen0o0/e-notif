@@ -1,20 +1,26 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import Spinner from './Spinner';
+import React, { Component } from 'react';
+import { getAllVocabularies, deleteVocabulary } from '../utils/api';
+import Spinner from './icons/Spinner';
 
-class VocaList extends Component {
-  static propTypes = {
-    data: PropTypes.array
+class VocabularyList extends Component {
+  state = {
+    vocabularies: []
+  }
+
+  componentDidMount() {
+    getAllVocabularies().then((vocabularies) => {
+      this.setState({ vocabularies });
+    });
   }
 
   render() {
-    const { data } = this.props;
+    const { vocabularies } = this.state;
 
-    if (!data.length) {
+    if (!vocabularies.length) {
       return <Spinner />;
     }
 
-    const content = data.map((vocabulary, index) => {
+    const content = vocabularies.map((vocabulary, index) => {
       const {
         id,
         word,
@@ -40,17 +46,19 @@ class VocaList extends Component {
           <div>{definitionContents}</div>
           <h6>Exmaples</h6>
           <div>{exampleContents}</div>
-          <div><Link to={`/vocabulary/edit/${id}`}>Edit</Link></div>
+          <div><a onClick={() => this._onEdit(id)}>Edit</a></div>
+          <div><a onClick={() => this._onRemove(id)}>Remove</a></div>
         </div>
       );
     });
 
     return (
       <div className="vocabulary-list">
+        <div><a onClick={() => this._onCreate(id)}>Create</a></div>
         {content}
       </div>
     );
   }
 }
 
-export default VocaList;
+export default VocabularyList;

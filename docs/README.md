@@ -36,3 +36,6 @@ https://www.robinwieruch.de/react-eslint-webpack-babel/
 # React form validation
 https://medium.com/@KozhukharenkoN/react-form-validation-with-mobx-8ce00233ae27
 https://github.com/lorenseanstewart/react-controlled-form-components
+
+# CRUD
+https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4

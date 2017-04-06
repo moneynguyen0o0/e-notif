@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { login as loginAction, toggleLoginMode as toggleLoginModeAction } from '../actions/users';
-import Spinner from './Spinner';
+import Spinner from './icons/Spinner';
 
 class Login extends Component {
   static propTypes = {

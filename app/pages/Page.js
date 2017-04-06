@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
-import Navigation from '../components/Navigation';
+import Navigation from '../components/core/Navigation';
 import { title, meta } from '../../config/assets';
 import { isClient } from '../../config/app';
 
