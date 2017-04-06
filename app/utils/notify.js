@@ -1,4 +1,4 @@
-export const notify = (title, options, events) => {
+const notify = (title, options, events) => {
   let notification = null;
   const notifyItem = () => {
     notification = new Notification(title, options);
@@ -24,6 +24,8 @@ export const notify = (title, options, events) => {
   return notification;
 };
 
-export const close = (notification) => {
+const close = (notification) => {
   notification.close();
 };
+
+export { notify, close };
