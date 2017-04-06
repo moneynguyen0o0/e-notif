@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
-import { findVoca } from '../utils/api';
+import { findVocabulary } from '../utils/api';
 import VocabularyForm from '../components/VocabularyForm';
 
 class EditedVocabulary extends Component {
@@ -17,7 +17,7 @@ class EditedVocabulary extends Component {
       params: { id }
     } = this.props;
 
-    findVoca(id).then((vocabulary) => {
+    findVocabulary(id).then((vocabulary) => {
       this.setState({ vocabulary });
     });
   }

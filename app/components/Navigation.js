@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logOut as logOutAction } from '../actions/users';
-import Notificaton from '../components/Notificaton';
+import Notification from '../components/Notification';
 
 class Navigation extends Component {
   static propTypes = {
@@ -18,7 +18,7 @@ class Navigation extends Component {
         <Link to="/">Home</Link>
         <Link to="/vocabulary/create">Create</Link>
         <Link to="/about">About</Link>
-        <Link><Notificaton /></Link>
+        <Link><Notification /></Link>
         { user.authenticated ? <Link onClick={() => logOut()} to="/">Logout</Link> : <Link to="/login">Login</Link> }
       </nav>
     );

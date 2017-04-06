@@ -1,14 +1,14 @@
 import { request } from './request';
 
-export const getVocas = () => {
+const getVocabularies = () => {
   return request({ url: '/vocabularies' });
 };
 
-export const findVoca = (id) => {
+const findVocabulary = (id) => {
   return request({ url: `/vocabularies/${id}` });
 };
 
-export const searchVocas = (params) => {
+const searchVocabularies = (params = {}) => {
   let paramString = '';
 
   Object.keys(params).forEach((key) => {
@@ -21,6 +21,13 @@ export const searchVocas = (params) => {
   return request({ url: `/vocabularies/search?${paramString}` });
 };
 
-export const saveVoca = (data) => {
+const saveVocabulary = (data) => {
   return request({ method: 'post', url: '/vocabulary/save', data });
+};
+
+export {
+  getVocabularies,
+  findVocabulary,
+  searchVocabularies,
+  saveVocabulary
 };

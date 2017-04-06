@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import { getVocas } from '../utils/api';
+import { getVocabularies } from '../utils/api';
 import VocabularyList from '../components/VocabularyList';
 
 class Home extends Component {
@@ -9,7 +9,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    getVocas().then((vocabularies) => {
+    getVocabularies().then((vocabularies) => {
       this.setState({ vocabularies });
     });
   }
