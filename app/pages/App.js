@@ -8,14 +8,27 @@ if (isClient) {
   require('styles/app.css');
 }
 
-class Page extends Component {
+class App extends Component {
   static propTypes = {
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    location: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired
+  }
+
+  static childContextTypes = {
+    location: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired
+  }
+
+  getChildContext() {
+    const { location, params } = this.props;
+
+    return { location, params };
   }
 
   render() {
     return (
-      <div className="page">
+      <div className="app">
         <Helmet title={title} meta={meta} />
         <Navigation />
         {this.props.children}
@@ -24,4 +37,4 @@ class Page extends Component {
   }
 }
 
-export default Page;
+export default App;

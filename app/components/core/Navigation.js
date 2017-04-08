@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { logOut as logOutAction } from '../actions/users';
-import Notification from '../components/Notification';
+import { logOut as logOutAction } from '../../actions/users';
+import Notification from '../Notification';
 
 class Navigation extends Component {
   static propTypes = {

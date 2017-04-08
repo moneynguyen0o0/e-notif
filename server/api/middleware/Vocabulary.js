@@ -8,7 +8,7 @@ const dbPath = process.cwd() + '/data/tdb.json';
 export const getAll = (res) => {
   const vocabularies = _.orderBy(tdb.vocabularies, ['id'], ['desc']);
 
-  res.json(vocabularies);
+  res.json({ status: 200, data: vocabularies });
 };
 
 export const find = (req, res) => {
@@ -21,7 +21,7 @@ export const find = (req, res) => {
   res.json(vocabulary);
 };
 
-export const delete = (req, res) => {
+export const remove = (req, res) => {
   const { params: { id } } = req;
 
   const index = tdb.vocabularies.findIndex(item => item.id === id);
@@ -49,14 +49,28 @@ export const search = (req, res) => {
 };
 
 export const save = (req, res) => {
-  const { vocabulary } = req.body;
+  const {
+    word,
+    pronunciation,
+    pos,
+    definitions,
+    examples
+  } = req.body;
 
-  vocabulary.id = tdb.vocabularies.length;
+  const vocabulary = {
+    id: tdb.vocabularies.length,
+    word,
+    pronunciation,
+    pos,
+    definitions,
+    examples
+  };
+
   tdb.vocabularies.push(vocabulary);
 
   fs.unlinkSync(dbPath);
   fs.writeFile(dbPath, JSON.stringify(tdb, null, 2), (err) => {
-    let rs = { status: 200, message: 'Saved successfully' };
+    let rs = { status: 200, message: 'Saved successfully', data: vocabulary };
 
     if (err) rs = { status: 500, message: 'Saved unsuccessfully' };
 
@@ -65,8 +79,23 @@ export const save = (req, res) => {
 };
 
 export const update = (req, res) => {
-  const { vocabulary } = req.body;
-  const { id } = vocabulary;
+  const {
+    id,
+    word,
+    pronunciation,
+    pos,
+    definitions,
+    examples
+  } = req.body;
+
+  const vocabulary = {
+    id,
+    word,
+    pronunciation,
+    pos,
+    definitions,
+    examples
+  };
 
   const index = tdb.vocabularies.findIndex(item => item.id === id);
 
@@ -74,7 +103,7 @@ export const update = (req, res) => {
 
   fs.unlinkSync(dbPath);
   fs.writeFile(dbPath, JSON.stringify(tdb, null, 2), (err) => {
-    let rs = { status: 200, message: 'Updated successfully' };
+    let rs = { status: 200, message: 'Updated successfully', data: vocabulary };
 
     if (err) rs = { status: 500, message: 'Updated unsuccessfully' };
 

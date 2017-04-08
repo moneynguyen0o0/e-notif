@@ -21,15 +21,23 @@ const searchVocabularies = (params = {}) => {
   return request({ url: `/vocabularies/search?${paramString}` });
 };
 
-const saveVocabulary = (data) => {
-  return request({ method: 'post', url: '/vocabulary/save', data });
+const createVocabulary = (data) => {
+  return request({ method: 'post', url: '/vocabularies', data });
 };
 
 const updateVocabulary = (data) => {
   return request({ method: 'put', url: `/vocabularies/${data.id}`, data });
 };
 
-const deleteVocabulary = (id) => {
+const saveVocabulary = (data) => {
+  if (data.id) {
+    return updateVocabulary(data);
+  }
+
+  return createVocabulary(data);
+};
+
+const removeVocabulary = (id) => {
   return request({ method: 'delete', url: `/vocabularies/${id}` });
 };
 
@@ -38,6 +46,7 @@ export {
   findVocabulary,
   searchVocabularies,
   saveVocabulary,
+  createVocabulary,
   updateVocabulary,
-  deleteVocabulary
+  removeVocabulary
 };

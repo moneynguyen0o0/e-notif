@@ -20,7 +20,7 @@ const request = async (config = {}) => {
 
     return data;
   } catch (error) {
-    throw (error && error.response && error.response.message) || error.stack;
+    throw error;
   }
 };
 
