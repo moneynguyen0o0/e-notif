@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field, FieldArray, SubmissionError } from 'redux-form';
-import { saveVoca } from '../utils/api';
 
 // TODO: fetch from db
 const POS = {
@@ -10,58 +9,59 @@ const POS = {
   adjective: 'Adjective'
 };
 
-const validate = (vocabulary) => {
-  const {
-    word,
-    pronunciation,
-    definitions,
-    examples
-  } = vocabulary;
-
-  const errors = {};
-
-  if (!word) {
-    errors.word = 'Required';
-  }
-
-  if (!pronunciation) {
-    errors.pronunciation = 'Required';
-  }
-
-  const definitionErrors = [];
-
-  definitions.forEach((definition, index) => {
-    if (!definition) {
-      definitionErrors[index] = 'Required';
-    }
-  });
-
-  if (definitionErrors.length) {
-    errors.definitions = definitionErrors;
-  }
-
-  const exampleErrors = [];
-
-  examples.forEach((example, index) => {
-    if (!example) {
-      exampleErrors[index] = 'Required';
-    }
-  });
-
-  if (exampleErrors.length) {
-    errors.examples = exampleErrors;
-  }
-
-  if (!_.isEmpty(errors)) {
-    throw new SubmissionError(errors);
-  } else {
-    saveVoca({ vocabulary });
-  }
-};
-
 class VocabularyForm extends Component {
   static propTypes = {
+    saveVocabulary: PropTypes.func.isRequired,
     ...reduxFormPropTypes
+  }
+
+  _validate = (vocabulary) => {
+    const {
+      word,
+      pronunciation,
+      definitions,
+      examples
+    } = vocabulary;
+
+    const errors = {};
+
+    if (!word) {
+      errors.word = 'Required';
+    }
+
+    if (!pronunciation) {
+      errors.pronunciation = 'Required';
+    }
+
+    const definitionErrors = [];
+
+    definitions.forEach((definition, index) => {
+      if (!definition) {
+        definitionErrors[index] = 'Required';
+      }
+    });
+
+    if (definitionErrors.length) {
+      errors.definitions = definitionErrors;
+    }
+
+    const exampleErrors = [];
+
+    examples.forEach((example, index) => {
+      if (!example) {
+        exampleErrors[index] = 'Required';
+      }
+    });
+
+    if (exampleErrors.length) {
+      errors.examples = exampleErrors;
+    }
+
+    if (!_.isEmpty(errors)) {
+      throw new SubmissionError(errors);
+    } else {
+      this.props.saveVocabulary(vocabulary);
+    }
   }
 
   _renderField = ({ input, label, type, meta: { touched, error } }) => {
@@ -121,7 +121,7 @@ class VocabularyForm extends Component {
     });
 
     return (
-      <form onSubmit={handleSubmit(validate)}>
+      <form onSubmit={handleSubmit(this._validate)}>
         {id && <input name="id" type="hidden" value={initialValues.id} />}
         <Field name="word" type="text" component={this._renderField} label="Word" />
         <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
@@ -145,11 +145,12 @@ class VocabularyForm extends Component {
 
 class VocabularyFormWrapper extends Component {
   static propTypes = {
-    data: PropTypes.object
+    vocabulary: PropTypes.object,
+    saveVocabulary: PropTypes.func.isRequired,
   }
 
   render() {
-    const { data } = this.props;
+    const { vocabulary, saveVocabulary } = this.props;
 
     const newVocabulary = {
       pos: 'noun',
@@ -159,13 +160,14 @@ class VocabularyFormWrapper extends Component {
 
     let initialVocabulary = newVocabulary;
 
-    if (data) {
-      initialVocabulary = data;
+    if (vocabulary) {
+      initialVocabulary = vocabulary;
     }
 
     const VocabularyFormContainer = reduxForm({
       form: 'vocabularyForm',  // a unique identifier for this form
-      initialValues: initialVocabulary
+      initialValues: initialVocabulary,
+      saveVocabulary
     })(VocabularyForm);
 
     return (

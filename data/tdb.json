@@ -50,6 +50,30 @@
       "word": "demo",
       "pronunciation": "demo",
       "id": 3
+    },
+    {
+      "id": 4,
+      "word": "A",
+      "pronunciation": "a",
+      "pos": "adjective",
+      "definitions": [
+        "a"
+      ],
+      "examples": [
+        "a"
+      ]
+    },
+    {
+      "id": 5,
+      "word": "Z",
+      "pronunciation": "z",
+      "pos": "noun",
+      "definitions": [
+        "z"
+      ],
+      "examples": [
+        "z"
+      ]
     }
   ]
 }

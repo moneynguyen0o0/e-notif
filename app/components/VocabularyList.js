@@ -1,20 +1,78 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import Spinner from './Spinner';
+import { connect } from 'react-redux';
+import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../actions/vocabulary';
+import Spinner from './icons/Spinner';
+import VocabularyForm from './VocabularyForm';
 
-class VocaList extends Component {
+class VocabularyList extends Component {
   static propTypes = {
-    data: PropTypes.array
+    vocabularies: PropTypes.array,
+    message: PropTypes.string,
+    isWaiting: PropTypes.bool,
+    fetchVocabularies: PropTypes.func.isRequired,
+    saveVocabulary: PropTypes.func.isRequired,
+    removeVocabulary: PropTypes.func.isRequired
+  }
+
+  state = {
+    vocabularies: [],
+    vocabulary: undefined,
+    showForm: false
+  }
+
+  componentDidMount() {
+    this.props.fetchVocabularies();
+  }
+
+  _onCreate() {
+    this.setState({
+      vocabulary: undefined,
+      showForm: true
+    });
+  }
+
+  _onEdit(vocabulary) {
+    this.setState({
+      vocabulary,
+      showForm: true
+    });
+  }
+
+  _onRemove(id) {
+    this.props.removeVocabulary(id);
+  }
+
+  _onCancel() {
+    this.setState({
+      showForm: false
+    });
+  }
+
+  _saveVocabulary(vocabulary) {
+    this.props.saveVocabulary(vocabulary);
+
+    this.setState({
+      showForm: false
+    });
   }
 
   render() {
-    const { data } = this.props;
+    const {
+      vocabularies,
+      message,
+      isWaiting
+    } = this.props;
 
-    if (!data.length) {
+    const {
+      vocabulary,
+      showForm
+    } = this.state;
+
+    if (!vocabularies) {
       return <Spinner />;
     }
 
-    const content = data.map((vocabulary, index) => {
+    const content = vocabularies.map((vocabulary, index) => {
       const {
         id,
         word,
@@ -40,17 +98,31 @@ class VocaList extends Component {
           <div>{definitionContents}</div>
           <h6>Exmaples</h6>
           <div>{exampleContents}</div>
-          <div><Link to={`/vocabulary/edit/${id}`}>Edit</Link></div>
+          <div><a onClick={() => this._onEdit(vocabulary)}>Edit</a></div>
+          <div><a onClick={() => this._onRemove(id)}>Remove</a></div>
         </div>
       );
     });
 
     return (
       <div className="vocabulary-list">
+        {isWaiting && <span>Saving</span>}
+        {message && <span>{message}</span>}
+        <div><a onClick={() => this._onCreate()}>Create</a></div>
+        {
+          showForm && <div>
+            <div onClick={() => this._onCancel()}>Cancel</div>
+            <VocabularyForm vocabulary={vocabulary} saveVocabulary={(vocabulary) => this._saveVocabulary(vocabulary)} />
+          </div>
+        }
         {content}
       </div>
     );
   }
 }
 
-export default VocaList;
+const mapStateToProps = ({ vocabulary }) => {
+  return vocabulary;
+};
+
+export default connect(mapStateToProps, { fetchVocabularies, saveVocabulary, removeVocabulary })(VocabularyList);

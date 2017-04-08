@@ -1,15 +1,14 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import {
-  Page,
+  App,
   Home,
   VocabularyDetail,
-  NewVocabulary,
-  EditedVocabulary,
   About,
   Login,
   Profile,
-  NotFoundPage
+  NotFoundPage,
+  InternalServerErrorPage
 } from './pages';
 
 /*
@@ -40,14 +39,13 @@ export default (store) => {
   };
 
   return (
-    <Route path="/" component={Page}>
+    <Route path="/" component={App}>
       <IndexRoute component={Home} />
       <Route path="vocabularies/:id" component={VocabularyDetail} />
-      <Route path="vocabulary/create" component={NewVocabulary} />
-      <Route path="vocabulary/edit/:id" component={EditedVocabulary} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth} />
       <Route path="profile/:username" component={Profile} onEnter={requireAuth} />
+      <Route path="500" component={InternalServerErrorPage} />
       <Route path="*" component={NotFoundPage} />
     </Route>
   );

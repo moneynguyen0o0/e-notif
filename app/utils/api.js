@@ -1,6 +1,6 @@
 import { request } from './request';
 
-const getVocabularies = () => {
+const getAllVocabularies = () => {
   return request({ url: '/vocabularies' });
 };
 
@@ -21,13 +21,32 @@ const searchVocabularies = (params = {}) => {
   return request({ url: `/vocabularies/search?${paramString}` });
 };
 
+const createVocabulary = (data) => {
+  return request({ method: 'post', url: '/vocabularies', data });
+};
+
+const updateVocabulary = (data) => {
+  return request({ method: 'put', url: `/vocabularies/${data.id}`, data });
+};
+
 const saveVocabulary = (data) => {
-  return request({ method: 'post', url: '/vocabulary/save', data });
+  if (data.id) {
+    return updateVocabulary(data);
+  }
+
+  return createVocabulary(data);
+};
+
+const removeVocabulary = (id) => {
+  return request({ method: 'delete', url: `/vocabularies/${id}` });
 };
 
 export {
-  getVocabularies,
+  getAllVocabularies,
   findVocabulary,
   searchVocabularies,
-  saveVocabulary
+  saveVocabulary,
+  createVocabulary,
+  updateVocabulary,
+  removeVocabulary
 };
