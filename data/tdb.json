@@ -1,4 +1,18 @@
 {
+  "accounts": [
+    {
+      "firstname": "money",
+      "lastname": "nguyen",
+      "password": "1234567",
+      "email": "money@gmail.com"
+    },
+    {
+      "firstname": "tien",
+      "lastname": "nguyen",
+      "email": "tien@gmail.com",
+      "password": "7654321"
+    }
+  ],
   "vocabularies": [
     {
       "id": 0,
@@ -66,6 +80,18 @@
     {
       "id": 5,
       "word": "Z",
+      "pronunciation": "z",
+      "pos": "noun",
+      "definitions": [
+        "z"
+      ],
+      "examples": [
+        "z"
+      ]
+    },
+    {
+      "id": 6,
+      "word": "z",
       "pronunciation": "z",
       "pos": "noun",
       "definitions": [

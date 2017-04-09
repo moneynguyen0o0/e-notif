@@ -1,4 +1,4 @@
-import { login, logout } from './middleware/User';
+import { login, logout, signup } from './middleware/User';
 import {
   getAll as getAllVocabularies,
   find as findVocabulary,
@@ -11,6 +11,7 @@ import {
 export default (router) => {
   router.post('/login', (req, res, next) => login(req, res, next));
   router.get('/logout', (req, res) => logout(req, res));
+  router.post('/signup', (req, res, next) => signup(req, res, next));
 
   router.get('/vocabularies/search', (req, res) => searchVocabularies(req, res));
   router.route('/vocabularies')
