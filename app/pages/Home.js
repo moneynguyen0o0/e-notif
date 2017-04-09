@@ -7,7 +7,9 @@ class Home extends Component {
     return (
       <div className="home">
         <Helmet title="Home | ENotif" />
-        <VocabularyList />
+        <div className="container">
+          <VocabularyList />
+        </div>
       </div>
     );
   }

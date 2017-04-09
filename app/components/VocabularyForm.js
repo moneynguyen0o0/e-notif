@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field, FieldArray, SubmissionError } from 'redux-form';
 
@@ -65,8 +66,13 @@ class VocabularyForm extends Component {
   }
 
   _renderField = ({ input, label, type, meta: { touched, error } }) => {
+    const groupClassnames = classnames(
+      'form-group',
+      { 'form-error': touched && error }
+    );
+
     return (
-      <div>
+      <div className={groupClassnames}>
         <label htmlFor={input.name}>{label}</label>
         <div>
           <input {...input} placeholder={label} type={type} />
@@ -79,9 +85,6 @@ class VocabularyForm extends Component {
   _renderFieldArrays = (fields, bntText, lable) => {
     return (
       <div>
-        <div>
-          <button type="button" onClick={() => fields.push()}>{bntText}</button>
-        </div>
         {fields.map((field, index) =>
           <div key={index}>
             <Field
@@ -93,21 +96,25 @@ class VocabularyForm extends Component {
             { index !== 0 ?
               <button
                 type="button"
+                className="btn-danger"
                 onClick={() => fields.remove(index)}
               >x</button> : null
             }
           </div>
         )}
+        <div>
+          <button type="button" className="btn-info" onClick={() => fields.push()}>{bntText}</button>
+        </div>
       </div>
     );
   }
 
   _renderDefinitions = ({ fields }) => {
-    return this._renderFieldArrays(fields, 'Add definition', 'Definition');
+    return this._renderFieldArrays(fields, '+', 'Definition');
   }
 
   _renderExamples = ({ fields }) => {
-    return this._renderFieldArrays(fields, 'Add example', 'Example');
+    return this._renderFieldArrays(fields, '+', 'Example');
   }
 
   render() {
@@ -122,21 +129,23 @@ class VocabularyForm extends Component {
 
     return (
       <form onSubmit={handleSubmit(this._validate)}>
-        {id && <input name="id" type="hidden" value={initialValues.id} />}
-        <Field name="word" type="text" component={this._renderField} label="Word" />
-        <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
-        <div>
-          <label htmlFor="pos">P O S</label>
+        <div className="form-body">
+          {id && <input name="id" type="hidden" value={initialValues.id} />}
+          <Field name="word" type="text" component={this._renderField} label="Word" />
+          <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
           <div>
-            <Field name="pos" component="select">
-              {posPptions}
-            </Field>
+            <label htmlFor="pos">P O S</label>
+            <div className="form-group">
+              <Field name="pos" component="select">
+                {posPptions}
+              </Field>
+            </div>
           </div>
           <FieldArray name="definitions" component={this._renderDefinitions} />
           <FieldArray name="examples" component={this._renderExamples} />
         </div>
-        <div>
-          <button type="submit" disabled={submitting}>Save</button>
+        <div className="form-footer form-footer--right">
+          <button type="submit" disabled={submitting} className="btn-primary">SAVE</button>
         </div>
       </form>
     );

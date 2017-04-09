@@ -118,9 +118,9 @@ class Notificaton extends Component {
     const { ring } = this.state;
 
     return (
-      <div className="bell">
+      <a className="Notification">
         <i className={`fa ${ring ? 'fa-bell' : 'fa-bell-o'}`} onClick={() => this._ringBell()} />
-      </div>
+      </a>
     );
   }
 }

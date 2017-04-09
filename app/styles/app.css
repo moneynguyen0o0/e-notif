@@ -1,4 +1,80 @@
 @import 'normalize.css/normalize';
 @import 'font-awesome/css/font-awesome.css';
 
-@import './spinner';
+@import './navigation';
+@import './icons';
+@import './vocabulary';
+
+button {
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+/* FORM */
+
+.form-error {
+  input[type=text],
+  input[type=email],
+  input[type=url],
+  input[type=password],
+  textarea {
+    border-color: #d43f3a;
+  }
+
+  span {
+    color: #d43f3a;
+  }
+}
+
+.form-footer {
+  width: 100%;
+
+  &--right {
+    text-align: right;
+  }
+}
+
+label {
+	font-size: 90%;
+}
+
+fieldset {
+	border: 0;
+  padding: 0;
+}
+
+select {
+
+}
+
+input[type=text],
+input[type=email],
+input[type=url],
+input[type=password],
+textarea,
+select {
+	width: 100%;
+
+  padding: 12px 20px;
+
+  background: none;
+
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=url]:focus,
+input[type=password]:focus,
+textarea:focus,
+select:focus {
+  outline: 0;
+  border-color: #4697e4;
+}

@@ -8,6 +8,7 @@
     "es6": true
   },
   "rules": {
+    "react/jsx-closing-bracket-location": 0,
     "react/no-multi-comp": 0,
     "react/require-default-props": 0,
     "react/forbid-prop-types": 0,

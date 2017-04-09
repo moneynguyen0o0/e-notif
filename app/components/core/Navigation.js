@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
@@ -10,16 +11,46 @@ class Navigation extends Component {
     logout: PropTypes.func.isRequired
   }
 
+  state = {
+    toggle: false
+  }
+
+  _toggleNav() {
+    this.setState({ toggle: !this.state.toggle });
+  }
+
   render() {
-    const { user, logout } = this.props;
+    const { user: { authenticated }, logout } = this.props;
+    const { toggle } = this.state;
+
+    const rightNav = [];
+
+    rightNav.push(<Notification key={rightNav.length} />);
+
+    if (authenticated) {
+      rightNav.push(<Link key={rightNav.length} onClick={() => logout()} to="/">Logout</Link>);
+    } else {
+      rightNav.push(<Link key={rightNav.length} to="/login">Login</Link>);
+    }
+
+    const navClassnames = classnames(
+      'Navigation',
+      { responsive: toggle }
+    );
 
     return (
-      <nav role="navigation">
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link><Notification /></Link>
-        { user.authenticated ? <Link onClick={() => logout()} to="/">Logout</Link> : <div><Link to="/login">Login</Link><Link to="/signup">Signup</Link></div> }
-      </nav>
+      <div className={navClassnames}>
+        <div className="container">
+          <div className="Navigation-left">
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+          </div>
+          <div className="Navigation-right">
+            { rightNav }
+          </div>
+          <a className="icon" onClick={() => this._toggleNav()}>&#9776;</a>
+        </div>
+      </div>
     );
   }
 }

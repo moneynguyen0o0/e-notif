@@ -1,0 +1,32 @@
+.ReactModal__Content {
+  width: 50%;
+
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  transform: translate(-50%, -50%);
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
+}
+
+.Modal {
+  &-title {
+    h1 {
+      display: inline-block;
+
+      text-transform: uppercase;
+    }
+
+    button {
+      float: right;
+    }
+  }
+}
+
+.VocabularyList {
+
+}

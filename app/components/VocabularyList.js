@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../actions/vocabulary';
 import Spinner from './icons/Spinner';
@@ -17,24 +18,17 @@ class VocabularyList extends Component {
   state = {
     vocabularies: [],
     vocabulary: undefined,
-    showForm: false
+    modalIsOpen: false
   }
 
   componentDidMount() {
     this.props.fetchVocabularies();
   }
 
-  _onCreate() {
-    this.setState({
-      vocabulary: undefined,
-      showForm: true
-    });
-  }
-
   _onEdit(vocabulary) {
     this.setState({
       vocabulary,
-      showForm: true
+      modalIsOpen: true
     });
   }
 
@@ -42,17 +36,24 @@ class VocabularyList extends Component {
     this.props.removeVocabulary(id);
   }
 
-  _onCancel() {
-    this.setState({
-      showForm: false
-    });
-  }
-
   _saveVocabulary(vocabulary) {
     this.props.saveVocabulary(vocabulary);
 
     this.setState({
-      showForm: false
+      modalIsOpen: false
+    });
+  }
+
+  _openModal() {
+    this.setState({
+      vocabulary: undefined,
+      modalIsOpen: true
+    });
+  }
+
+  _closeModal() {
+    this.setState({
+      modalIsOpen: false
     });
   }
 
@@ -65,7 +66,7 @@ class VocabularyList extends Component {
 
     const {
       vocabulary,
-      showForm
+      modalIsOpen
     } = this.state;
 
     if (!vocabularies) {
@@ -105,16 +106,23 @@ class VocabularyList extends Component {
     });
 
     return (
-      <div className="vocabulary-list">
-        {isWaiting && <span>Saving</span>}
-        {message && <span>{message}</span>}
-        <div><a onClick={() => this._onCreate()}>Create</a></div>
-        {
-          showForm && <div>
-            <div onClick={() => this._onCancel()}>Cancel</div>
-            <VocabularyForm vocabulary={vocabulary} saveVocabulary={(vocabulary) => this._saveVocabulary(vocabulary)} />
+      <div className="VocabularyList">
+        <div><button onClick={() => this._openModal()}>Create</button></div>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={() => this._closeModal()}
+          contentLabel="Vocabulary">
+
+          <div className="Modal-title">
+            <h1>Vocabulary form</h1>
+            <button className="btn-danger" onClick={() => this._closeModal()}>X</button>
           </div>
-        }
+
+          {isWaiting && <span>Saving</span>}
+          {message && <span>{message}</span>}
+
+          <VocabularyForm vocabulary={vocabulary} saveVocabulary={(vocabulary) => this._saveVocabulary(vocabulary)} />
+        </Modal>
         {content}
       </div>
     );
