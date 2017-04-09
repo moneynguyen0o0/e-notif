@@ -4,7 +4,7 @@ import * as types from '../constants/types';
 
 // Log In Action Creators
 export const beginLogin = () => {
-  return { type: types.MANUAL_LOGIN_USER };
+  return { type: types.LOGIN_USER };
 };
 
 export const loginSuccess = (message) => {
@@ -53,10 +53,6 @@ export const logoutError = () => {
   return { type: types.LOGOUT_ERROR_USER };
 };
 
-export const toggleLoginMode = () => {
-  return { type: types.TOGGLE_LOGIN_MODE };
-};
-
 export const login = (data) => {
   return (dispatch) => {
     dispatch(beginLogin());
@@ -78,17 +74,19 @@ export const login = (data) => {
   };
 };
 
-export const signUp = (data) => {
+export const signup = (data) => {
   return (dispatch) => {
     dispatch(beginSignUp());
 
     return request({ method: 'post', url: '/signup', data })
       .then((response) => {
-        if (response.status === 200) {
-          dispatch(signUpSuccess(response.data.message));
+        const { status, message } = response;
+
+        if (status === 200) {
+          dispatch(signUpSuccess(message));
           dispatch(push('/'));
         } else {
-          dispatch(signUpError('Oops! Something went wrong'));
+          dispatch(signUpError(message));
         }
       })
       .catch(() => {
@@ -97,7 +95,7 @@ export const signUp = (data) => {
   };
 };
 
-export const logOut = () => {
+export const logout = () => {
   return (dispatch) => {
     dispatch(beginLogout());
 

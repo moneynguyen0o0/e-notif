@@ -6,6 +6,7 @@ import {
   VocabularyDetail,
   About,
   Login,
+  Signup,
   Profile,
   NotFoundPage,
   InternalServerErrorPage
@@ -44,6 +45,7 @@ export default (store) => {
       <Route path="vocabularies/:id" component={VocabularyDetail} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth} />
+      <Route path="signup" component={Signup} onEnter={redirectAuth} />
       <Route path="profile/:username" component={Profile} onEnter={requireAuth} />
       <Route path="500" component={InternalServerErrorPage} />
       <Route path="*" component={NotFoundPage} />

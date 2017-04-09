@@ -1,12 +1,12 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
 
-const user = {
-  email: 'money@gmail.com',
-  password: 'money'
-};
-
 const findByEmail = (email, done) => {
+  const tdb = require('../../data/tdb.json');
+  const accounts = tdb.accounts;
+
+  const user = accounts.find(account => account.email === email);
+
   if (email === user.email) {
     return done(null, user)
   }
