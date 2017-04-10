@@ -1,9 +1,18 @@
 @import 'normalize.css/normalize';
 @import 'font-awesome/css/font-awesome.css';
+@import 'react-table/react-table.css';
 
 @import './navigation';
 @import './icons';
 @import './vocabulary';
+
+a {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
 
 button {
   padding: 15px 32px;

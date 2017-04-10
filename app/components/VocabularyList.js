@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import ReactTable from 'react-table';
 import Modal from 'react-modal';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../actions/vocabulary';
 import Spinner from './icons/Spinner';
@@ -73,44 +75,55 @@ class VocabularyList extends Component {
       return <Spinner />;
     }
 
-    const content = vocabularies.map((vocabulary, index) => {
-      const {
-        id,
-        word,
-        pronunciation,
-        pos,
-        definitions,
-        examples
-      } = vocabulary;
-
-      const definitionContents = definitions.map((definition, i) => {
-        return <div key={i}>{definition}</div>;
-      });
-      const exampleContents = examples.map((example, i) => {
-        return <div key={i}>{example}</div>;
-      });
-
-      return (
-        <div key={index}>
-          <h3>{word}</h3>
-          <div><i>/{pronunciation}/</i></div>
-          <h5>{pos}</h5>
-          <h6>Definitions</h6>
-          <div>{definitionContents}</div>
-          <h6>Exmaples</h6>
-          <div>{exampleContents}</div>
-          <div><a onClick={() => this._onEdit(vocabulary)}>Edit</a></div>
-          <div><a onClick={() => this._onRemove(id)}>Remove</a></div>
-        </div>
-      );
-    });
+    const columns = [{
+      header: 'VOCABULARIES',
+      columns: [
+        {
+          header: 'Word',
+          accessor: 'word',
+          render: props => <Link to={`/vocabularies/${props.row.id}`}>{props.value}</Link>,
+          width: 200
+        }, {
+          header: 'Pronunciation',
+          accessor: 'pronunciation',
+          width: 200
+        }, {
+          header: 'P.O.S',
+          accessor: 'pos',
+          width: 150
+        }, {
+          header: 'Definitions',
+          id: 'definitions',
+          accessor: vocabulary => vocabulary.definitions.map(definition => {
+            return <div>- {definition}</div>;
+          })
+        }, {
+          header: 'Examples',
+          id: 'examples',
+          accessor: vocabulary => vocabulary.examples.map(example => {
+            return <div>- {example}</div>;
+          })
+        }, {
+          header: '',
+          id: 'options',
+          width: 100,
+          accessor: vocabulary => <div className="text-center">
+            <a onClick={() => this._onEdit(vocabulary)}>
+              <i className="fa fa-pencil-square-o" />
+            </a>
+            <a onClick={() => this._onRemove(vocabulary.id)}>
+              <i className="fa fa-trash" />
+            </a>
+          </div>
+        }
+      ]
+    }];
 
     return (
       <div className="VocabularyList">
-        <div><button onClick={() => this._openModal()}>Create</button></div>
+        <div className="VocabularyList-addContainer"><button className="btn-primary" onClick={() => this._openModal()}>Create New</button></div>
         <Modal
           isOpen={modalIsOpen}
-          onRequestClose={() => this._closeModal()}
           contentLabel="Vocabulary">
 
           <div className="Modal-title">
@@ -118,12 +131,17 @@ class VocabularyList extends Component {
             <button className="btn-danger" onClick={() => this._closeModal()}>X</button>
           </div>
 
-          {isWaiting && <span>Saving</span>}
-          {message && <span>{message}</span>}
+          {/* TODO: implement later */}
+          {isWaiting && <div>Saving</div>}
+          {message && <div>{message}</div>}
 
           <VocabularyForm vocabulary={vocabulary} saveVocabulary={(vocabulary) => this._saveVocabulary(vocabulary)} />
         </Modal>
-        {content}
+        <ReactTable
+          data={vocabularies}
+          columns={columns}
+          defaultPageSize={10}
+        />
       </div>
     );
   }

@@ -145,7 +145,7 @@ class VocabularyForm extends Component {
           <FieldArray name="examples" component={this._renderExamples} />
         </div>
         <div className="form-footer form-footer--right">
-          <button type="submit" disabled={submitting} className="btn-primary">SAVE</button>
+          <button type="submit" disabled={submitting} className="btn-success">SAVE</button>
         </div>
       </form>
     );

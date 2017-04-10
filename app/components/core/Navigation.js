@@ -40,7 +40,7 @@ class Navigation extends Component {
 
     return (
       <div className={navClassnames}>
-        <div className="container">
+        <div className="container-fluid">
           <div className="Navigation-left">
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>

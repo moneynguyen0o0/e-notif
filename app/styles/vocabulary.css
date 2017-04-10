@@ -1,12 +1,28 @@
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
 .ReactModal__Content {
   width: 50%;
+  max-height: 100%;
 
   top: 50% !important;
   left: 50% !important;
   right: auto !important;
   bottom: auto !important;
 
+  border-radius: 0 !important;
+  overflow-y: scroll !important;
+
   transform: translate(-50%, -50%);
+
+  &--after-open {
+
+  }
 
   @media screen and (max-width: 768px) {
     width: 90%;
@@ -28,5 +44,9 @@
 }
 
 .VocabularyList {
-
+  &-addContainer {
+    margin: 15px 0;
+    
+    text-align: right;
+  }
 }
