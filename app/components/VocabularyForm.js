@@ -121,9 +121,11 @@ class VocabularyForm extends Component {
     const { handleSubmit, submitting, initialValues } = this.props;
     const { id, pos } = initialValues;
 
-    const posPptions = Object.keys(POS).map((item, index) => {
+    const posContent = Object.keys(POS).map((item, index) => {
       return (
-        <option key={index} value={item} selected={item === pos}>{POS[item]}</option>
+        <div key={index}>
+          <span>{POS[item]}</span><Field name="pos" component="input" type="checkbox" selected={item === pos} />
+        </div>
       );
     });
 
@@ -134,11 +136,9 @@ class VocabularyForm extends Component {
           <Field name="word" type="text" component={this._renderField} label="Word" />
           <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
           <div>
-            <label htmlFor="pos">P O S</label>
+            <label htmlFor="pos">P.O.S</label>
             <div className="form-group">
-              <Field name="pos" component="select">
-                {posPptions}
-              </Field>
+              {posContent}
             </div>
           </div>
           <FieldArray name="definitions" component={this._renderDefinitions} />
