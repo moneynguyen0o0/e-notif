@@ -7,6 +7,12 @@ import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVoc
 import Spinner from './icons/Spinner';
 import VocabularyForm from './VocabularyForm';
 
+const editStyles = {
+  content: {
+    overflowY: 'scroll'
+  }
+};
+
 class VocabularyList extends Component {
   static propTypes = {
     vocabularies: PropTypes.array,
@@ -20,42 +26,62 @@ class VocabularyList extends Component {
   state = {
     vocabularies: [],
     vocabulary: undefined,
-    modalIsOpen: false
+    isEditingModal: false,
+    isDeletingModal: false
   }
 
   componentDidMount() {
     this.props.fetchVocabularies();
   }
 
-  _onEdit(vocabulary) {
+  _edit(vocabulary) {
     this.setState({
       vocabulary,
-      modalIsOpen: true
+      isEditingModal: true
     });
   }
 
-  _onRemove(id) {
-    this.props.removeVocabulary(id);
+  _remove() {
+    const { deletingId } = this.state;
+
+    if (deletingId) {
+      this.props.removeVocabulary(deletingId);
+    }
+
+    this.setState({ isDeletingModal: false });
   }
 
   _saveVocabulary(vocabulary) {
     this.props.saveVocabulary(vocabulary);
 
     this.setState({
-      modalIsOpen: false
+      isEditingModal: false
     });
   }
 
-  _openModal() {
+  _openEditingModal() {
     this.setState({
       vocabulary: undefined,
-      modalIsOpen: true
+      isEditingModal: true
     });
   }
 
-  _closeModal() {
+  _closeEditingModal() {
     this.setState({
-      modalIsOpen: false
+      isEditingModal: false
+    });
+  }
+
+  _openDeletingModal(id) {
+    this.setState({
+      deletingId: id,
+      isDeletingModal: true
+    });
+  }
+
+  _closeDeletingModal() {
+    this.setState({
+      isDeletingModal: false
     });
   }
 
@@ -68,7 +94,8 @@ class VocabularyList extends Component {
 
     const {
       vocabulary,
-      modalIsOpen
+      isEditingModal,
+      isDeletingModal
     } = this.state;
 
     if (!vocabularies) {
@@ -89,8 +116,12 @@ class VocabularyList extends Component {
           width: 200
         }, {
           header: 'P.O.S',
-          accessor: 'pos',
-          width: 150
+          id: 'pos',
+          width: 200,
+          accessor: vocabulary => vocabulary.pos.map((item, index) => {
+            const content = `${index !== 0 ? ', ' : ''}${item}`;
+            return <span key={index}>{content}</span>;
+          })
         }, {
           header: 'Definitions',
           id: 'definitions',
@@ -108,10 +139,10 @@ class VocabularyList extends Component {
           id: 'options',
           width: 100,
           accessor: vocabulary => <div className="text-center">
-            <a onClick={() => this._onEdit(vocabulary)}>
+            <a onClick={() => this._edit(vocabulary)}>
               <i className="fa fa-pencil-square-o" />
             </a>
-            <a onClick={() => this._onRemove(vocabulary.id)}>
+            <a onClick={() => this._openDeletingModal(vocabulary.id)}>
               <i className="fa fa-trash" />
             </a>
           </div>
@@ -121,19 +152,33 @@ class VocabularyList extends Component {
 
     return (
       <div className="VocabularyList">
-        <div className="VocabularyList-addContainer"><button className="btn-primary" onClick={() => this._openModal()}>Create New</button></div>
+        <div className="VocabularyList-addContainer"><button className="btn-primary" onClick={() => this._openEditingModal()}>Create New</button></div>
         <Modal
-          isOpen={modalIsOpen}
-          contentLabel="Vocabulary">
+          isOpen={isDeletingModal}
+          contentLabel="Vocabulary-Editing">
+
+          <div className="Modal-title">
+            <h1>Warning</h1>
+          </div>
+
+          <div className="text-right">
+            <button className="btn-default" onClick={() => this._closeDeletingModal()}>Cancel</button>
+            <button className="btn-primary" onClick={() => this._remove()}>Delete</button>
+          </div>
+        </Modal>
+        <Modal
+          isOpen={isEditingModal}
+          style={editStyles}
+          contentLabel="Vocabulary-Editing">
 
           <div className="Modal-title">
             <h1>Vocabulary form</h1>
-            <button className="btn-danger" onClick={() => this._closeModal()}>X</button>
+            <button className="btn-danger" onClick={() => this._closeEditingModal()}>X</button>
           </div>
 
           {/* TODO: implement later */}
-          {isWaiting && <div>Saving</div>}
-          {message && <div>{message}</div>}
+          {isWaiting && <h3>Saving</h3>}
+          {message && <h4>{message}</h4>}
 
           <VocabularyForm vocabulary={vocabulary} saveVocabulary={(vocabulary) => this._saveVocabulary(vocabulary)} />
         </Modal>

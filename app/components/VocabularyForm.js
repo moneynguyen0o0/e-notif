@@ -59,9 +59,6 @@ class VocabularyForm extends Component {
       errors.examples = exampleErrors;
     }
 
-    vocabulary.pos = this.state.pos;
-    console.log(vocabulary);
-
     if (!_.isEmpty(errors)) {
       throw new SubmissionError(errors);
     } else {

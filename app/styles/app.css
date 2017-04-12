@@ -24,6 +24,47 @@ button {
   border: 1px solid #ccc;
 }
 
+/* MODAL */
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+.ReactModal__Content {
+  width: 50%;
+  max-height: 100%;
+
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  border-radius: 0 !important;
+
+  transform: translate(-50%, -50%);
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
+}
+
+.Modal {
+  &-title {
+    h1 {
+      display: inline-block;
+
+      text-transform: uppercase;
+    }
+
+    button {
+      float: right;
+    }
+  }
+}
+
 /* FORM */
 
 .form-error {

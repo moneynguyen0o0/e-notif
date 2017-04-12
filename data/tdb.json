@@ -18,7 +18,9 @@
       "id": 0,
       "word": "routine",
       "pronunciation": "ruːˈtiːn",
-      "pos": "noun",
+      "pos": [
+        "noun"
+      ],
       "definitions": [
         "a usual or fixed way of doing things",
         "a regular series of movements, jokes, or similar things used in a performance",
@@ -30,7 +32,9 @@
       ]
     },
     {
-      "pos": "noun",
+      "pos": [
+        "noun"
+      ],
       "definitions": [
         "world"
       ],
@@ -42,7 +46,10 @@
       "id": 1
     },
     {
-      "pos": "noun",
+      "pos": [
+        "noun",
+        "verb"
+      ],
       "definitions": [
         "test"
       ],
@@ -54,7 +61,9 @@
       "id": 2
     },
     {
-      "pos": "noun",
+      "pos": [
+        "noun"
+      ],
       "definitions": [
         "demo"
       ],
@@ -69,7 +78,9 @@
       "id": 4,
       "word": "A",
       "pronunciation": "a",
-      "pos": "adjective",
+      "pos": [
+        "noun"
+      ],
       "definitions": [
         "a"
       ],
@@ -81,7 +92,10 @@
       "id": 5,
       "word": "Z",
       "pronunciation": "z",
-      "pos": "noun",
+      "pos": [
+        "noun",
+        "adjective"
+      ],
       "definitions": [
         "z"
       ],
