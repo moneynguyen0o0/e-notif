@@ -94,14 +94,14 @@ class VocabularyList extends Component {
         }, {
           header: 'Definitions',
           id: 'definitions',
-          accessor: vocabulary => vocabulary.definitions.map(definition => {
-            return <div>- {definition}</div>;
+          accessor: vocabulary => vocabulary.definitions.map((definition, index) => {
+            return <div key={index}>- {definition}</div>;
           })
         }, {
           header: 'Examples',
           id: 'examples',
-          accessor: vocabulary => vocabulary.examples.map(example => {
-            return <div>- {example}</div>;
+          accessor: vocabulary => vocabulary.examples.map((example, index) => {
+            return <div key={index}>- {example}</div>;
           })
         }, {
           header: '',
