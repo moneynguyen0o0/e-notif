@@ -1,18 +1,20 @@
 import _ from 'lodash';
+import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
+import { Checkbox, CheckboxGroup } from 'react-checkbox-group';
 import { reduxForm, propTypes as reduxFormPropTypes, Field, FieldArray, SubmissionError } from 'redux-form';
 
 // TODO: fetch from db
-const POS = {
-  noun: 'Noun',
-  verb: 'Verd',
-  adjective: 'Adjective'
-};
+const POS = ['noun', 'verd', 'adjective'];
 
 class VocabularyForm extends Component {
   static propTypes = {
     saveVocabulary: PropTypes.func.isRequired,
     ...reduxFormPropTypes
+  }
+
+  state = {
+    pos: this.props.initialValues.pos
   }
 
   _validate = (vocabulary) => {
@@ -60,13 +62,19 @@ class VocabularyForm extends Component {
     if (!_.isEmpty(errors)) {
       throw new SubmissionError(errors);
     } else {
+      vocabulary.pos = this.state.pos;
       this.props.saveVocabulary(vocabulary);
     }
   }
 
   _renderField = ({ input, label, type, meta: { touched, error } }) => {
+    const groupClassnames = classnames(
+      'form-group',
+      { 'form-error': touched && error }
+    );
+
     return (
-      <div>
+      <div className={groupClassnames}>
         <label htmlFor={input.name}>{label}</label>
         <div>
           <input {...input} placeholder={label} type={type} />
@@ -79,9 +87,6 @@ class VocabularyForm extends Component {
   _renderFieldArrays = (fields, bntText, lable) => {
     return (
       <div>
-        <div>
-          <button type="button" onClick={() => fields.push()}>{bntText}</button>
-        </div>
         {fields.map((field, index) =>
           <div key={index}>
             <Field
@@ -93,50 +98,81 @@ class VocabularyForm extends Component {
             { index !== 0 ?
               <button
                 type="button"
+                className="btn-danger"
                 onClick={() => fields.remove(index)}
               >x</button> : null
             }
           </div>
         )}
+        <div>
+          <button type="button" className="btn-info" onClick={() => fields.push()}>{bntText}</button>
+        </div>
       </div>
     );
   }
 
   _renderDefinitions = ({ fields }) => {
-    return this._renderFieldArrays(fields, 'Add definition', 'Definition');
+    return this._renderFieldArrays(fields, '+', 'Definition');
   }
 
   _renderExamples = ({ fields }) => {
-    return this._renderFieldArrays(fields, 'Add example', 'Example');
+    return this._renderFieldArrays(fields, '+', 'Example');
+  }
+
+  _posChanged = (values) => {
+    if (values.length) {
+      this.setState({
+        pos: values
+      });
+    }
   }
 
   render() {
     const { handleSubmit, submitting, initialValues } = this.props;
-    const { id, pos } = initialValues;
+    const { id } = initialValues;
 
-    const posPptions = Object.keys(POS).map((item, index) => {
-      return (
-        <option key={index} value={item} selected={item === pos}>{POS[item]}</option>
-      );
-    });
+    // const posContent = Object.keys(POS).map((item, index) => {
+    //   return (
+    //     <div key={index}>
+    //       <Field name={`pos.${item}`} component="input" type="checkbox" /><span> {POS[item]}</span>
+    //     </div>
+    //   );
+    // });
+
+    const { pos } = this.state;
+
+    const posContent = (
+      <CheckboxGroup
+        name="pos"
+        value={pos}
+        onChange={this._posChanged}>
+        {
+          POS.map((item, index) => {
+            return (
+              <div key={index}><Checkbox value={item} /> {item}</div>
+            );
+          })
+        }
+      </CheckboxGroup>
+    );
 
     return (
       <form onSubmit={handleSubmit(this._validate)}>
-        {id && <input name="id" type="hidden" value={initialValues.id} />}
-        <Field name="word" type="text" component={this._renderField} label="Word" />
-        <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
-        <div>
-          <label htmlFor="pos">P O S</label>
+        <div className="form-body">
+          {id && <input name="id" type="hidden" value={initialValues.id} />}
+          <Field name="word" type="text" component={this._renderField} label="Word" />
+          <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
           <div>
-            <Field name="pos" component="select">
-              {posPptions}
-            </Field>
+            <label htmlFor="pos">P.O.S</label>
+            <div className="form-group">
+              {posContent}
+            </div>
           </div>
           <FieldArray name="definitions" component={this._renderDefinitions} />
           <FieldArray name="examples" component={this._renderExamples} />
         </div>
-        <div>
-          <button type="submit" disabled={submitting}>Save</button>
+        <div className="form-footer form-footer--right">
+          <button type="submit" disabled={submitting} className="btn-success">SAVE</button>
         </div>
       </form>
     );
@@ -153,7 +189,7 @@ class VocabularyFormWrapper extends Component {
     const { vocabulary, saveVocabulary } = this.props;
 
     const newVocabulary = {
-      pos: 'noun',
+      pos: [POS[0]],
       definitions: [null],
       examples: [null]
     };

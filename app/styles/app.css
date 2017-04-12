@@ -1,4 +1,130 @@
 @import 'normalize.css/normalize';
 @import 'font-awesome/css/font-awesome.css';
+@import 'react-table/react-table.css';
 
-@import './spinner';
+@import './navigation';
+@import './icons';
+@import './vocabulary';
+
+a {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+button {
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+/* MODAL */
+
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+.ReactModal__Content {
+  width: 50%;
+  max-height: 100%;
+
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  border-radius: 0 !important;
+
+  transform: translate(-50%, -50%);
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
+}
+
+.Modal {
+  &-title {
+    h1 {
+      display: inline-block;
+
+      text-transform: uppercase;
+    }
+
+    button {
+      float: right;
+    }
+  }
+}
+
+/* FORM */
+
+.form-error {
+  input[type=text],
+  input[type=email],
+  input[type=url],
+  input[type=password],
+  textarea {
+    border-color: #d43f3a;
+  }
+
+  span {
+    color: #d43f3a;
+  }
+}
+
+.form-footer {
+  width: 100%;
+
+  &--right {
+    text-align: right;
+  }
+}
+
+label {
+	font-size: 90%;
+}
+
+fieldset {
+	border: 0;
+  padding: 0;
+}
+
+select {
+
+}
+
+input[type=text],
+input[type=email],
+input[type=url],
+input[type=password],
+textarea,
+select {
+	width: 100%;
+
+  padding: 12px 20px;
+
+  background: none;
+
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=url]:focus,
+input[type=password]:focus,
+textarea:focus,
+select:focus {
+  outline: 0;
+  border-color: #4697e4;
+}

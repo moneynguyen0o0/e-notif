@@ -1,4 +1,8 @@
-.spinner {
+.Notification {
+  cursor: pointer;
+}
+
+.Spinner {
   height: 50px;
   width: 50px;
   background: url('../images/spinner.svg') no-repeat;
