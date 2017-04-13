@@ -5,3 +5,31 @@
     text-align: right;
   }
 }
+
+.Vocabulary {
+  &-title {
+    margin-top: 15px;
+    padding-top: 5px;
+    color: #e67e22;
+    border-top: 1px solid #0164a7;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  &-word {
+    font-size: 8em;
+    font-weight: 300;
+    color: #222;
+    line-height: 1em;
+  }
+
+  &-pronunciation {
+    font-size: 20px;
+    color: #979797;
+    padding-left: 8px;
+  }
+
+  &-pos, &-definition, &-example {
+    padding-left: 30px;
+  }
+}

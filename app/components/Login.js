@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
@@ -28,8 +29,13 @@ class LoginForm extends Component {
   }
 
   _renderField = ({ input, label, type, meta: { touched, error } }) => {
+    const groupClassnames = classnames(
+      'form-group',
+      { 'form-error': touched && error }
+    );
+
     return (
-      <div>
+      <div className={groupClassnames}>
         <label htmlFor={input.name}>{label}</label>
         <div>
           <input {...input} placeholder={label} type={type} />
@@ -46,8 +52,8 @@ class LoginForm extends Component {
       <form onSubmit={handleSubmit}>
         <Field name="email" type="email" component={this._renderField} label="Email" />
         <Field name="password" type="password" component={this._renderField} label="Password" />
-        <div>
-          <button type="submit" disabled={submitting}>Log In</button>
+        <div className="Login-footer">
+          <button type="submit" className="btn-info" disabled={submitting}>Log In</button>
         </div>
       </form>
     );
@@ -79,7 +85,7 @@ class LoginWrapper extends Component {
     }
 
     return (
-      <div className="login">
+      <div className="Login">
         <h3>{message}</h3>
         <LoginContainer onSubmit={this._login} />
       </div>

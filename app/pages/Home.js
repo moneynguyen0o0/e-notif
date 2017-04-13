@@ -5,7 +5,7 @@ import VocabularyList from '../components/VocabularyList';
 class Home extends Component {
   render() {
     return (
-      <div className="home">
+      <div className="HomePage">
         <Helmet title="Home | ENotif" />
         <div className="container-fluid">
           <VocabularyList />

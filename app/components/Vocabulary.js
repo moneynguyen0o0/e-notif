@@ -39,23 +39,28 @@ export default class Vocabulary extends Component {
       examples
     } = vocabulary;
 
-    const definitionContents = definitions.map((definition, i) => {
-      return <div key={i}>{definition}</div>;
+    const posContent = pos.map((item, index) => {
+      const content = `${index !== 0 ? ', ' : ''}${item}`;
+      return <span key={index}>{content}</span>;
     });
-    const exampleContents = examples.map((example, i) => {
-      return <div key={i}>{example}</div>;
+    const definitionContent = definitions.map((definition, index) => {
+      return <div key={index}>- {definition}</div>;
+    });
+    const exampleContent = examples.map((example, index) => {
+      return <div key={index}>- {example}</div>;
     });
 
     return (
-      <div>
+      <div className="Vocabulary">
         {vocabulary && <Helmet title={`${vocabulary.word} | ENotif`} />}
-        <h3>{word}</h3>
-        <div><i>/{pronunciation}/</i></div>
-        <h5>{pos}</h5>
-        <h6>Definitions</h6>
-        <div>{definitionContents}</div>
-        <h6>Exmaples</h6>
-        <div>{exampleContents}</div>
+        <div className="Vocabulary-word">{word}</div>
+        <div className="Vocabulary-pronunciation">[ {pronunciation} ]</div>
+        <div className="Vocabulary-title">P.O.S</div>
+        <div className="Vocabulary-pos">{posContent}</div>
+        <div className="Vocabulary-title">Definitions</div>
+        <div className="Vocabulary-definition">{definitionContent}</div>
+        <div className="Vocabulary-title">Exmaples</div>
+        <div className="Vocabulary-example">{exampleContent}</div>
       </div>
     );
   }

@@ -5,9 +5,11 @@ import SignupComponent from '../components/Signup';
 class Signup extends Component {
   render() {
     return (
-      <div className="signup">
+      <div className="SignupPage">
         <Helmet title="Signup | ENotif" />
-        <SignupComponent />
+        <div className="container">
+          <SignupComponent />
+        </div>
       </div>
     );
   }
