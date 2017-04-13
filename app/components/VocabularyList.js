@@ -102,6 +102,10 @@ class VocabularyList extends Component {
       return <Spinner />;
     }
 
+    const customRow = {
+      whiteSpace: 'normal'
+    };
+
     const columns = [{
       header: 'VOCABULARIES',
       columns: [
@@ -126,13 +130,13 @@ class VocabularyList extends Component {
           header: 'Definitions',
           id: 'definitions',
           accessor: vocabulary => vocabulary.definitions.map((definition, index) => {
-            return <div key={index}>- {definition}</div>;
+            return <div key={index} style={customRow}>- {definition}</div>;
           })
         }, {
           header: 'Examples',
           id: 'examples',
           accessor: vocabulary => vocabulary.examples.map((example, index) => {
-            return <div key={index}>- {example}</div>;
+            return <div key={index} style={customRow}>- {example}</div>;
           })
         }, {
           header: '',

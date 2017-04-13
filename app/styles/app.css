@@ -4,6 +4,7 @@
 
 @import './navigation';
 @import './icons';
+@import './account';
 @import './vocabulary';
 
 a {

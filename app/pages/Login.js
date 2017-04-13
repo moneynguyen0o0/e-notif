@@ -5,9 +5,11 @@ import LoginComponent from '../components/Login';
 class Login extends Component {
   render() {
     return (
-      <div className="login">
+      <div className="LoginPage">
         <Helmet title="Login | ENotif" />
-        <LoginComponent />
+        <div className="container">
+          <LoginComponent />
+        </div>
       </div>
     );
   }

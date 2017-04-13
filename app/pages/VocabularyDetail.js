@@ -4,8 +4,10 @@ import Vocabulary from '../components/Vocabulary';
 class VocabularyDetail extends Component {
   render() {
     return (
-      <div className="vocabulary">
-        <Vocabulary />
+      <div className="VocabularyDetailPage">
+        <div className="container">
+          <Vocabulary />
+        </div>
       </div>
     );
   }
