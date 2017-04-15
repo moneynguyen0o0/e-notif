@@ -58,15 +58,8 @@ export const login = (data) => {
     dispatch(beginLogin());
 
     return request({ method: 'post', url: '/login', data })
-      .then((response) => {
-        const { status, message } = response;
-
-        if (status === 200) {
-          dispatch(loginSuccess(message));
-          dispatch(push('/'));
-        } else {
-          dispatch(loginError(message));
-        }
+      .then(() => {
+        dispatch(push('/'));
       })
       .catch(() => {
         dispatch(push('/500'));
@@ -79,15 +72,8 @@ export const signup = (data) => {
     dispatch(beginSignUp());
 
     return request({ method: 'post', url: '/signup', data })
-      .then((response) => {
-        const { status, message } = response;
-
-        if (status === 200) {
-          dispatch(signUpSuccess(message));
-          dispatch(push('/'));
-        } else {
-          dispatch(signUpError(message));
-        }
+      .then(() => {
+        dispatch(push('/'));
       })
       .catch(() => {
         dispatch(push('/500'));
@@ -101,10 +87,9 @@ export const logout = () => {
 
     return request({ url: '/logout' })
       .then(() => {
-        dispatch(logoutSuccess());
+        dispatch(push('/'));
       })
       .catch(() => {
-        dispatch(logoutError());
         dispatch(push('/500'));
       });
   };

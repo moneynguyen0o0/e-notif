@@ -29,10 +29,10 @@ export const showMessage = (message) => {
   };
 };
 
-export const removeSuccess = (id) => {
+export const removeSuccess = (_id) => {
   return {
     type: types.DELETE_VOCABULARY_SUCCESS,
-    id
+    _id
   };
 };
 
@@ -40,11 +40,7 @@ export const fetch = () => {
   return (dispatch) => {
     return getAllVocabularies()
       .then((response) => {
-        if (response.status === 200) {
-          dispatch(fetchSuccess(response.data));
-        } else {
-          dispatch(showMessage(response.message));
-        }
+        dispatch(fetchSuccess(response));
       })
       .catch(() => {
         dispatch(push('/500'));
@@ -58,11 +54,7 @@ export const save = (vocabulary) => {
 
     return saveVocabulary(vocabulary)
       .then((response) => {
-        if (response.status === 200) {
-          dispatch(saveSuccess(response.data));
-        }
-
-        dispatch(showMessage(response.message));
+        dispatch(saveSuccess(response));
       })
       .catch(() => {
         dispatch(push('/500'));
@@ -70,17 +62,13 @@ export const save = (vocabulary) => {
   };
 };
 
-export const remove = (id) => {
+export const remove = (_id) => {
   return (dispatch) => {
     dispatch(wait());
 
-    return removeVocabulary(id)
-      .then((response) => {
-        if (response.status === 200) {
-          dispatch(removeSuccess(id));
-        }
-
-        dispatch(showMessage(response.message));
+    return removeVocabulary(_id)
+      .then(() => {
+        dispatch(removeSuccess(_id));
       })
       .catch(() => {
         dispatch(push('/500'));

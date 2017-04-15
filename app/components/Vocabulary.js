@@ -14,12 +14,12 @@ export default class Vocabulary extends Component {
 
   componentDidMount() {
     const {
-      params: { id }
+      params: { id: _id }
     } = this.context;
 
     console.log(this.context);
 
-    findVocabulary(id).then((vocabulary) => {
+    findVocabulary(_id).then((vocabulary) => {
       this.setState({ vocabulary });
     });
   }

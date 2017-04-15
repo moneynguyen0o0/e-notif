@@ -72,9 +72,9 @@ class VocabularyList extends Component {
     });
   }
 
-  _openDeletingModal(id) {
+  _openDeletingModal(_id) {
     this.setState({
-      deletingId: id,
+      deletingId: _id,
       isDeletingModal: true
     });
   }
@@ -112,7 +112,7 @@ class VocabularyList extends Component {
         {
           header: 'Word',
           accessor: 'word',
-          render: props => <Link to={`/vocabularies/${props.row.id}`}>{props.value}</Link>,
+          render: props => <Link to={`/vocabularies/${props.row._id}`}>{props.value}</Link>,
           width: 200
         }, {
           header: 'Pronunciation',
@@ -146,7 +146,7 @@ class VocabularyList extends Component {
             <a onClick={() => this._edit(vocabulary)}>
               <i className="fa fa-pencil-square-o" />
             </a>
-            <a onClick={() => this._openDeletingModal(vocabulary.id)}>
+            <a onClick={() => this._openDeletingModal(vocabulary._id)}>
               <i className="fa fa-trash" />
             </a>
           </div>

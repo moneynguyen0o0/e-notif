@@ -88,7 +88,7 @@ class Notificaton extends Component {
       const vocabulary = vocabularies[vocabularyIndex];
 
       const {
-        id,
+        _id,
         word,
         definitions
       } = vocabulary;
@@ -98,7 +98,7 @@ class Notificaton extends Component {
         body: definitions.toString()
       }, {
         onclick: () => {
-          window.open(`${location.protocol}//${location.host}/vocabularies/${id}`, '_blank');
+          window.open(`${location.protocol}//${location.host}/vocabularies/${_id}`, '_blank');
         }
       });
 

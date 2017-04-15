@@ -129,15 +129,7 @@ class VocabularyForm extends Component {
 
   render() {
     const { handleSubmit, submitting, initialValues } = this.props;
-    const { id } = initialValues;
-
-    // const posContent = Object.keys(POS).map((item, index) => {
-    //   return (
-    //     <div key={index}>
-    //       <Field name={`pos.${item}`} component="input" type="checkbox" /><span> {POS[item]}</span>
-    //     </div>
-    //   );
-    // });
+    const { _id } = initialValues;
 
     const { pos } = this.state;
 
@@ -159,7 +151,7 @@ class VocabularyForm extends Component {
     return (
       <form onSubmit={handleSubmit(this._validate)}>
         <div className="form-body">
-          {id && <input name="id" type="hidden" value={initialValues.id} />}
+          {_id && <input name="_id" type="hidden" value={_id} />}
           <Field name="word" type="text" component={this._renderField} label="Word" />
           <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
           <div>

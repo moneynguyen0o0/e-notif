@@ -4,8 +4,8 @@ const getAllVocabularies = () => {
   return request({ url: '/vocabularies' });
 };
 
-const findVocabulary = (id) => {
-  return request({ url: `/vocabularies/${id}` });
+const findVocabulary = (_id) => {
+  return request({ url: `/vocabularies/${_id}` });
 };
 
 const searchVocabularies = (params = {}) => {
@@ -26,19 +26,19 @@ const createVocabulary = (data) => {
 };
 
 const updateVocabulary = (data) => {
-  return request({ method: 'put', url: `/vocabularies/${data.id}`, data });
+  return request({ method: 'put', url: `/vocabularies/${data._id}`, data });
 };
 
 const saveVocabulary = (data) => {
-  if (data.id) {
+  if (data._id) {
     return updateVocabulary(data);
   }
 
   return createVocabulary(data);
 };
 
-const removeVocabulary = (id) => {
-  return request({ method: 'delete', url: `/vocabularies/${id}` });
+const removeVocabulary = (_id) => {
+  return request({ method: 'delete', url: `/vocabularies/${_id}` });
 };
 
 export {

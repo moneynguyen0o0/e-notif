@@ -1,29 +1,14 @@
 import { combineReducers } from 'redux';
 import * as types from '../constants/types';
 
-const getVocabulary = (state = {}, action) => {
-  switch (action.type) {
-    case types.SAVE_VOCABULARY_SUCCESS:
-      const { vocabulary = {} } = action;
-
-      if (!vocabulary.completed) {
-        vocabulary.completed = false;
-      }
-
-      return vocabulary;
-    default:
-      return state;
-  }
-};
-
 const getVocabularies = (state = [], action) => {
   switch (action.type) {
     case types.FETCH_VOCABULARIES_SUCCESS:
       return action.vocabularies || state;
     case types.SAVE_VOCABULARY_SUCCESS: {
-      const vocabulary = getVocabulary(undefined, action);
+      const { vocabulary = {} } = action;
 
-      const index = state.findIndex(item => item.id === vocabulary.id);
+      const index = state.findIndex(item => item._id === vocabulary._id);
 
       if (index === -1) {
         state.unshift(vocabulary);
@@ -34,7 +19,7 @@ const getVocabularies = (state = [], action) => {
       return state;
     }
     case types.DELETE_VOCABULARY_SUCCESS: {
-      const index = state.findIndex(item => item.id === action.id);
+      const index = state.findIndex(item => item._id === action._id);
 
       state.splice(index, 1);
 
