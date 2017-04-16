@@ -67,7 +67,7 @@ class SignupForm extends Component {
         <Field name="email" type="email" component={this._renderField} label="Email" />
         <Field name="password" type="password" component={this._renderField} label="Password" />
         <div className="Signup-footer">
-          <button type="submit" className="btn-info" disabled={submitting}>Log In</button>
+          <button type="submit" className="btn-info" disabled={submitting}>Sign Up</button>
         </div>
       </form>
     );
@@ -100,7 +100,7 @@ class SignupWrapper extends Component {
 
     return (
       <div className="Signup">
-        <h3>{message}</h3>
+        <h3 className="Signup-message">{message}</h3>
         <SignupContainer onSubmit={this._signup} />
       </div>
     );

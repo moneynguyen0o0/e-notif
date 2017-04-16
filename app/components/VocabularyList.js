@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../actions/vocabulary';
 import Spinner from './icons/Spinner';
+import Mark from './Mark';
 import VocabularyForm from './VocabularyForm';
 
 const editStyles = {
@@ -15,6 +16,7 @@ const editStyles = {
 
 class VocabularyList extends Component {
   static propTypes = {
+    user: PropTypes.object,
     vocabularies: PropTypes.array,
     message: PropTypes.string,
     isWaiting: PropTypes.bool,
@@ -72,9 +74,9 @@ class VocabularyList extends Component {
     });
   }
 
-  _openDeletingModal(id) {
+  _openDeletingModal(_id) {
     this.setState({
-      deletingId: id,
+      deletingId: _id,
       isDeletingModal: true
     });
   }
@@ -102,6 +104,8 @@ class VocabularyList extends Component {
       return <Spinner />;
     }
 
+    const { user: { _id: userId } } = this.props;
+
     const customRow = {
       whiteSpace: 'normal'
     };
@@ -112,7 +116,7 @@ class VocabularyList extends Component {
         {
           header: 'Word',
           accessor: 'word',
-          render: props => <Link to={`/vocabularies/${props.row.id}`}>{props.value}</Link>,
+          render: props => <Link to={`/vocabularies/${props.row._id}`}>{props.value}</Link>,
           width: 200
         }, {
           header: 'Pronunciation',
@@ -140,13 +144,28 @@ class VocabularyList extends Component {
           })
         }, {
           header: '',
+          id: 'mark',
+          width: 50,
+          accessor: vocabulary => {
+            const { _id, users = [] } = vocabulary;
+            const index = users.findIndex(item => item === userId);
+            const marked = index !== -1;
+
+            return (
+              <div className="text-center">
+                <Mark id={_id} marked={marked} />
+              </div>
+            );
+          }
+        }, {
+          header: '',
           id: 'options',
           width: 100,
           accessor: vocabulary => <div className="text-center">
             <a onClick={() => this._edit(vocabulary)}>
               <i className="fa fa-pencil-square-o" />
             </a>
-            <a onClick={() => this._openDeletingModal(vocabulary.id)}>
+            <a onClick={() => this._openDeletingModal(vocabulary._id)}>
               <i className="fa fa-trash" />
             </a>
           </div>
@@ -156,7 +175,7 @@ class VocabularyList extends Component {
 
     return (
       <div className="VocabularyList">
-        <div className="VocabularyList-addContainer"><button className="btn-primary" onClick={() => this._openEditingModal()}>Create New</button></div>
+        <div className="btn-container"><button className="btn-primary" onClick={() => this._openEditingModal()}>Create New</button></div>
         <Modal
           isOpen={isDeletingModal}
           contentLabel="Vocabulary-Editing">
@@ -196,8 +215,8 @@ class VocabularyList extends Component {
   }
 }
 
-const mapStateToProps = ({ vocabulary }) => {
-  return vocabulary;
+const mapStateToProps = ({ vocabulary, user }) => {
+  return { ...vocabulary, user };
 };
 
 export default connect(mapStateToProps, { fetchVocabularies, saveVocabulary, removeVocabulary })(VocabularyList);

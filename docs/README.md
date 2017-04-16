@@ -1,5 +1,7 @@
 # TODO
-- Update API (CSRF token, catch -> best practice)
+- Security
+- CSRF token
+- Update spinner when CRUD
 # Notification
 https://developer.mozilla.org/en-US/docs/Web/API/notification
 
@@ -39,3 +41,9 @@ https://github.com/lorenseanstewart/react-controlled-form-components
 
 # CRUD
 https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4
+
+# Mongoose
+https://www.terlici.com/2014/08/25/best-practices-express-structure.html
+https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
+https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
+http://stackoverflow.com/questions/18148166/find-document-with-array-that-contains-a-specific-value

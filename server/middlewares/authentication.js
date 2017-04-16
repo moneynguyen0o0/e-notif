@@ -1,17 +1,6 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
-
-const findByEmail = (email, done) => {
-  const tdb = require('../../data/tdb.json');
-  const accounts = tdb.accounts;
-
-  const user = accounts.find(account => account.email === email);
-
-  if (email === user.email) {
-    return done(null, user)
-  }
-  return done(null)
-};
+import { findByEmail, authenticate } from '../services/User';
 
 export default (passport) => {
   // Configure Passport authenticated session persistence.
@@ -25,12 +14,7 @@ export default (passport) => {
     done(null, user.email);
   });
 
-  passport.deserializeUser((email, done) => {
-    findByEmail(email, (err, user) => {
-      if (err) { return done(err); }
-      done(null, user);
-    });
-  });
+  passport.deserializeUser(findByEmail);
 
   // Configure the local strategy for use by Passport.
   //
@@ -40,12 +24,5 @@ export default (passport) => {
   // will be set at `req.user` in route handlers after authentication.
   passport.use(new Strategy({
     usernameField: 'email'
-  }, (email, password, done) => {
-    findByEmail(email, (err, user) => {
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (user.password != password) { return done(null, false); }
-      return done(null, user);
-    });
-  }));
+  }, authenticate));
 };

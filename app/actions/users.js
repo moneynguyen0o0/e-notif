@@ -7,10 +7,10 @@ export const beginLogin = () => {
   return { type: types.LOGIN_USER };
 };
 
-export const loginSuccess = (message) => {
+export const loginSuccess = (_id) => {
   return {
     type: types.LOGIN_SUCCESS_USER,
-    message
+    _id
   };
 };
 
@@ -59,17 +59,21 @@ export const login = (data) => {
 
     return request({ method: 'post', url: '/login', data })
       .then((response) => {
-        const { status, message } = response;
+        const { _id } = response;
 
-        if (status === 200) {
-          dispatch(loginSuccess(message));
-          dispatch(push('/'));
-        } else {
-          dispatch(loginError(message));
-        }
+        dispatch(loginSuccess(_id));
+        dispatch(push('/'));
       })
-      .catch(() => {
-        dispatch(push('/500'));
+      .catch((error) => {
+        const { response } = error;
+
+        if (response) {
+          const { data: { message = '' } = {} } = response;
+
+          dispatch(loginError(message));
+        } else {
+          dispatch(push('/500'));
+        }
       });
   };
 };
@@ -79,18 +83,20 @@ export const signup = (data) => {
     dispatch(beginSignUp());
 
     return request({ method: 'post', url: '/signup', data })
-      .then((response) => {
-        const { status, message } = response;
-
-        if (status === 200) {
-          dispatch(signUpSuccess(message));
-          dispatch(push('/'));
-        } else {
-          dispatch(signUpError(message));
-        }
+      .then(() => {
+        dispatch(signUpSuccess());
+        dispatch(push('/'));
       })
-      .catch(() => {
-        dispatch(push('/500'));
+      .catch((error) => {
+        const { response } = error;
+
+        if (response) {
+          const { data: { message = '' } = {} } = response;
+
+          dispatch(signUpError(message));
+        } else {
+          dispatch(push('/500'));
+        }
       });
   };
 };

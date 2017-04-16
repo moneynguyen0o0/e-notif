@@ -37,9 +37,11 @@ const renderHtml = (content, initialState, assets, helmet) => {
 export default () => {
   return (req, res) => {
     const authenticated = req.isAuthenticated();
+    const { user: { _id } = {} } = req;
     const history = createMemoryHistory();
     const store = configureStore({
       user: {
+        _id,
         authenticated,
         isWaiting: false,
         message: '',
@@ -50,7 +52,7 @@ export default () => {
 
     match({routes, location: req.url}, (err, redirect, props) => {
       if (err) {
-        res.status(500).send('Internal Server Error');
+        res.sendStatus(500);
       } else if (redirect) {
         res.redirect(302, redirect.pathname + redirect.search);
       } else if (props) {
@@ -71,9 +73,9 @@ export default () => {
         console.log("======== HTML ========");
         console.log(content);
 
-        res.status(200).send(renderHtml(content, initialState, assets, helmet));
+        res.send(renderHtml(content, initialState, assets, helmet));
       } else {
-        res.status(404).send('Not found');
+        res.sendStatus(404);
       }
     });
   }

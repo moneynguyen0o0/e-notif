@@ -1,6 +1,15 @@
 import { combineReducers } from 'redux';
 import * as types from '../constants/types';
 
+const _id = (state = '', action) => {
+  switch (action.type) {
+    case types.LOGIN_SUCCESS_USER:
+      return action._id;
+    default:
+      return state;
+  }
+};
+
 const isLogin = (
   state = true,
   action
@@ -73,6 +82,7 @@ const authenticated = (
 };
 
 const userReducer = combineReducers({
+  _id,
   isLogin,
   isWaiting,
   authenticated,

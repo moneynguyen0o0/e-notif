@@ -6,14 +6,17 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import helmet from 'helmet';
 import favicon from 'serve-favicon';
+import connect from './db/connect';
 import api from './api';
-import renderLayout from './middleware/renderLayout';
-import authentication from './middleware/authentication';
+import renderLayout from './middlewares/renderLayout';
+import authentication from './middlewares/authentication';
 import { PORT, ENV } from '../config/env';
 import { isProduction, isDevelopment } from '../config/app';
 import { sessionSecret } from '../config/secrets';
 
 const app = express();
+
+connect();
 
 authentication(passport);
 
