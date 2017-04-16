@@ -21,7 +21,7 @@ UserSchema.methods = {
       return cb(null, true);
     }
 
-    return cb(err);
+    return cb(null, false);
   }
 };
 

@@ -30,7 +30,7 @@ export const signup = (req, res) => {
     password
   } = req.body;
 
-  const newUer = {
+  const newUser = {
     firstname,
     lastname,
     email,

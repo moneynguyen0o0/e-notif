@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Vocabulary from '../models/Vocabulary';
 
 const getAll = (done) => {
-  Vocabulary.find({}).exec((err, vocabularies) => {
+  Vocabulary.find({}).sort({ created: 'desc' }).exec((err, vocabularies) => {
     done(err, vocabularies);
   });
 };
@@ -17,7 +17,6 @@ const update = (vocabulary, done) => {
   const { _id } = vocabulary;
 
   Vocabulary.findOneAndUpdate({ _id }, _.omit(vocabulary, ['_id', '_v']), { new: true }, (err, vocabulary) => {
-    console.log(vocabulary);
     done(err, vocabulary);
   });
 };
