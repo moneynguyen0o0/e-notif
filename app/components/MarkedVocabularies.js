@@ -74,6 +74,7 @@ class MarkedVocabularies extends Component {
 
     return (
       <div className="MarkedVocabularies">
+        <div className="btn-container"><button className="btn-primary" onClick={() => this._export()}>Export</button></div>
         <ReactTable
           data={vocabularies}
           columns={columns}

@@ -100,7 +100,7 @@ class SignupWrapper extends Component {
 
     return (
       <div className="Signup">
-        <h3>{message}</h3>
+        <h3 className="Signup-message">{message}</h3>
         <SignupContainer onSubmit={this._signup} />
       </div>
     );

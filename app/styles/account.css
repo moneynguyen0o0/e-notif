@@ -1,4 +1,10 @@
 .Login, .Signup {
+  &-message {
+    text-align: center;
+    text-transform: uppercase;
+    color: #d43f3a;
+  }
+
   form {
     margin: 0 auto;
 

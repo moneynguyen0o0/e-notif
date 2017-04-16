@@ -95,9 +95,10 @@ class Notificaton extends Component {
   }
 
   _notifyVocabulary() {
-    const { vocabularies, vocabularyIndex } = this.state;
+    const { vocabularies, vocabularyIndex: currentIndex } = this.state;
 
     if (vocabularies.length) {
+      const vocabularyIndex = currentIndex >= vocabularies.length ? 0 : currentIndex;
       const vocabulary = vocabularies[vocabularyIndex];
 
       const {

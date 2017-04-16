@@ -175,7 +175,7 @@ class VocabularyList extends Component {
 
     return (
       <div className="VocabularyList">
-        <div className="VocabularyList-addContainer"><button className="btn-primary" onClick={() => this._openEditingModal()}>Create New</button></div>
+        <div className="btn-container"><button className="btn-primary" onClick={() => this._openEditingModal()}>Create New</button></div>
         <Modal
           isOpen={isDeletingModal}
           contentLabel="Vocabulary-Editing">

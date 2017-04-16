@@ -25,6 +25,12 @@ button {
   border: 1px solid #ccc;
 }
 
+.btn-container {
+  margin: 15px 0;
+
+  text-align: right;
+}
+
 /* MODAL */
 
 .ReactModal__Overlay {
@@ -97,10 +103,6 @@ label {
 fieldset {
 	border: 0;
   padding: 0;
-}
-
-select {
-
 }
 
 input[type=text],

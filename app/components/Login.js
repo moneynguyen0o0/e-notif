@@ -86,7 +86,7 @@ class LoginWrapper extends Component {
 
     return (
       <div className="Login">
-        <h3>{message}</h3>
+        <h3 className="Login-message">{message}</h3>
         <LoginContainer onSubmit={this._login} />
       </div>
     );
