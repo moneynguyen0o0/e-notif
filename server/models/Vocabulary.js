@@ -10,7 +10,7 @@ const VocabularySchema = new Schema({
   examples: [String],
   created: { type: Date, default: Date.now },
   updated: Date,
-  users: [Schema.ObjectId]
+  users: [String]
 });
 
 export default mongoose.model('Vocabulary', VocabularySchema);

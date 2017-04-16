@@ -28,6 +28,7 @@ class Navigation extends Component {
     rightNav.push(<Notification key={rightNav.length} />);
 
     if (authenticated) {
+      rightNav.push(<Link key={rightNav.length} to="/my-vocabularies">My vocabularies</Link>);
       rightNav.push(<Link key={rightNav.length} onClick={() => logout()} to="/">Logout</Link>);
     } else {
       rightNav.push(<Link key={rightNav.length} to="/login">Login</Link>);

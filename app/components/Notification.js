@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import store from 'store';
+import { connect } from 'react-redux';
 import { notify, close as closeNotification } from '../utils/notify';
-import { searchVocabularies } from '../utils/api';
+import { getMarkedVocabularies, searchVocabularies } from '../utils/api';
 
 const notifyKey = '_nofify';
 
-const TIMEOUT = 3000;
+const TIMEOUT = 5000;
 
 class Notificaton extends Component {
+  static propTypes = {
+    user: PropTypes.object
+  }
+
   state = {
     vocabularies: []
   }
@@ -23,9 +28,17 @@ class Notificaton extends Component {
   }
 
   componentDidMount() {
-    searchVocabularies().then((vocabularies) => {
-      this.setState({ vocabularies });
-    });
+    const { user: { authenticated } } = this.props;
+
+    if (authenticated) {
+      getMarkedVocabularies().then((vocabularies) => {
+        this.setState({ vocabularies });
+      });
+    } else {
+      searchVocabularies().then((vocabularies) => {
+        this.setState({ vocabularies });
+      });
+    }
 
     if (this.state.ring) {
       this._startNotificationInterval();
@@ -125,4 +138,8 @@ class Notificaton extends Component {
   }
 }
 
-export default Notificaton;
+const mapStateToProps = ({ user }) => {
+  return { user };
+};
+
+export default connect(mapStateToProps)(Notificaton);

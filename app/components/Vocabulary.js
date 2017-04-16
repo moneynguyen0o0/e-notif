@@ -17,8 +17,6 @@ export default class Vocabulary extends Component {
       params: { id: _id }
     } = this.context;
 
-    console.log(this.context);
-
     findVocabulary(_id).then((vocabulary) => {
       this.setState({ vocabulary });
     });

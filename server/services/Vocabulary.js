@@ -16,7 +16,7 @@ const create = (vocabulary, done) => {
 const update = (vocabulary, done) => {
   const { _id } = vocabulary;
 
-  Vocabulary.findOneAndUpdate({ _id }, _.omit(vocabulary, ['_id', '_v']), { new: true }, (err, vocabulary) => {
+  Vocabulary.findOneAndUpdate({ _id }, _.omit(vocabulary, ['_id', '__v']), { new: true }, (err, vocabulary) => {
     done(err, vocabulary);
   });
 };
@@ -33,10 +33,26 @@ const findById = (_id, done) => {
   });
 };
 
+const getMarked = (userId, done) => {
+  Vocabulary.find({ users: userId }).sort({ created: 'desc' }).exec((err, vocabularies) => {
+    done(err, vocabularies);
+  });
+};
+
+const search = (params, done) => {
+  const { start = 0, end = 1 } = params;
+
+  Vocabulary.find({}).skip(start).limit(end).sort({ created: 'desc' }).exec((err, vocabularies) => {
+    done(err, vocabularies);
+  });
+};
+
 export default {
   getAll,
   findById,
   create,
   update,
-  remove
+  remove,
+  search,
+  getMarked
 };

@@ -41,6 +41,14 @@ const removeVocabulary = (_id) => {
   return request({ method: 'delete', url: `/vocabularies/${_id}` });
 };
 
+const markVocabulary = (_id) => {
+  return request({ url: `/vocabularies/mark/${_id}` });
+};
+
+const getMarkedVocabularies = () => {
+  return request({ url: '/vocabularies/marked' });
+};
+
 export {
   getAllVocabularies,
   findVocabulary,
@@ -48,5 +56,7 @@ export {
   saveVocabulary,
   createVocabulary,
   updateVocabulary,
-  removeVocabulary
+  removeVocabulary,
+  markVocabulary,
+  getMarkedVocabularies
 };

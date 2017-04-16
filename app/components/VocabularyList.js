@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../actions/vocabulary';
 import Spinner from './icons/Spinner';
+import Mark from './Mark';
 import VocabularyForm from './VocabularyForm';
 
 const editStyles = {
@@ -15,6 +16,7 @@ const editStyles = {
 
 class VocabularyList extends Component {
   static propTypes = {
+    user: PropTypes.object,
     vocabularies: PropTypes.array,
     message: PropTypes.string,
     isWaiting: PropTypes.bool,
@@ -102,6 +104,8 @@ class VocabularyList extends Component {
       return <Spinner />;
     }
 
+    const { user: { _id: userId } } = this.props;
+
     const customRow = {
       whiteSpace: 'normal'
     };
@@ -138,6 +142,21 @@ class VocabularyList extends Component {
           accessor: vocabulary => vocabulary.examples.map((example, index) => {
             return <div key={index} style={customRow}>- {example}</div>;
           })
+        }, {
+          header: '',
+          id: 'mark',
+          width: 50,
+          accessor: vocabulary => {
+            const { _id, users = [] } = vocabulary;
+            const index = users.findIndex(item => item === userId);
+            const marked = index !== -1;
+
+            return (
+              <div className="text-center">
+                <Mark id={_id} marked={marked} />
+              </div>
+            );
+          }
         }, {
           header: '',
           id: 'options',
@@ -196,8 +215,8 @@ class VocabularyList extends Component {
   }
 }
 
-const mapStateToProps = ({ vocabulary }) => {
-  return vocabulary;
+const mapStateToProps = ({ vocabulary, user }) => {
+  return { ...vocabulary, user };
 };
 
 export default connect(mapStateToProps, { fetchVocabularies, saveVocabulary, removeVocabulary })(VocabularyList);

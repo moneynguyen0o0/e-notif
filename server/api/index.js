@@ -2,10 +2,12 @@ import { login, logout, signup } from './middlewares/User';
 import {
   getAll as getAllVocabularies,
   findById as findByIdVocabulary,
+  mark as markVocabulary,
   search as searchVocabularies,
   create as createVocabulary,
   update as updateVocabulary,
-  remove as deleteVocabulary
+  remove as deleteVocabulary,
+  getMarked as getMarkedVocabularies
 } from './middlewares/Vocabulary';
 
 export default (router) => {
@@ -14,6 +16,8 @@ export default (router) => {
   router.post('/signup', (req, res) => signup(req, res));
 
   router.get('/vocabularies/search', (req, res) => searchVocabularies(req, res));
+  router.get('/vocabularies/mark/:id', (req, res) => markVocabulary(req, res));
+  router.get('/vocabularies/marked', (req, res) => getMarkedVocabularies(req, res));
   router.route('/vocabularies')
         .get((req, res) => getAllVocabularies(res))
         .post((req, res) => createVocabulary(req, res));

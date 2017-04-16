@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import {
   App,
   Home,
+  MarkedVocabularies,
   VocabularyDetail,
   About,
   Login,
@@ -43,6 +44,7 @@ export default (store) => {
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
       <Route path="vocabularies/:id" component={VocabularyDetail} />
+      <Route path="my-vocabularies" component={MarkedVocabularies} onEnter={requireAuth} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth} />
       <Route path="signup" component={Signup} onEnter={redirectAuth} />

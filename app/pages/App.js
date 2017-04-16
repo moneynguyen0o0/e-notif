@@ -12,18 +12,20 @@ class App extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     location: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired
+    params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
   }
 
   static childContextTypes = {
     location: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired
+    params: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
   }
 
   getChildContext() {
-    const { location, params } = this.props;
+    const { location, params, router } = this.props;
 
-    return { location, params };
+    return { location, params, router };
   }
 
   render() {

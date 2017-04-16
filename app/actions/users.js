@@ -7,10 +7,10 @@ export const beginLogin = () => {
   return { type: types.LOGIN_USER };
 };
 
-export const loginSuccess = (message) => {
+export const loginSuccess = (_id) => {
   return {
     type: types.LOGIN_SUCCESS_USER,
-    message
+    _id
   };
 };
 
@@ -58,8 +58,10 @@ export const login = (data) => {
     dispatch(beginLogin());
 
     return request({ method: 'post', url: '/login', data })
-      .then(() => {
-        dispatch(loginSuccess());
+      .then((response) => {
+        const { _id } = response;
+
+        dispatch(loginSuccess(_id));
         dispatch(push('/'));
       })
       .catch((error) => {
