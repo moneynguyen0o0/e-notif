@@ -10,11 +10,12 @@ const findByEmail = (email, done) => {
 const authenticate = (email, password, done) => {
   User.findOne({ email }, (findErr, user) => {
     if (!user) return done(null, false, { message: `There is no record of the email ${email}.` });
-    return user.comparePassword(password, (err, isMatch) => {
-      if (isMatch) {
-        return done(null, user);
+    return user.comparePassword(password, (err) => {
+      if (!err) {
+        return done(null, false, { message: 'Your email or password combination is not correct.' });
       }
-      return done(null, false, { message: 'Your email or password combination is not correct.' });
+      
+      return done(null, user);
     });
   });
 };
