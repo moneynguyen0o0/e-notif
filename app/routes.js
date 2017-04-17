@@ -22,7 +22,6 @@ export default (store) => {
   const { user: { authenticated } } = store.getState();
 
   const requireAuth = (nextState, replace, callback) => {
-    console.log(authenticated);
     if (!authenticated) {
       replace({
         pathname: '/login',

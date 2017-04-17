@@ -41,11 +41,10 @@ export default () => {
     const history = createMemoryHistory();
     const store = configureStore({
       user: {
-        _id,
         authenticated,
         isWaiting: false,
         message: '',
-        isLogin: true
+        _id
       }
     }, history);
     const routes = createRoutes(store);
