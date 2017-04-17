@@ -7,13 +7,6 @@ export const beginLogin = () => {
   return { type: types.LOGIN_USER };
 };
 
-export const loginSuccess = (_id) => {
-  return {
-    type: types.LOGIN_SUCCESS_USER,
-    _id
-  };
-};
-
 export const loginError = (message) => {
   return {
     type: types.LOGIN_ERROR_USER,
@@ -33,20 +26,9 @@ export const beginSignUp = () => {
   return { type: types.SIGNUP_USER };
 };
 
-export const signUpSuccess = (message) => {
-  return {
-    type: types.SIGNUP_SUCCESS_USER,
-    message
-  };
-};
-
 // Log Out Action Creators
 export const beginLogout = () => {
   return { type: types.LOGOUT_USER };
-};
-
-export const logoutSuccess = () => {
-  return { type: types.LOGOUT_SUCCESS_USER };
 };
 
 export const logoutError = () => {
@@ -58,11 +40,8 @@ export const login = (data) => {
     dispatch(beginLogin());
 
     return request({ method: 'post', url: '/login', data })
-      .then((response) => {
-        const { _id } = response;
-
-        dispatch(loginSuccess(_id));
-        dispatch(push('/'));
+      .then(() => {
+        location.href = '/';
       })
       .catch((error) => {
         const { response } = error;
@@ -84,8 +63,7 @@ export const signup = (data) => {
 
     return request({ method: 'post', url: '/signup', data })
       .then(() => {
-        dispatch(signUpSuccess());
-        dispatch(push('/'));
+        location.href = '/';
       })
       .catch((error) => {
         const { response } = error;
@@ -107,7 +85,7 @@ export const logout = () => {
 
     return request({ url: '/logout' })
       .then(() => {
-        dispatch(logoutSuccess());
+        location.href = '/';
       })
       .catch(() => {
         dispatch(logoutError());

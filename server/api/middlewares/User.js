@@ -11,7 +11,7 @@ export const login = (req, res) => {
     return req.logIn(user, (loginErr) => {
       if (loginErr) return res.status(500).send({ message: 'Authenticated error', error: err });
 
-      return res.json({ _id: user._id });
+      return res.sendStatus(200);
     });
   })(req, res);
 };
