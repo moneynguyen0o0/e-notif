@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import * as Role from '../constants/Role';
 
 const UserSchema = new mongoose.Schema({
   id: String,
@@ -6,6 +7,7 @@ const UserSchema = new mongoose.Schema({
   password: String,
   first_name: { type: String, default: '' },
   last_name: { type: String, default: '' },
+  roles: { type: Array, default: [Role.USER] },
   created: { type: Date, default: Date.now },
   tokens: Array,
   resetPasswordToken: String,

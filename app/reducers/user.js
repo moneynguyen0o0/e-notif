@@ -52,10 +52,11 @@ const authenticated = (
 };
 
 const userReducer = combineReducers({
+  _id: (state = '') => state,
+  isAdmin: (state = false) => state,
   isWaiting,
   authenticated,
-  message,
-  _id: (state = '') => state
+  message
 });
 
 export default userReducer;

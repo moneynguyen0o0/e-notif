@@ -20,7 +20,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const { user: { authenticated }, logout } = this.props;
+    const { user: { authenticated, isAdmin }, logout } = this.props;
     const { toggle } = this.state;
 
     const rightNav = [];
@@ -28,6 +28,10 @@ class Navigation extends Component {
     rightNav.push(<Notification key={rightNav.length} />);
 
     if (authenticated) {
+      if (isAdmin) {
+        rightNav.push(<Link key={rightNav.length} to="/vocabulary-management">Vocabulary management</Link>);
+      }
+
       rightNav.push(<Link key={rightNav.length} to="/my-vocabularies">My vocabularies</Link>);
       rightNav.push(<Link key={rightNav.length} onClick={() => logout()} to="/">Logout</Link>);
     } else {
