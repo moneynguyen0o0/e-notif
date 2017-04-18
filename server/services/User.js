@@ -14,6 +14,7 @@ const authenticate = (email, password, done) => {
       if (isMatch) {
         return done(null, user);
       }
+
       return done(null, false, { message: 'Your email or password combination is not correct.' });
     });
   });

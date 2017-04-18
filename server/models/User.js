@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import * as Role from '../constants/Role';
 
 const UserSchema = new mongoose.Schema({
@@ -14,16 +15,40 @@ const UserSchema = new mongoose.Schema({
   resetPasswordExpires: Date
 });
 
+// Issue: https://github.com/Automattic/mongoose/issues/4537
+function encryptPassword(next) {
+  if (!this.isModified('password')) return next();
+
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return next(err);
+
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) return next(err);
+
+      this.password = hash;
+
+      return next();
+    });
+  });
+};
+
+/**
+ * Password hash middleware.
+ */
+UserSchema.pre('save', encryptPassword);
+
 /*
  Defining our own custom document instance method
  */
 UserSchema.methods = {
-  comparePassword(candidatePassword, cb) {
-    if (candidatePassword === this.password) {
-      return cb(null, true);
-    }
+  comparePassword(password, cb) {
+      bcrypt.compare(password, this.password, (err, isMatch) => {
+      console.log(isMatch);
 
-    return cb(null, false);
+      if (err) return cb(err);
+
+      return cb(null, isMatch);
+    });
   }
 };
 
