@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 import Vocabulary from '../models/Vocabulary';
 
 const getAll = (done) => {
@@ -47,6 +48,15 @@ const search = (params, done) => {
   });
 };
 
+const getDaily = (done) => {
+  const today = moment().startOf('day');
+  const tomorrow = moment(today).add(1, 'days');
+
+  Vocabulary.find({ created: { $gte: today.toDate(), $lt: tomorrow.toDate() } }).sort({ created: 'desc' }).exec((err, vocabularies) => {
+    done(err, vocabularies);
+  });
+};
+
 export default {
   getAll,
   findById,
@@ -54,5 +64,6 @@ export default {
   update,
   remove,
   search,
-  getMarked
+  getMarked,
+  getDaily
 };

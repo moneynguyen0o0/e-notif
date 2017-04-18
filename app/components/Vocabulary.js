@@ -1,9 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
 import { findVocabulary } from '../utils/api';
 import Spinner from './icons/Spinner';
+import Mark from './Mark';
 
-export default class Vocabulary extends Component {
+class Vocabulary extends Component {
+  static propTypes = {
+    user: PropTypes.object
+  }
+
   static contextTypes = {
     params: PropTypes.object.isRequired
   }
@@ -29,13 +35,21 @@ export default class Vocabulary extends Component {
       return <Spinner />;
     }
 
+    const { user: { _id: userId } } = this.props;
+
     const {
+      _id,
       word,
       pronunciation,
       pos,
       definitions,
-      examples
+      examples,
+      users = []
     } = vocabulary;
+
+    const marked = users.findIndex(item => item === userId) !== -1;
+
+    const markContent = <Mark id={_id} marked={marked} />;
 
     const posContent = pos.map((item, index) => {
       const content = `${index !== 0 ? ', ' : ''}${item}`;
@@ -59,7 +73,14 @@ export default class Vocabulary extends Component {
         <div className="Vocabulary-definition">{definitionContent}</div>
         <div className="Vocabulary-title">Exmaples</div>
         <div className="Vocabulary-example">{exampleContent}</div>
+        <div className="Vocabulary-mark">{markContent}</div>
       </div>
     );
   }
 }
+
+const mapStateToProps = ({ user }) => {
+  return { user };
+};
+
+export default connect(mapStateToProps)(Vocabulary);

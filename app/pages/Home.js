@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
+import DailyVocabularies from '../components/DailyVocabularies';
 
 class Home extends Component {
   render() {
@@ -7,7 +8,7 @@ class Home extends Component {
       <div className="HomePage">
         <Helmet title="Home | ENotif" />
         <div className="container">
-          <h1>Please complete it soon!!!</h1>
+          <DailyVocabularies />
         </div>
       </div>
     );

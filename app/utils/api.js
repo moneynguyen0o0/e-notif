@@ -4,6 +4,10 @@ const getAllVocabularies = () => {
   return request({ url: '/vocabularies' });
 };
 
+const getDailyVocabularies = () => {
+  return request({ url: '/vocabularies/daily' });
+};
+
 const findVocabulary = (_id) => {
   return request({ url: `/vocabularies/${_id}` });
 };
@@ -51,6 +55,7 @@ const getMarkedVocabularies = () => {
 
 export {
   getAllVocabularies,
+  getDailyVocabularies,
   findVocabulary,
   searchVocabularies,
   saveVocabulary,
