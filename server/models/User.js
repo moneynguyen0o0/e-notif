@@ -15,7 +15,8 @@ const UserSchema = new mongoose.Schema({
   resetPasswordExpires: Date
 });
 
-const encryptPassword = (next) => {
+// Issue: https://github.com/Automattic/mongoose/issues/4537
+function encryptPassword(next) {
   if (!this.isModified('password')) return next();
 
   bcrypt.genSalt(10, (err, salt) => {
@@ -40,11 +41,13 @@ UserSchema.pre('save', encryptPassword);
  Defining our own custom document instance method
  */
 UserSchema.methods = {
-  comparePassword(hash, cb) {
-    bcrypt.compare(this.password, hash, (err, res) => {
+  comparePassword(password, cb) {
+      bcrypt.compare(password, this.password, (err, isMatch) => {
+      console.log(isMatch);
+
       if (err) return cb(err);
 
-      return cb(null);
+      return cb(null, isMatch);
     });
   }
 };

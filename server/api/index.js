@@ -19,7 +19,7 @@ export default (router) => {
   router.get('/vocabularies/mark/:id', (req, res) => markVocabulary(req, res));
   router.get('/vocabularies/marked', (req, res) => getMarkedVocabularies(req, res));
   router.route('/vocabularies')
-        .get((req, res) => getAllVocabularies(res))
+        .get((req, res) => getAllVocabularies(req, res))
         .post((req, res) => createVocabulary(req, res));
   router.route('/vocabularies/:id')
         .get((req, res) => findByIdVocabulary(req, res))

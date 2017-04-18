@@ -1,7 +1,12 @@
 import _ from 'lodash';
 import Vocabulary from '../../services/Vocabulary';
+import { isAdmin } from '../../utils/UserUtil';
 
-export const getAll = (res) => {
+export const getAll = (req, res) => {
+  if (!isAdmin(req.user)) {
+    return res.sendStatus(401);
+  }
+
   Vocabulary.getAll((err, vocabularies) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
 
@@ -21,6 +26,10 @@ export const findById = (req, res) => {
 };
 
 export const remove = (req, res) => {
+  if (!isAdmin(req.user)) {
+    return res.sendStatus(401);
+  }
+
   const { params: { id: _id } } = req;
 
   Vocabulary.remove(_id, (err) => {
@@ -30,6 +39,10 @@ export const remove = (req, res) => {
 };
 
 export const create = (req, res) => {
+  if (!isAdmin(req.user)) {
+    return res.sendStatus(401);
+  }
+
   const {
     word,
     pronunciation,
@@ -54,6 +67,10 @@ export const create = (req, res) => {
 };
 
 export const update = (req, res) => {
+  if (!isAdmin(req.user)) {
+    return res.sendStatus(401);
+  }
+
   const {
     _id,
     word,

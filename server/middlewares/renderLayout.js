@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { renderToString } from 'react-dom/server';
@@ -8,7 +7,7 @@ import { createMemoryHistory, match } from 'react-router';
 import createRoutes from '../../app/routes';
 import configureStore from '../../app/store/configureStore';
 import { isDevelopment } from '../../config/app';
-import * as Role from '../constants/Role';
+import { isAdmin } from '../utils/UserUtil';
 
 const renderHtml = (content, initialState, assets, helmet) => {
   return `
@@ -39,13 +38,12 @@ const renderHtml = (content, initialState, assets, helmet) => {
 export default () => {
   return (req, res) => {
     const authenticated = req.isAuthenticated();
-    const { user: { _id, roles = [] } = {} } = req;
-    const isAdmin = _.includes(roles, Role.ADMIN);
+    const { user = {} } = req;
     const history = createMemoryHistory();
     const store = configureStore({
       user: {
-        _id,
-        isAdmin,
+        _id: user._id || '',
+        isAdmin: isAdmin(user),
         authenticated,
         isWaiting: false,
         message: ''
