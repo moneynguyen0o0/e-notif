@@ -149,3 +149,11 @@ export const mark = (req, res) => {
     });
   });
 };
+
+export const getDaily = (req, res) => {
+  Vocabulary.getDaily((err, vocabularies) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    return res.json(vocabularies);
+  });
+};
