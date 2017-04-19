@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import {
   App,
   Home,
+  SearchPage,
   MarkedVocabularies,
   VocabularyDetail,
   VocabularyManagement,
@@ -59,6 +60,7 @@ export default (store) => {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
+      <Route path="search" component={SearchPage} />
       <Route path="vocabularies/:id" component={VocabularyDetail} />
       <Route path="my-vocabularies" component={MarkedVocabularies} onEnter={requireAuth} />
       <Route path="vocabulary-management" component={VocabularyManagement} onEnter={requireAdminAuth} />

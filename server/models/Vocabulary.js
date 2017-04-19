@@ -13,4 +13,6 @@ const VocabularySchema = new Schema({
   users: [String]
 });
 
+VocabularySchema.index({ word: 'text', definitions: 'text' });
+
 export default mongoose.model('Vocabulary', VocabularySchema);

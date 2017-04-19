@@ -41,9 +41,15 @@ const getMarked = (userId, done) => {
 };
 
 const search = (params, done) => {
-  const { start = 0, end = 1 } = params;
+  const { keyword, start = 0, end = 10 } = params;
 
-  Vocabulary.find({}).skip(start).limit(end).sort({ created: 'desc' }).exec((err, vocabularies) => {
+  const criteria = {};
+
+  if (keyword) {
+    criteria['$text'] = { $search : keyword };
+  }
+
+  Vocabulary.find(criteria).skip(start).limit(end).sort({ created: 'desc' }).exec((err, vocabularies) => {
     done(err, vocabularies);
   });
 };

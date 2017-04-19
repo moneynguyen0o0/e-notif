@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Spinner from './icons/Spinner';
 import Mark from './Mark';
 
 class DailyVocabularies extends Component {
@@ -13,10 +12,6 @@ class DailyVocabularies extends Component {
     const {
       vocabularies
     } = this.props;
-
-    if (!vocabularies.length) {
-      return <Spinner />;
-    }
 
     const { user: { _id: userId } } = this.props;
 
