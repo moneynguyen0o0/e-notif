@@ -51,3 +51,33 @@ export const signup = (req, res) => {
     });
   });
 };
+
+export const sendEmail = (req, res) => {
+  console.log("===================");
+  const nodemailer = require('nodemailer');
+
+  const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: 'trungnguyen1793@gmail.com',
+        pass: 'hoangtrung123'
+      }
+  });
+
+  const mailOptions = {
+    from: 'trungnguyen1793@gmail.com',
+    to: 'moneynguyen0o0@gmail.com',
+    subject: 'Test Enotif',
+    html: '<b>Hello world ✔</b>'
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.json({yo: 'error'});
+    } else {
+      console.log('Message sent: ' + info.response);
+      res.json({yo: info.response});
+    };
+  });
+};

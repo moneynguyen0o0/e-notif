@@ -1,4 +1,4 @@
-import { login, logout, signup } from './middlewares/User';
+import { login, logout, signup, sendEmail } from './middlewares/User';
 import {
   getAll as getAllVocabularies,
   findById as findByIdVocabulary,
@@ -27,6 +27,8 @@ export default (router) => {
         .get((req, res) => findByIdVocabulary(req, res))
         .put((req, res) => updateVocabulary(req, res))
         .delete((req, res) => deleteVocabulary(req, res));
+
+  router.get('/sendEmail', (req, res) => sendEmail(req, res));
 
   return router;
 }

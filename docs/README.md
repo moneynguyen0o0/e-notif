@@ -49,3 +49,6 @@ https://www.terlici.com/2014/08/25/best-practices-express-structure.html
 https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
 https://scotch.io/tutorials/using-mongoosejs-in-node-js-and-mongodb-applications
 http://stackoverflow.com/questions/18148166/find-document-with-array-that-contains-a-specific-value
+
+# Send email
+http://javascript.tutorialhorizon.com/2015/07/02/send-email-node-js-express/
