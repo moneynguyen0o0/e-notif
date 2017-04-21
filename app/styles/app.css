@@ -2,7 +2,7 @@
 @import 'font-awesome/css/font-awesome.css';
 @import 'react-table/react-table.css';
 
-@import './navigation';
+@import './header';
 @import './icons';
 @import './account';
 @import './vocabulary';

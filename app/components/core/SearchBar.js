@@ -1,11 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { browserHistory } from 'react-router';
 
-// https://webdesign.tutsplus.com/tutorials/css-experiments-with-a-search-form-input-and-button--cms-22069
 export default class SearchBar extends Component {
-  static contextTypes = {
-    router: PropTypes.object.isRequired
-  }
-
   state = {
     keyword: ''
   }
@@ -13,7 +9,18 @@ export default class SearchBar extends Component {
   _search() {
     const { keyword } = this.state;
     if (keyword) {
-      this.context.router.push(`/search?keyword=${keyword}`);
+      browserHistory.push({
+        pathname: '/search',
+        query: {
+          keyword
+        }
+      });
+    }
+  }
+
+  _handleKeyPress(e) {
+    if (e.charCode === 13) {
+      this._search();
     }
   }
 
@@ -26,11 +33,9 @@ export default class SearchBar extends Component {
 
     return (
       <div className="SearchBar">
-        <div className="SearchBar-container">
-          <div className="SearchBar-box">
-            <input type="search" placeholder="Search..." value={keyword} onChange={(e) => this._handleChange(e)} />
-            <button className="icon" onClick={() => this._search()}><i className="fa fa-search" /></button>
-          </div>
+        <div className="SearchBar-box">
+          <input type="search" placeholder="Search..." value={keyword} onChange={(e) => this._handleChange(e)} onKeyPress={(e) => this._handleKeyPress(e)} />
+          <button className="icon" onClick={() => this._search()}><i className="fa fa-search" /></button>
         </div>
       </div>
     );

@@ -14,12 +14,19 @@ class SearchVocabularies extends Component {
   }
 
   componentDidMount() {
-    const {
-      location: {
-        query
-      }
-    } = this.context;
+    this._search(this.context.location.query);
+  }
 
+  componentWillReceiveProps(nextProps, nextContext) {
+    const newQuery = nextContext.location.query;
+    const oldQuery = this.context.location.query;
+
+    if (!_.isEqual(newQuery, oldQuery)) {
+      this._search(newQuery);
+    }
+  }
+
+  _search(query) {
     if (!_.isEmpty(query)) {
       searchVocabularies(query).then((vocabularies) => {
         this.setState({ vocabularies });
