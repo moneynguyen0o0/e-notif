@@ -1,5 +1,6 @@
 export { default as App } from './App';
 export { default as Home } from './Home';
+export { default as SearchPage } from './SearchPage';
 export { default as VocabularyDetail } from './VocabularyDetail';
 export { default as MarkedVocabularies } from './MarkedVocabularies';
 export { default as VocabularyManagement } from './VocabularyManagement';
