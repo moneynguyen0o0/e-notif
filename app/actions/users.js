@@ -22,6 +22,13 @@ export const signUpError = (message) => {
   };
 };
 
+export const signUpSuccess = (message) => {
+  return {
+    type: types.SIGNUP_SUCCESS_USER,
+    message
+  };
+};
+
 export const beginSignUp = () => {
   return { type: types.SIGNUP_USER };
 };
@@ -63,7 +70,7 @@ export const signup = (data) => {
 
     return request({ method: 'post', url: '/signup', data })
       .then(() => {
-        location.href = '/';
+        dispatch(signUpSuccess('Sign up seccessfully! Please varify your account!'));
       })
       .catch((error) => {
         const { response } = error;

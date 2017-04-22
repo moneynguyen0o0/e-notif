@@ -1,5 +1,4 @@
 # TODO
-- Security
 - CSRF token
 - Update spinner when CRUD
 - https://medium.com/@rajaraodv/securing-react-redux-apps-with-jwt-tokens-fcfe81356ea0

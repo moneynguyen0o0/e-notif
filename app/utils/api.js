@@ -53,6 +53,10 @@ const getMarkedVocabularies = () => {
   return request({ url: '/vocabularies/marked' });
 };
 
+const verifyMail = (token) => {
+  return request({ url: `/verifymail/${token}` });
+};
+
 export {
   getAllVocabularies,
   getDailyVocabularies,
@@ -63,5 +67,6 @@ export {
   updateVocabulary,
   removeVocabulary,
   markVocabulary,
-  getMarkedVocabularies
+  getMarkedVocabularies,
+  verifyMail
 };

@@ -12,6 +12,7 @@ const message = (
       return '';
     case types.LOGIN_ERROR_USER:
     case types.SIGNUP_ERROR_USER:
+    case types.SIGNUP_SUCCESS_USER:
       return action.message;
     default:
       return state;
@@ -30,21 +31,7 @@ const isWaiting = (
     case types.LOGIN_ERROR_USER:
     case types.SIGNUP_ERROR_USER:
     case types.LOGOUT_ERROR_USER:
-      return false;
-    default:
-      return state;
-  }
-};
-
-const authenticated = (
-  state = false,
-  action
-) => {
-  switch (action.type) {
-    case types.LOGOUT_ERROR_USER:
-      return true;
-    case types.LOGIN_ERROR_USER:
-    case types.SIGNUP_ERROR_USER:
+    case types.SIGNUP_SUCCESS_USER:
       return false;
     default:
       return state;
@@ -54,8 +41,8 @@ const authenticated = (
 const userReducer = combineReducers({
   _id: (state = '') => state,
   isAdmin: (state = false) => state,
+  authenticated: (state = false) => state,
   isWaiting,
-  authenticated,
   message
 });
 

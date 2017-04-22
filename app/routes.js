@@ -10,6 +10,7 @@ import {
   About,
   Login,
   Signup,
+  VerifyMailPage,
   Profile,
   NotFoundPage,
   InternalServerErrorPage
@@ -73,6 +74,7 @@ export default (store) => {
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth(authenticated)} />
       <Route path="signup" component={Signup} onEnter={redirectAuth(authenticated)} />
+      <Route path="verify-mail" component={VerifyMailPage} />
       <Route path="profile/:username" component={Profile} onEnter={requireAuth(authenticated)} />
       <Route path="500" component={InternalServerErrorPage} />
       <Route path="*" component={NotFoundPage} />

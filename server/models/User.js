@@ -10,8 +10,8 @@ const UserSchema = new mongoose.Schema({
   last_name: { type: String, default: '' },
   roles: { type: Array, default: [Role.USER] },
   created: { type: Date, default: Date.now },
-  tokens: Array,
-  resetPasswordToken: String,
+  enable: { type: Boolean, default: false },
+  token: String,
   resetPasswordExpires: Date
 });
 

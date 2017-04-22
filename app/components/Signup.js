@@ -85,8 +85,17 @@ class SignupWrapper extends Component {
     signup: PropTypes.func.isRequired
   }
 
+  state = {
+    showMessage: true
+  }
+
   _signup = (account) => {
     this.props.signup(account);
+    this.state.showMessage = true;
+  }
+
+  _closeMessage() {
+    this.setState({ showMessage: false });
   }
 
   render() {
@@ -94,13 +103,23 @@ class SignupWrapper extends Component {
       user: { isWaiting, message } = {}
     } = this.props;
 
+    const { showMessage } = this.state;
+
     if (isWaiting) {
       return <Spinner />;
     }
 
+    if (message && showMessage) {
+      return (
+        <div>
+          <h3 className="Signup-message">{message}</h3>
+          <div onClick={() => this._closeMessage()}>X</div>
+        </div>
+      );
+    }
+
     return (
       <div className="Signup">
-        <h3 className="Signup-message">{message}</h3>
         <SignupContainer onSubmit={this._signup} />
       </div>
     );
