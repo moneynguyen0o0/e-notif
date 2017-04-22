@@ -44,9 +44,7 @@ export default () => {
       user: {
         _id: user._id || '',
         isAdmin: isAdmin(user),
-        authenticated,
-        isWaiting: false,
-        message: ''
+        authenticated
       }
     }, history);
     const routes = createRoutes(store);

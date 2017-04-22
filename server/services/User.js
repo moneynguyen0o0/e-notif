@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import passport from 'passport';
 import User from '../models/User';
 
@@ -26,8 +27,24 @@ const create = (user, done) => {
   });
 };
 
+const update = (user, done) => {
+  const { _id } = user;
+
+  User.findOneAndUpdate({ _id }, _.omit(user, ['_id', '__v']), { new: true }, (err, user) => {
+    done(err, user);
+  });
+};
+
+const findByToken = (token, done) => {
+  User.findOne({ token }, (err, user) => {
+    done(err, user);
+  });
+};
+
 export default {
   findByEmail,
   authenticate,
-  create
+  create,
+  update,
+  findByToken
 };

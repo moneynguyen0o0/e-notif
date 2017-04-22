@@ -7,6 +7,7 @@ export { default as VocabularyManagement } from './VocabularyManagement';
 export { default as About } from './About';
 export { default as Login } from './Login';
 export { default as Signup } from './Signup';
+export { default as VerifyMailPage } from './VerifyMailPage';
 export { default as Profile } from './Profile';
 export { default as NotFoundPage } from './NotFoundPage';
 export { default as InternalServerErrorPage } from './InternalServerErrorPage';
