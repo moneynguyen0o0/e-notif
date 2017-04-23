@@ -54,7 +54,11 @@ const getMarkedVocabularies = () => {
 };
 
 const verifyMail = (token) => {
-  return request({ url: `/verifymail/${token}` });
+  return request({ url: `/verify-mail/${token}` });
+};
+
+const changePassword = (data) => {
+  return request({ method: 'post', url: '/change-password', data });
 };
 
 export {
@@ -68,5 +72,6 @@ export {
   removeVocabulary,
   markVocabulary,
   getMarkedVocabularies,
-  verifyMail
+  verifyMail,
+  changePassword
 };
