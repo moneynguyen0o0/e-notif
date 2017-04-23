@@ -2,6 +2,12 @@ import _ from 'lodash';
 import passport from 'passport';
 import User from '../models/User';
 
+const findById = (_id, done) => {
+  User.findById(_id, (err, user) => {
+    done(err, user);
+  });
+};
+
 const findByEmail = (email, done) => {
   User.findOne({ email }, (err, user) => {
     done(err, user);
@@ -42,6 +48,7 @@ const findByToken = (token, done) => {
 };
 
 export default {
+  findById,
   findByEmail,
   authenticate,
   create,

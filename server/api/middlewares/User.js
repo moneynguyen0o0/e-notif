@@ -83,3 +83,37 @@ export const verifyMail = (req, res) => {
     });
   });
 };
+
+export const changePassword = (req, res) => {
+  const {
+    body: {
+      currentPassword,
+      newPassword
+    },
+    user
+  } = req;
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  User.findById(user._id, (err, user) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    user.comparePassword(currentPassword, (err, isMatch) => {
+      if (!isMatch) {
+        return res.sendStatus(401);
+      }
+
+      const { _id } = user;
+
+      user.password = newPassword;
+
+      user.save((err) => {
+        if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
+
+        return res.sendStatus(200);
+      });
+    });
+  });
+};
