@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import passport from 'passport';
 import uuidV4 from 'uuid/v4';
 import moment from 'moment';
@@ -41,8 +42,8 @@ export const signup = (req, res) => {
   const token = uuidV4();
 
   const newUser = {
-    first_name: firstname,
-    last_name: lastname,
+    firstname,
+    lastname,
     email,
     password,
     token
@@ -184,5 +185,47 @@ export const checkToken = (req, res) => {
     }
 
     return res.sendStatus(200);
+  });
+};
+
+export const getProfile = (req, res) => {
+  const { user } = req;
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  User.findById(user._id, (err, user) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    return res.json(_.pick(user, [ '_id', 'email', 'firstname', 'lastname', 'dob', 'gender', 'created']));
+  });
+};
+
+export const updateProfile = (req, res) => {
+  const {
+    body: {
+      firstname,
+      lastname,
+      dob,
+      gender
+    },
+    user
+  } = req;
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  const { _id } = user;
+
+  User.findById(_id, (err, user) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    user.update({ _id }, { firstname, lastname, dob, gender }, (err) => {
+      if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
+
+      return res.sendStatus(200);
+    });
   });
 };
