@@ -61,6 +61,18 @@ const changePassword = (data) => {
   return request({ method: 'post', url: '/change-password', data });
 };
 
+const forgotPassword = (data) => {
+  return request({ method: 'post', url: '/forgot-password', data });
+};
+
+const resetPassword = (token, data) => {
+  return request({ method: 'post', url: `/reset-password/${token}`, data });
+};
+
+const checkToken = (token) => {
+  return request({ url: `/check-token/${token}` });
+};
+
 export {
   getAllVocabularies,
   getDailyVocabularies,
@@ -73,5 +85,8 @@ export {
   markVocabulary,
   getMarkedVocabularies,
   verifyMail,
-  changePassword
+  changePassword,
+  forgotPassword,
+  resetPassword,
+  checkToken
 };

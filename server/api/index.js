@@ -1,4 +1,4 @@
-import { login, logout, signup, verifyMail, changePassword } from './middlewares/User';
+import { login, logout, signup, verifyMail, changePassword, forgotPassword, resetPassword, checkToken } from './middlewares/User';
 import {
   getAll as getAllVocabularies,
   findById as findByIdVocabulary,
@@ -17,6 +17,9 @@ export default (router) => {
   router.post('/signup', (req, res) => signup(req, res));
   router.get('/verify-mail/:token', (req, res) => verifyMail(req, res));
   router.post('/change-password', (req, res) => changePassword(req, res));
+  router.post('/forgot-password', (req, res) => forgotPassword(req, res));
+  router.post('/reset-password/:token', (req, res) => resetPassword(req, res));
+  router.get('/check-token/:token', (req, res) => checkToken(req, res));
 
   router.get('/vocabularies/daily', (req, res) => getDailyVocabularies(req, res));
   router.get('/vocabularies/search', (req, res) => searchVocabularies(req, res));

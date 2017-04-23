@@ -1,5 +1,6 @@
 import passport from 'passport';
 import uuidV4 from 'uuid/v4';
+import moment from 'moment';
 import User from '../../services/User';
 import { sendMail } from '../../utils/MailUtil';
 
@@ -115,5 +116,73 @@ export const changePassword = (req, res) => {
         return res.sendStatus(200);
       });
     });
+  });
+};
+
+export const forgotPassword = (req, res) => {
+  const { email } = req.body;
+
+  User.findByEmail(email, (err, user) => {
+    if (!user) return res.status(404).send({ message: 'Mail not found', error: err });
+
+    const { _id, resetPasswordExpires } = user;
+    const token = uuidV4();
+
+    if (resetPasswordExpires && resetPasswordExpires.getTime() > (new Date()).getTime()) {
+      return res.status(500).send({ message: 'Can not handle now', error: err });
+    }
+
+    User.update({ _id, token, resetPasswordExpires: moment(moment()).add(1, 'day') }, (err) => {
+      if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
+
+      const url = getRootUrl(req) + '/reset-password?token=' + token;
+      const content = `
+        <a href="${url}">Reset</a>
+      `;
+
+      sendMail({ email, subject: 'Enotif - Reset password', content }).then(() => {
+        return res.sendStatus(200);
+      }).catch(err => {
+        return res.status(500).send({ message: 'Send mail error', error: err });
+      });
+    });
+  });
+};
+
+export const resetPassword = (req, res) => {
+  const { body: { newPassword },  params: { token } } = req;
+
+  User.findByToken(token, (err, user) => {
+    if (!user) return res.status(404).send({ message: 'Data not found', error: err });
+
+    const { resetPasswordExpires } = user;
+
+    if (resetPasswordExpires && (new Date()).getTime() > resetPasswordExpires.getTime()) {
+      return res.status(498).send({ message: 'Too late to handle', error: err });
+    }
+
+    user.password = newPassword;
+
+    user.save((err) => {
+      if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
+
+      return res.sendStatus(200);
+    });
+  });
+};
+
+export const checkToken = (req, res) => {
+  const { params: { token } } = req;
+
+  User.findByToken(token, (err, user) => {
+    if (!user) return res.status(404).send({ message: 'Data not found', error: err });
+
+    const { resetPasswordExpires } = user;
+
+    if (resetPasswordExpires && (new Date()).getTime() > resetPasswordExpires.getTime()) {
+      return res.status(498).send({ message: 'Too late to handle', error: err });
+    }
+
+    return res.sendStatus(200);
   });
 };

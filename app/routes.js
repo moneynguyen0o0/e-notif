@@ -11,6 +11,8 @@ import {
   Login,
   Signup,
   VerifyMailPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
   Profile,
   NotFoundPage,
   InternalServerErrorPage
@@ -75,6 +77,8 @@ export default (store) => {
       <Route path="login" component={Login} onEnter={redirectAuth(authenticated)} />
       <Route path="signup" component={Signup} onEnter={redirectAuth(authenticated)} />
       <Route path="verify-mail" component={VerifyMailPage} />
+      <Route path="forgot-password" component={ForgotPasswordPage} />
+      <Route path="reset-password" component={ResetPasswordPage} />
       <Route path="profile" component={Profile} onEnter={requireAuth(authenticated)} />
       <Route path="500" component={InternalServerErrorPage} />
       <Route path="*" component={NotFoundPage} />
