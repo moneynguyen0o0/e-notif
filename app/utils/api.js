@@ -73,6 +73,14 @@ const checkToken = (token) => {
   return request({ url: `/check-token/${token}` });
 };
 
+const getProfile = () => {
+  return request({ url: '/profile' });
+};
+
+const updateProfile = (data) => {
+  return request({ method: 'post', url: '/profile/update', data });
+};
+
 export {
   getAllVocabularies,
   getDailyVocabularies,
@@ -88,5 +96,7 @@ export {
   changePassword,
   forgotPassword,
   resetPassword,
-  checkToken
+  checkToken,
+  getProfile,
+  updateProfile
 };
