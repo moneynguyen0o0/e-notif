@@ -26,6 +26,8 @@ const validate = (account) => {
     errors.dob = 'Date of birth must be greater than 13';
   }
 
+  console.log(account);
+
   return errors;
 };
 
@@ -52,12 +54,10 @@ class ProfileForm extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, initialValues } = this.props;
-    const { _id } = initialValues;
+    const { handleSubmit, submitting } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
-        <input name="_id" type="hidden" value={_id} />
         <Field name="firstname" type="text" component={this._renderField} label="First name" />
         <Field name="lastname" type="text" component={this._renderField} label="Last name" />
         <Field name="dob" type="date" component={this._renderField} label="Date of birth" />
@@ -93,8 +93,13 @@ class ProfileWrapper extends Component {
   }
 
   _change = (account) => {
-    updateProfile(account).then(() => this.setState({ message: 'Your profile changed success', isWaiting: false }))
-    .catch(() => this.setState({ message: 'Error! Something is wrong', isWaiting: false }));
+    updateProfile(account).then(() => {
+      this.setState({ account, message: 'Your profile changed success', isWaiting: false });
+    })
+    .catch(() => {
+      this.setState({ message: 'Error! Something is wrong', isWaiting: false });
+    });
+
     this.setState({ isWaiting: true });
   }
 
@@ -109,8 +114,17 @@ class ProfileWrapper extends Component {
       return <Spinner />;
     }
 
-    if (!account.gender) {
+    const {
+      gender,
+      dob
+    } = account;
+
+    if (!gender) {
       account.gender = GENDER[0];
+    }
+
+    if (dob) {
+      account.dob = moment(dob).format('YYYY-MM-DD');
     }
 
     const ProfileContainer = reduxForm({

@@ -78,7 +78,7 @@ const getProfile = () => {
 };
 
 const updateProfile = (data) => {
-  return request({ method: 'put', url: `/users/${data._id}`, data });
+  return request({ method: 'post', url: '/profile/update', data });
 };
 
 export {

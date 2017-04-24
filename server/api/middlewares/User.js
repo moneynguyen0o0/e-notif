@@ -222,7 +222,7 @@ export const updateProfile = (req, res) => {
   User.findById(_id, (err, user) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
 
-    user.update({ _id }, { firstname, lastname, dob, gender }, (err) => {
+    User.update({ _id, firstname, lastname, dob, gender }, (err) => {
       if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
 
       return res.sendStatus(200);
