@@ -13,6 +13,10 @@ class SearchVocabularies extends Component {
     vocabularies: null
   }
 
+  componentWillMount() {
+    this._search = _.debounce(this._search, 500, { maxWait: 500 });
+  }
+
   componentDidMount() {
     this._search(this.context.location.query);
   }

@@ -14,7 +14,8 @@ class Mark extends Component {
   }
 
   state = {
-    marked: this.props.marked || false
+    marked: this.props.marked || false,
+    isWaiting: true
   }
 
   _mark() {
@@ -26,27 +27,22 @@ class Mark extends Component {
     }
 
     markVocabulary(_id)
-    .then(() => this.setState({ marked: !this.state.marked }))
-    .catch((error) => {
-      const { response } = error;
-
-      if (response) {
-        if (response.status === 401) {
-          router.push('/login');
-        } else {
-          router.push('/500');
-        }
-      } else {
-        router.push('/500');
-      }
+    .then(() => this.setState({ marked: !this.state.marked, isWaiting: true }))
+    .catch(() => {
+      router.push('/500');
     });
+    this.setState({ isWaiting: false });
   }
 
   render() {
-    const { marked } = this.state;
+    const { marked, isWaiting } = this.state;
+
+    const props = {
+      onClick: isWaiting ? () => this._mark() : null
+    };
 
     return (
-      <a onClick={() => this._mark()}>
+      <a {...props}>
         <i className={`fa ${marked ? 'fa-bookmark' : 'fa-bookmark-o'}`} />
       </a>
     );
