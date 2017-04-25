@@ -1,16 +1,20 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import { isEmail } from 'validator';
 import * as Role from '../constants/Role';
 
 const UserSchema = new mongoose.Schema({
   id: String,
-  email: { type: String, unique: true, lowercase: true },
-  password: String,
-  firstname: { type: String, default: '' },
-  lastname: { type: String, default: '' },
+  email: {
+    type: String, unique: true, lowercase: true, required: true,
+    validate: [ isEmail, 'invalid email' ]
+  },
+  password: { type: String, required: true, minlength: 3, maxlength: 25 },
+  firstname: { type: String, required: true, trim: true, minlength: 2, maxlength: 10 },
+  lastname: { type: String, required: true, trim: true, minlength: 2, maxlength: 10 },
   dob: Date,
   gender: String,
-  roles: { type: Array, default: [Role.USER] },
+  roles: { type: [{ type: String, enum: [Role.USER, Role.ADMIN] }], default: [Role.USER] },
   created: { type: Date, default: Date.now },
   enable: { type: Boolean, default: false },
   token: String,

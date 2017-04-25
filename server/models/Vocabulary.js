@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
+import POS from '../constants/POS';
 
 const Schema = mongoose.Schema;
 
 const VocabularySchema = new Schema({
-  word: String,
-  pronunciation: String,
-  pos: [String],
-  definitions: [String],
-  examples: [String],
+  word: { type: String, required: true, maxlength: 25 },
+  pronunciation: { type: String, required: true, maxlength: 25 },
+  pos: { type: [{ type: String, enum: POS }], required: true },
+  definitions: { type: [{ type: String, maxlength: 250, required: true }], required: true },
+  examples: { type: [{ type: String, maxlength: 250, required: true }], required: true },
   created: { type: Date, default: Date.now },
   updated: Date,
   users: [String]
