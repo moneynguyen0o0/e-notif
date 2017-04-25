@@ -1,0 +1,42 @@
+{
+	"title": "Vocabulary",
+	"type": "object",
+	"properties": {
+		"word": {
+			"type": "string",
+			"maxLength": 50
+		},
+		"pronunciation": {
+			"type": "string",
+			"maxLength": 100
+		},
+    "pos": {
+      "type": "array",
+      "items": {
+          "type": "string",
+					"maxLength": 25
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "definitions": {
+      "type": "array",
+      "items": {
+          "type": "string",
+					"maxLength": 250
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "examples": {
+      "type": "array",
+      "items": {
+          "type": "string",
+					"maxLength": 250
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+	},
+	"required": ["word", "pronunciation", "pos", "definitions", "examples"]
+}

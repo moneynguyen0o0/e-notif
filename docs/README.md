@@ -51,3 +51,6 @@ http://stackoverflow.com/questions/18148166/find-document-with-array-that-contai
 
 # Send email
 http://javascript.tutorialhorizon.com/2015/07/02/send-email-node-js-express/
+
+# JSON schema
+https://spacetelescope.github.io/understanding-json-schema/index.html
