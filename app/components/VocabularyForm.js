@@ -5,7 +5,7 @@ import { Checkbox, CheckboxGroup } from 'react-checkbox-group';
 import { reduxForm, propTypes as reduxFormPropTypes, Field, FieldArray, SubmissionError } from 'redux-form';
 
 // TODO: fetch from db
-const POS = ['noun', 'verd', 'adjective'];
+const POS = ['noun', 'verb', 'adjective'];
 
 class VocabularyForm extends Component {
   static propTypes = {
