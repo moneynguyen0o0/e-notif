@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import { request } from '../utils/request';
+import { login, signup, logout } from '../utils/api';
 import * as types from '../constants/types';
 
 // Log In Action Creators
@@ -46,8 +46,7 @@ export const login = (data) => {
   return (dispatch) => {
     dispatch(beginLogin());
 
-    return request({ method: 'post', url: '/login', data })
-      .then(() => {
+    return login(data).then(() => {
         location.href = '/';
       })
       .catch((error) => {
@@ -68,8 +67,7 @@ export const signup = (data) => {
   return (dispatch) => {
     dispatch(beginSignUp());
 
-    return request({ method: 'post', url: '/signup', data })
-      .then(() => {
+    return signup(data).then(() => {
         dispatch(signUpSuccess('Sign up seccessfully! Please varify your account!'));
       })
       .catch((error) => {
@@ -90,8 +88,7 @@ export const logout = () => {
   return (dispatch) => {
     dispatch(beginLogout());
 
-    return request({ url: '/logout' })
-      .then(() => {
+    return logout().then(() => {
         location.href = '/';
       })
       .catch(() => {

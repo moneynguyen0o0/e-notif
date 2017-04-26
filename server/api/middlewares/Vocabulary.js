@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import Vocabulary from '../../services/Vocabulary';
 import { isAdmin } from '../../utils/UserUtil';
+import Vocabulary from '../../services/Vocabulary';
+import POS from '../../constants/POS';
 
 export const getAll = (req, res) => {
   if (!isAdmin(req.user)) {
@@ -12,6 +13,14 @@ export const getAll = (req, res) => {
 
     return res.json(vocabularies);
   });
+};
+
+export const getPOS = (req, res) => {
+  if (!isAdmin(req.user)) {
+    return res.sendStatus(401);
+  }
+
+  return res.json(POS);;
 };
 
 export const findById = (req, res) => {

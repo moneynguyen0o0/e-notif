@@ -25,6 +25,10 @@ const searchVocabularies = (params = {}) => {
   return request({ url: `/vocabularies/search?${paramString}` });
 };
 
+const getPOS = () => {
+  return request({ url: '/vocabularies/pos' });
+};
+
 const createVocabulary = (data) => {
   return request({ method: 'post', url: '/vocabularies', data });
 };
@@ -51,6 +55,26 @@ const markVocabulary = (_id) => {
 
 const getMarkedVocabularies = () => {
   return request({ url: '/vocabularies/marked' });
+};
+
+/**
+*
+*
+  USER
+*
+*
+*/
+
+const login = (data) => {
+  return request({ method: 'post', url: '/login', data });
+};
+
+const signup = (data) => {
+  return request({ method: 'post', url: '/signup', data });
+};
+
+const logout = () => {
+  return request({ url: '/logout' });
 };
 
 const verifyMail = (token) => {
@@ -82,6 +106,7 @@ const updateProfile = (data) => {
 };
 
 export {
+  getPOS,
   getAllVocabularies,
   getDailyVocabularies,
   findVocabulary,
@@ -92,6 +117,9 @@ export {
   removeVocabulary,
   markVocabulary,
   getMarkedVocabularies,
+  login,
+  signup,
+  logout,
   verifyMail,
   changePassword,
   forgotPassword,

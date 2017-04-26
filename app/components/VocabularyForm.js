@@ -4,11 +4,9 @@ import React, { Component, PropTypes } from 'react';
 import { Checkbox, CheckboxGroup } from 'react-checkbox-group';
 import { reduxForm, propTypes as reduxFormPropTypes, Field, FieldArray, SubmissionError } from 'redux-form';
 
-// TODO: fetch from db
-const POS = ['noun', 'verb', 'adjective'];
-
 class VocabularyForm extends Component {
   static propTypes = {
+    POS: PropTypes.array,
     saveVocabulary: PropTypes.func.isRequired,
     ...reduxFormPropTypes
   }
@@ -128,7 +126,7 @@ class VocabularyForm extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting, initialValues } = this.props;
+    const { POS, handleSubmit, submitting, initialValues } = this.props;
     const { _id } = initialValues;
 
     const { pos } = this.state;
@@ -173,12 +171,13 @@ class VocabularyForm extends Component {
 
 class VocabularyFormWrapper extends Component {
   static propTypes = {
+    POS: PropTypes.array,
     vocabulary: PropTypes.object,
-    saveVocabulary: PropTypes.func.isRequired,
+    saveVocabulary: PropTypes.func.isRequired
   }
 
   render() {
-    const { vocabulary, saveVocabulary } = this.props;
+    const { vocabulary, saveVocabulary, POS } = this.props;
 
     const newVocabulary = {
       pos: [POS[0]],
@@ -195,7 +194,8 @@ class VocabularyFormWrapper extends Component {
     const VocabularyFormContainer = reduxForm({
       form: 'vocabularyForm',  // a unique identifier for this form
       initialValues: initialVocabulary,
-      saveVocabulary
+      saveVocabulary,
+      POS
     })(VocabularyForm);
 
     return (

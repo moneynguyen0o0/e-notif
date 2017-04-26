@@ -8,7 +8,8 @@ import {
   update as updateVocabulary,
   remove as deleteVocabulary,
   getDaily as getDailyVocabularies,
-  getMarked as getMarkedVocabularies
+  getMarked as getMarkedVocabularies,
+  getPOS
 } from './middlewares/Vocabulary';
 
 export default (router) => {
@@ -27,6 +28,7 @@ export default (router) => {
   router.get('/vocabularies/search', (req, res) => searchVocabularies(req, res));
   router.get('/vocabularies/mark/:id', (req, res) => markVocabulary(req, res));
   router.get('/vocabularies/marked', (req, res) => getMarkedVocabularies(req, res));
+  router.get('/vocabularies/pos', (req, res) => getPOS(req, res));
   router.route('/vocabularies')
         .get((req, res) => getAllVocabularies(req, res))
         .post((req, res) => createVocabulary(req, res));
