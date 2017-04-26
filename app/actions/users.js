@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import { login, signup, logout } from '../utils/api';
+import * as API from '../utils/api';
 import * as types from '../constants/types';
 
 // Log In Action Creators
@@ -46,7 +46,7 @@ export const login = (data) => {
   return (dispatch) => {
     dispatch(beginLogin());
 
-    return login(data).then(() => {
+    return API.login(data).then(() => {
         location.href = '/';
       })
       .catch((error) => {
@@ -67,7 +67,7 @@ export const signup = (data) => {
   return (dispatch) => {
     dispatch(beginSignUp());
 
-    return signup(data).then(() => {
+    return API.signup(data).then(() => {
         dispatch(signUpSuccess('Sign up seccessfully! Please varify your account!'));
       })
       .catch((error) => {
@@ -88,7 +88,7 @@ export const logout = () => {
   return (dispatch) => {
     dispatch(beginLogout());
 
-    return logout().then(() => {
+    return API.logout().then(() => {
         location.href = '/';
       })
       .catch(() => {

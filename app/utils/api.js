@@ -1,18 +1,18 @@
 import { request } from './request';
 
-const getAllVocabularies = () => {
+export const getAllVocabularies = () => {
   return request({ url: '/vocabularies' });
 };
 
-const getDailyVocabularies = () => {
+export const getDailyVocabularies = () => {
   return request({ url: '/vocabularies/daily' });
 };
 
-const findVocabulary = (_id) => {
+export const findVocabulary = (_id) => {
   return request({ url: `/vocabularies/${_id}` });
 };
 
-const searchVocabularies = (params = {}) => {
+export const searchVocabularies = (params = {}) => {
   let paramString = '';
 
   Object.keys(params).forEach((key) => {
@@ -25,19 +25,19 @@ const searchVocabularies = (params = {}) => {
   return request({ url: `/vocabularies/search?${paramString}` });
 };
 
-const getPOS = () => {
+export const getPOS = () => {
   return request({ url: '/vocabularies/pos' });
 };
 
-const createVocabulary = (data) => {
+export const createVocabulary = (data) => {
   return request({ method: 'post', url: '/vocabularies', data });
 };
 
-const updateVocabulary = (data) => {
+export const updateVocabulary = (data) => {
   return request({ method: 'put', url: `/vocabularies/${data._id}`, data });
 };
 
-const saveVocabulary = (data) => {
+export const saveVocabulary = (data) => {
   if (data._id) {
     return updateVocabulary(data);
   }
@@ -45,15 +45,15 @@ const saveVocabulary = (data) => {
   return createVocabulary(data);
 };
 
-const removeVocabulary = (_id) => {
+export const removeVocabulary = (_id) => {
   return request({ method: 'delete', url: `/vocabularies/${_id}` });
 };
 
-const markVocabulary = (_id) => {
+export const markVocabulary = (_id) => {
   return request({ url: `/vocabularies/mark/${_id}` });
 };
 
-const getMarkedVocabularies = () => {
+export const getMarkedVocabularies = () => {
   return request({ url: '/vocabularies/marked' });
 };
 
@@ -65,66 +65,42 @@ const getMarkedVocabularies = () => {
 *
 */
 
-const login = (data) => {
+export const login = (data) => {
   return request({ method: 'post', url: '/login', data });
 };
 
-const signup = (data) => {
+export const signup = (data) => {
   return request({ method: 'post', url: '/signup', data });
 };
 
-const logout = () => {
+export const logout = () => {
   return request({ url: '/logout' });
 };
 
-const verifyMail = (token) => {
+export const verifyMail = (token) => {
   return request({ url: `/verify-mail/${token}` });
 };
 
-const changePassword = (data) => {
+export const changePassword = (data) => {
   return request({ method: 'post', url: '/change-password', data });
 };
 
-const forgotPassword = (data) => {
+export const forgotPassword = (data) => {
   return request({ method: 'post', url: '/forgot-password', data });
 };
 
-const resetPassword = (token, data) => {
+export const resetPassword = (token, data) => {
   return request({ method: 'post', url: `/reset-password/${token}`, data });
 };
 
-const checkToken = (token) => {
+export const checkToken = (token) => {
   return request({ url: `/check-token/${token}` });
 };
 
-const getProfile = () => {
+export const getProfile = () => {
   return request({ url: '/profile' });
 };
 
-const updateProfile = (data) => {
+export const updateProfile = (data) => {
   return request({ method: 'post', url: '/profile/update', data });
-};
-
-export {
-  getPOS,
-  getAllVocabularies,
-  getDailyVocabularies,
-  findVocabulary,
-  searchVocabularies,
-  saveVocabulary,
-  createVocabulary,
-  updateVocabulary,
-  removeVocabulary,
-  markVocabulary,
-  getMarkedVocabularies,
-  login,
-  signup,
-  logout,
-  verifyMail,
-  changePassword,
-  forgotPassword,
-  resetPassword,
-  checkToken,
-  getProfile,
-  updateProfile
 };
