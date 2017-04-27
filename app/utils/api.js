@@ -1,5 +1,13 @@
 import { request } from './request';
 
+/**
+*
+*
+  VOCABULARY
+*
+*
+*/
+
 export const getAllVocabularies = () => {
   return request({ url: '/vocabularies' });
 };
@@ -50,7 +58,7 @@ export const removeVocabulary = (_id) => {
 };
 
 export const markVocabulary = (_id) => {
-  return request({ url: `/vocabularies/mark/${_id}` });
+  return request({ url: `/vocabularies/${_id}/mark` });
 };
 
 export const getMarkedVocabularies = () => {
@@ -65,12 +73,12 @@ export const getMarkedVocabularies = () => {
 *
 */
 
-export const login = (data) => {
-  return request({ method: 'post', url: '/users/login', data });
+export const login = (user) => {
+  return request({ method: 'post', url: '/users/login', user });
 };
 
-export const signup = (data) => {
-  return request({ method: 'post', url: '/users/signup', data });
+export const signup = (user) => {
+  return request({ method: 'post', url: '/users', user });
 };
 
 export const logout = () => {
@@ -101,6 +109,6 @@ export const getProfile = (id) => {
   return request({ url: `/users/${id}` });
 };
 
-export const updateProfile = (id, data) => {
-  return request({ method: 'put', url: `/users/${data}`, data });
+export const updateProfile = (user) => {
+  return request({ method: 'put', url: `/users/${user._id}`, user });
 };

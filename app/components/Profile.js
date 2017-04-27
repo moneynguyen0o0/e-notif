@@ -1,8 +1,9 @@
 import classnames from 'classnames';
 import React, { Component } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { getProfile, updateProfile } from '../utils/api';
+import { updateProfile } from '../utils/api';
 import Spinner from './icons/Spinner';
 
 const GENDER = ['male', 'female'];
@@ -54,10 +55,11 @@ class ProfileForm extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, initialValues } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
+        <input name="_id" type="hidden" value={initialValues._id} />
         <Field name="firstname" type="text" component={this._renderField} label="First name" />
         <Field name="lastname" type="text" component={this._renderField} label="Last name" />
         <Field name="dob" type="date" component={this._renderField} label="Date of birth" />
@@ -82,19 +84,18 @@ class ProfileForm extends Component {
 }
 
 class ProfileWrapper extends Component {
+  static propTypes = {
+    user: PropTypes.object
+  }
+
   state = {
-    account: null,
     isWaiting: true,
     message: ''
   }
 
-  componentDidMount() {
-    getProfile().then((account) => this.setState({ account, isWaiting: false }));
-  }
-
-  _change = (account) => {
-    updateProfile(account).then(() => {
-      this.setState({ account, message: 'Your profile changed success', isWaiting: false });
+  _change = (user) => {
+    updateProfile(user).then(() => {
+      this.setState({ user, message: 'Your profile changed success', isWaiting: false });
     })
     .catch(() => {
       this.setState({ message: 'Error! Something is wrong', isWaiting: false });
@@ -105,7 +106,10 @@ class ProfileWrapper extends Component {
 
   render() {
     const {
-      account,
+      user
+    } = this.props;
+
+    const {
       isWaiting,
       message
     } = this.state;
@@ -117,20 +121,20 @@ class ProfileWrapper extends Component {
     const {
       gender,
       dob
-    } = account;
+    } = user;
 
     if (!gender) {
-      account.gender = GENDER[0];
+      user.gender = GENDER[0];
     }
 
     if (dob) {
-      account.dob = moment(dob).format('YYYY-MM-DD');
+      user.dob = moment(dob).format('YYYY-MM-DD');
     }
 
     const ProfileContainer = reduxForm({
       form: 'profileForm',
       validate,
-      initialValues: account
+      initialValues: user
     })(ProfileForm);
 
     return (
@@ -142,4 +146,8 @@ class ProfileWrapper extends Component {
   }
 }
 
-export default ProfileWrapper;
+const mapStateToProps = ({ vocabulary, user }) => {
+  return { ...vocabulary, user };
+};
+
+export default connect(mapStateToProps)(ProfileWrapper);

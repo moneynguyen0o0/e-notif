@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { renderToString } from 'react-dom/server';
@@ -7,7 +8,6 @@ import { createMemoryHistory, match } from 'react-router';
 import createRoutes from '../../app/routes';
 import configureStore from '../../app/store/configureStore';
 import { isDevelopment } from '../../config/app';
-import { isAdmin } from '../utils/UserUtil';
 
 const renderHtml = (content, initialState, assets, helmet) => {
   return `
@@ -42,8 +42,7 @@ export default () => {
     const history = createMemoryHistory();
     const store = configureStore({
       user: {
-        _id: user._id || '',
-        isAdmin: isAdmin(user),
+        ..._.pick(user, [ '_id', 'email', 'firstname', 'lastname', 'roles', 'dob', 'gender', 'created']),
         authenticated
       }
     }, history);

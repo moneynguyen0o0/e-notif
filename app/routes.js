@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+import { isAdmin } from '../utils/UserUtil';
 import {
   App,
   Home,
@@ -64,7 +65,7 @@ const redirectAuth = (authenticated) => {
  * state from the store after it has been authenticated.
  */
 export default (store) => {
-  const { user: { authenticated, isAdmin } } = store.getState();
+  const { user: { authenticated, roles } } = store.getState();
 
   return (
     <Route path="/" component={App}>
@@ -72,7 +73,7 @@ export default (store) => {
       <Route path="search" component={SearchPage} />
       <Route path="vocabularies/:id" component={VocabularyDetail} />
       <Route path="my-vocabularies" component={MarkedVocabularies} onEnter={requireAuth(authenticated)} />
-      <Route path="vocabulary-management" component={VocabularyManagement} onEnter={requireAdminAuth(authenticated, isAdmin)} />
+      <Route path="vocabulary-management" component={VocabularyManagement} onEnter={requireAdminAuth(authenticated, isAdmin(roles))} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth(authenticated)} />
       <Route path="signup" component={Signup} onEnter={redirectAuth(authenticated)} />

@@ -9,29 +9,7 @@ const getRootUrl = (req) => {
   return req.protocol + '://' + req.get('host');
 };
 
-export const login = (req, res) => {
-  // Do email and password validation for the server
-  passport.authenticate('local', (authErr, user) => {
-    if (authErr) return res.status(500).send({ message: 'Authenticated error', error: err })
-    if (!user) return res.status(401).json({ message: 'Email or Password is invalid.' });
-    if (!user.enable) return res.status(401).json({ message: 'Account is not active.' });
-    // Passport exposes a login() const on req (also aliased as
-    // logIn()) that can be used to establish a login session
-    return req.logIn(user, (loginErr) => {
-      if (loginErr) return res.status(500).send({ message: 'Authenticated error', error: err });
-
-      return res.sendStatus(200);
-    });
-  })(req, res);
-};
-
-export const logout = (req, res) => {
-  // Do email and password validation for the server
-  req.logout();
-  res.redirect('/');
-};
-
-export const signup = (req, res) => {
+export const create = (req, res) => {
   const {
     firstname,
     lastname,
@@ -68,6 +46,70 @@ export const signup = (req, res) => {
       });
     });
   });
+};
+
+export const get = (req, res) => {
+  const { user } = req;
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  User.findById(user._id, (err, user) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    return res.json(_.pick(user, [ '_id', 'email', 'firstname', 'lastname', 'roles', 'dob', 'gender', 'created']));
+  });
+};
+
+export const update = (req, res) => {
+  const {
+    body: {
+      firstname,
+      lastname,
+      dob,
+      gender
+    },
+    user
+  } = req;
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  const { _id } = user;
+
+  User.findById(_id, (err, user) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    User.update({ _id, firstname, lastname, dob, gender }, (err) => {
+      if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
+
+      return res.sendStatus(200);
+    });
+  });
+};
+
+export const login = (req, res) => {
+  // Do email and password validation for the server
+  passport.authenticate('local', (authErr, user) => {
+    if (authErr) return res.status(500).send({ message: 'Authenticated error', error: err })
+    if (!user) return res.status(401).json({ message: 'Email or Password is invalid.' });
+    if (!user.enable) return res.status(401).json({ message: 'Account is not active.' });
+    // Passport exposes a login() const on req (also aliased as
+    // logIn()) that can be used to establish a login session
+    return req.logIn(user, (loginErr) => {
+      if (loginErr) return res.status(500).send({ message: 'Authenticated error', error: err });
+
+      return res.sendStatus(200);
+    });
+  })(req, res);
+};
+
+export const logout = (req, res) => {
+  // Do email and password validation for the server
+  req.logout();
+  res.redirect('/');
 };
 
 export const verifyMail = (req, res) => {
@@ -185,47 +227,5 @@ export const checkToken = (req, res) => {
     }
 
     return res.sendStatus(200);
-  });
-};
-
-export const getProfile = (req, res) => {
-  const { user } = req;
-
-  if (!user) {
-    return res.sendStatus(401);
-  }
-
-  User.findById(user._id, (err, user) => {
-    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
-
-    return res.json(_.pick(user, [ '_id', 'email', 'firstname', 'lastname', 'dob', 'gender', 'created']));
-  });
-};
-
-export const updateProfile = (req, res) => {
-  const {
-    body: {
-      firstname,
-      lastname,
-      dob,
-      gender
-    },
-    user
-  } = req;
-
-  if (!user) {
-    return res.sendStatus(401);
-  }
-
-  const { _id } = user;
-
-  User.findById(_id, (err, user) => {
-    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
-
-    User.update({ _id, firstname, lastname, dob, gender }, (err) => {
-      if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
-
-      return res.sendStatus(200);
-    });
   });
 };

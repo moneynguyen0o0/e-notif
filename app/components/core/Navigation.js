@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { isAdmin } from '../../utils/UserUtil';
 import { logout } from '../../actions/users';
 import Notification from '../Notification';
 
@@ -20,7 +21,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const { user: { authenticated, isAdmin }, logout } = this.props;
+    const { user: { authenticated, roles }, logout } = this.props;
     const { toggle } = this.state;
 
     const rightNav = [];
@@ -28,7 +29,7 @@ class Navigation extends Component {
     rightNav.push(<Notification key={rightNav.length} />);
 
     if (authenticated) {
-      if (isAdmin) {
+      if (isAdmin(roles)) {
         rightNav.push(<Link key={rightNav.length} to="/vocabulary-management">Vocabulary management</Link>);
       }
 

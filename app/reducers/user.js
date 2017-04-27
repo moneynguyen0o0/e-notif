@@ -40,7 +40,6 @@ const isWaiting = (
 
 const userReducer = combineReducers({
   _id: (state = '') => state,
-  isAdmin: (state = false) => state,
   authenticated: (state = false) => state,
   isWaiting,
   message
