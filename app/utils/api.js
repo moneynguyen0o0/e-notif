@@ -66,41 +66,41 @@ export const getMarkedVocabularies = () => {
 */
 
 export const login = (data) => {
-  return request({ method: 'post', url: '/login', data });
+  return request({ method: 'post', url: '/users/login', data });
 };
 
 export const signup = (data) => {
-  return request({ method: 'post', url: '/signup', data });
+  return request({ method: 'post', url: '/users/signup', data });
 };
 
 export const logout = () => {
-  return request({ url: '/logout' });
+  return request({ url: '/users/logout' });
 };
 
 export const verifyMail = (token) => {
-  return request({ url: `/verify-mail/${token}` });
+  return request({ url: `/users/verify-mail/${token}` });
 };
 
 export const changePassword = (data) => {
-  return request({ method: 'post', url: '/change-password', data });
+  return request({ method: 'post', url: '/users/change-password', data });
 };
 
 export const forgotPassword = (data) => {
-  return request({ method: 'post', url: '/forgot-password', data });
+  return request({ method: 'post', url: '/users/forgot-password', data });
 };
 
 export const resetPassword = (token, data) => {
-  return request({ method: 'post', url: `/reset-password/${token}`, data });
+  return request({ method: 'post', url: `/users/reset-password/${token}`, data });
 };
 
 export const checkToken = (token) => {
-  return request({ url: `/check-token/${token}` });
+  return request({ url: `/users/check-token/${token}` });
 };
 
-export const getProfile = () => {
-  return request({ url: '/profile' });
+export const getProfile = (id) => {
+  return request({ url: `/users/${id}` });
 };
 
-export const updateProfile = (data) => {
-  return request({ method: 'post', url: '/profile/update', data });
+export const updateProfile = (id, data) => {
+  return request({ method: 'put', url: `/users/${data}`, data });
 };

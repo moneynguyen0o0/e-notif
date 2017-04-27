@@ -13,22 +13,26 @@ import {
 } from './middlewares/Vocabulary';
 
 export default (router) => {
-  router.post('/login', (req, res) => login(req, res));
-  router.get('/logout', (req, res) => logout(req, res));
-  router.post('/signup', (req, res) => signup(req, res));
-  router.get('/verify-mail/:token', (req, res) => verifyMail(req, res));
-  router.post('/change-password', (req, res) => changePassword(req, res));
-  router.post('/forgot-password', (req, res) => forgotPassword(req, res));
-  router.post('/reset-password/:token', (req, res) => resetPassword(req, res));
-  router.get('/check-token/:token', (req, res) => checkToken(req, res));
-  router.get('/profile', (req, res) => getProfile(req, res));
-  router.post('/profile/update', (req, res) => updateProfile(req, res));
+  router.route('/users')
+        .post('/signup', (req, res) => signup(req, res))
+        .post('/login', (req, res) => login(req, res))
+        .get('/logout', (req, res) => logout(req, res))
+        .get('/verify-mail/:token', (req, res) => verifyMail(req, res))
+        .post('/change-password', (req, res) => changePassword(req, res))
+        .post('/forgot-password', (req, res) => forgotPassword(req, res))
+        .post('/reset-password/:token', (req, res) => resetPassword(req, res))
+        .get('/check-token/:token', (req, res) => checkToken(req, res));
+
+  router.route('/users/:id')
+        .get((req, res) => getProfile(req, res))
+        .put((req, res) => updateProfile(req, res));
 
   router.get('/vocabularies/daily', (req, res) => getDailyVocabularies(req, res));
   router.get('/vocabularies/search', (req, res) => searchVocabularies(req, res));
   router.get('/vocabularies/mark/:id', (req, res) => markVocabulary(req, res));
   router.get('/vocabularies/marked', (req, res) => getMarkedVocabularies(req, res));
   router.get('/vocabularies/pos', (req, res) => getPOS(req, res));
+
   router.route('/vocabularies')
         .get((req, res) => getAllVocabularies(req, res))
         .post((req, res) => createVocabulary(req, res));
