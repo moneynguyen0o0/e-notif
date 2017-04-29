@@ -43,7 +43,7 @@ export const fetch = () => {
         dispatch(fetchSuccess(response));
       })
       .catch(() => {
-        dispatch(push('/500'));
+        dispatch(push('/internal-server-error'));
       });
   };
 };
@@ -57,7 +57,7 @@ export const save = (vocabulary) => {
         dispatch(saveSuccess(response));
       })
       .catch(() => {
-        dispatch(push('/500'));
+        dispatch(push('/internal-server-error'));
       });
   };
 };
@@ -71,7 +71,7 @@ export const remove = (_id) => {
         dispatch(removeSuccess(_id));
       })
       .catch(() => {
-        dispatch(push('/500'));
+        dispatch(push('/internal-server-error'));
       });
   };
 };

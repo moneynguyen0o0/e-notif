@@ -1,33 +1,31 @@
 import classnames from 'classnames';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { updateProfile } from '../utils/api';
-import Spinner from './icons/Spinner';
+import { update as updateProfile } from '../../actions/users';
+import Spinner from '../icons/Spinner';
 
 const GENDER = ['male', 'female'];
 
-const validate = (account) => {
+const validate = (user) => {
   const errors = {};
 
-  if (!account.firstname) {
+  if (!user.firstname) {
     errors.firstname = 'Required';
-  } else if (account.firstname.length > 15) {
+  } else if (user.firstname.length > 15) {
     errors.firstname = 'Must be 15 characters or less';
   }
 
-  if (!account.lastname) {
+  if (!user.lastname) {
     errors.lastname = 'Required';
-  } else if (account.lastname.length > 15) {
+  } else if (user.lastname.length > 15) {
     errors.lastname = 'Must be 15 characters or less';
   }
 
-  if (!moment().subtract('years', 13).isAfter(moment(account.dob))) {
+  if (!moment().subtract('years', 13).isAfter(moment(user.dob))) {
     errors.dob = 'Date of birth must be greater than 13';
   }
-
-  console.log(account);
 
   return errors;
 };
@@ -85,34 +83,22 @@ class ProfileForm extends Component {
 
 class ProfileWrapper extends Component {
   static propTypes = {
-    user: PropTypes.object
-  }
-
-  state = {
-    isWaiting: true,
-    message: ''
+    user: PropTypes.object,
+    updateProfile: PropTypes.func.isRequired
   }
 
   _change = (user) => {
-    updateProfile(user).then(() => {
-      this.setState({ user, message: 'Your profile changed success', isWaiting: false });
-    })
-    .catch(() => {
-      this.setState({ message: 'Error! Something is wrong', isWaiting: false });
-    });
-
-    this.setState({ isWaiting: true });
+    this.props.updateProfile(user);
   }
 
   render() {
     const {
-      user
+      user: {
+        data: user,
+        isWaiting,
+        message
+      }
     } = this.props;
-
-    const {
-      isWaiting,
-      message
-    } = this.state;
 
     if (isWaiting) {
       return <Spinner />;
@@ -146,8 +132,8 @@ class ProfileWrapper extends Component {
   }
 }
 
-const mapStateToProps = ({ vocabulary, user }) => {
-  return { ...vocabulary, user };
+const mapStateToProps = ({ user }) => {
+  return { user };
 };
 
-export default connect(mapStateToProps)(ProfileWrapper);
+export default connect(mapStateToProps, { updateProfile })(ProfileWrapper);

@@ -3,10 +3,10 @@ import ReactTable from 'react-table';
 import Modal from 'react-modal';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../actions/vocabulary';
-import { getPOS } from '../utils/api';
-import Spinner from './icons/Spinner';
-import Mark from './Mark';
+import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../../actions/vocabulary';
+import { getPOS } from '../../utils/api';
+import Spinner from '../icons/Spinner';
+import Mark from '../Mark';
 import VocabularyForm from './VocabularyForm';
 
 const editStyles = {
@@ -108,7 +108,13 @@ class VocabularyList extends Component {
       return <Spinner />;
     }
 
-    const { user: { _id: userId } } = this.props;
+    const {
+      user: {
+        data: {
+          _id: userId
+        }
+      }
+    } = this.props;
 
     const customRow = {
       whiteSpace: 'normal'
@@ -157,7 +163,7 @@ class VocabularyList extends Component {
 
             return (
               <div className="text-center">
-                <Mark id={_id} marked={marked} />
+                <Mark key={_id} id={_id} marked={marked} />
               </div>
             );
           }

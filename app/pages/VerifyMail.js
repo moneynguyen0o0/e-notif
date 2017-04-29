@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import VerifyMail from '../components/social/VerifyMail';
+import VerifyMailComponent from '../components/user/VerifyMail';
 
-class VerifyMailPage extends Component {
+class VerifyMail extends Component {
   render() {
     return (
       <div className="VerifyMailPage">
         <Helmet title="Verify mail | ENotif" />
-        <VerifyMail />
+        <VerifyMailComponent />
       </div>
     );
   }
 }
 
-export default VerifyMailPage;
+export default VerifyMail;

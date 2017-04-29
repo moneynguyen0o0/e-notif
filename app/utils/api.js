@@ -37,20 +37,20 @@ export const getPOS = () => {
   return request({ url: '/vocabularies/pos' });
 };
 
-export const createVocabulary = (data) => {
-  return request({ method: 'post', url: '/vocabularies', data });
+export const createVocabulary = (vocabulary) => {
+  return request({ method: 'post', url: '/vocabularies', data: { vocabulary } });
 };
 
-export const updateVocabulary = (data) => {
-  return request({ method: 'put', url: `/vocabularies/${data._id}`, data });
+export const updateVocabulary = (vocabulary) => {
+  return request({ method: 'put', url: `/vocabularies/${vocabulary._id}`, data: { vocabulary } });
 };
 
-export const saveVocabulary = (data) => {
-  if (data._id) {
-    return updateVocabulary(data);
+export const saveVocabulary = (vocabulary) => {
+  if (vocabulary._id) {
+    return updateVocabulary(vocabulary);
   }
 
-  return createVocabulary(data);
+  return createVocabulary(vocabulary);
 };
 
 export const removeVocabulary = (_id) => {
@@ -74,11 +74,11 @@ export const getMarkedVocabularies = () => {
 */
 
 export const login = (user) => {
-  return request({ method: 'post', url: '/users/login', user });
+  return request({ method: 'post', url: '/users/login', data: user });
 };
 
 export const signup = (user) => {
-  return request({ method: 'post', url: '/users', user });
+  return request({ method: 'post', url: '/users', data: { user } });
 };
 
 export const logout = () => {
@@ -110,5 +110,5 @@ export const getProfile = (id) => {
 };
 
 export const updateProfile = (user) => {
-  return request({ method: 'put', url: `/users/${user._id}`, user });
+  return request({ method: 'put', url: `/users/${user._id}`, data: { user } });
 };

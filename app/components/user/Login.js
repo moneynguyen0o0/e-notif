@@ -2,21 +2,21 @@ import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { login } from '../actions/users';
-import Spinner from './icons/Spinner';
+import { login } from '../../actions/users';
+import Spinner from '../icons/Spinner';
 
-const validate = (account) => {
+const validate = (user) => {
   const errors = {};
 
-  if (!account.email) {
-    errors.email = 'Required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(account.email)) {
+  if (!user.email) {
+    user.email = 'Required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(user.email)) {
     errors.email = 'Invalid email address';
   }
 
-  if (!account.password) {
+  if (!user.password) {
     errors.password = 'Required';
-  } else if (account.password.length > 15) {
+  } else if (user.password.length > 15) {
     errors.password = 'Must be 15 characters or less';
   }
 
@@ -71,8 +71,8 @@ class LoginWrapper extends Component {
     login: PropTypes.func.isRequired
   }
 
-  _login = (account) => {
-    this.props.login(account);
+  _login = (user) => {
+    this.props.login(user);
   }
 
   render() {

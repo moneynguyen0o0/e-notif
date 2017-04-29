@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { getDailyVocabularies } from '../utils/api';
-import Spinner from './icons/Spinner';
+import { getDailyVocabularies } from '../../utils/api';
+import Spinner from '../icons/Spinner';
 import Vocabularies from './Vocabularies';
 
 class DailyVocabularies extends Component {

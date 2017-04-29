@@ -1,5 +1,5 @@
 import {
-  get as getUser
+  get as getUser,
   update as updateUser,
   create as createUser,
   login,

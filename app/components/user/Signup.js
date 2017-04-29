@@ -2,8 +2,8 @@ import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { signup } from '../actions/users';
-import Spinner from './icons/Spinner';
+import { signup } from '../../actions/users';
+import Spinner from '../icons/Spinner';
 
 const validate = (account) => {
   const errors = {};

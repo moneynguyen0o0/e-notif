@@ -2,7 +2,6 @@ import { push } from 'react-router-redux';
 import * as API from '../utils/api';
 import * as types from '../constants/types';
 
-// Log In Action Creators
 export const beginLogin = () => {
   return { type: types.LOGIN_USER };
 };
@@ -14,7 +13,6 @@ export const loginError = (message) => {
   };
 };
 
-// Sign Up Action Creators
 export const signUpError = (message) => {
   return {
     type: types.SIGNUP_ERROR_USER,
@@ -33,7 +31,6 @@ export const beginSignUp = () => {
   return { type: types.SIGNUP_USER };
 };
 
-// Log Out Action Creators
 export const beginLogout = () => {
   return { type: types.LOGOUT_USER };
 };
@@ -42,11 +39,30 @@ export const logoutError = () => {
   return { type: types.LOGOUT_ERROR_USER };
 };
 
-export const login = (data) => {
+export const updateError = (message) => {
+  return {
+    type: types.UPDATE_ERROR_USER,
+    message
+  };
+};
+
+export const updateSuccess = (user, message) => {
+  return {
+    type: types.UPDATE_SUCCESS_USER,
+    user,
+    message
+  };
+};
+
+export const beginUpdate = () => {
+  return { type: types.UPDATE_USER };
+};
+
+export const login = (user) => {
   return (dispatch) => {
     dispatch(beginLogin());
 
-    return API.login(data).then(() => {
+    return API.login(user).then(() => {
         location.href = '/';
       })
       .catch((error) => {
@@ -57,17 +73,17 @@ export const login = (data) => {
 
           dispatch(loginError(message));
         } else {
-          dispatch(push('/500'));
+          dispatch(push('/internal-server-error'));
         }
       });
   };
 };
 
-export const signup = (data) => {
+export const signup = (user) => {
   return (dispatch) => {
     dispatch(beginSignUp());
 
-    return API.signup(data).then(() => {
+    return API.signup(user).then(() => {
         dispatch(signUpSuccess('Sign up seccessfully! Please varify your account!'));
       })
       .catch((error) => {
@@ -78,7 +94,7 @@ export const signup = (data) => {
 
           dispatch(signUpError(message));
         } else {
-          dispatch(push('/500'));
+          dispatch(push('/internal-server-error'));
         }
       });
   };
@@ -93,7 +109,28 @@ export const logout = () => {
       })
       .catch(() => {
         dispatch(logoutError());
-        dispatch(push('/500'));
+        dispatch(push('/internal-server-error'));
+      });
+  };
+};
+
+export const update = (user) => {
+  return (dispatch) => {
+    dispatch(beginUpdate());
+
+    return API.updateProfile(user).then(() => {
+        dispatch(updateSuccess(user, 'Your profile changed success'));
+      })
+      .catch((error) => {
+        const { response } = error;
+
+        if (response) {
+          const { data: { message = '' } = {} } = response;
+
+          dispatch(updateError(message));
+        } else {
+          dispatch(push('/internal-server-error'));
+        }
       });
   };
 };

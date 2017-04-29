@@ -21,7 +21,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const { user: { authenticated, roles }, logout } = this.props;
+    const { user: { authenticated, data: user }, logout } = this.props;
     const { toggle } = this.state;
 
     const rightNav = [];
@@ -29,11 +29,13 @@ class Navigation extends Component {
     rightNav.push(<Notification key={rightNav.length} />);
 
     if (authenticated) {
-      if (isAdmin(roles)) {
-        rightNav.push(<Link key={rightNav.length} to="/vocabulary-management">Vocabulary management</Link>);
+      const userId = user._id;
+      if (isAdmin(user)) {
+        rightNav.push(<Link key={rightNav.length} to="/manage/vocabularies">Manage vocabularies</Link>);
       }
 
-      rightNav.push(<Link key={rightNav.length} to="/my-vocabularies">My vocabularies</Link>);
+      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}`}>Profile</Link>);
+      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}/vocabularies`}>Vocabularies</Link>);
       rightNav.push(<Link key={rightNav.length} onClick={() => logout()} to="/">Logout</Link>);
     } else {
       rightNav.push(<Link key={rightNav.length} to="/login">Login</Link>);

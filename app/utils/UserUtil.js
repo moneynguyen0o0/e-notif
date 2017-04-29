@@ -1,12 +1,7 @@
 import _ from 'lodash';
 
-export const ADMIN = 'ADMIN';
-export const USER = 'USER';
+const ADMIN = 'ADMIN';
 
-const isAdmin = (roles) => {
-  return _.includes(roles, ADMIN);
-};
-
-export default {
-  isAdmin
+export const isAdmin = (user = {}) => {
+  return _.includes(user.roles, ADMIN);
 };

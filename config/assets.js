@@ -1,6 +1,6 @@
 const metaAssets = () => {
   return [
-    { name: 'description', content: 'Your One-Stop solution for a full-stack universal Redux App' }
+    { name: 'description', content: 'ENotif App' }
   ];
 };
 

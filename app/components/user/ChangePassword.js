@@ -1,11 +1,17 @@
 import classnames from 'classnames';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { resetPassword, checkToken } from '../utils/api';
-import Spinner from './icons/Spinner';
+import { changePassword } from '../../utils/api';
+import Spinner from '../icons/Spinner';
 
 const validate = (values) => {
   const errors = {};
+
+  if (!values.currentPassword) {
+    errors.currentPassword = 'Required';
+  } else if (values.currentPassword.length > 15) {
+    errors.currentPassword = 'Must be 15 characters or less';
+  }
 
   if (!values.newPassword) {
     errors.newPassword = 'Required';
@@ -20,7 +26,7 @@ const validate = (values) => {
   return errors;
 };
 
-class ResetPassword extends Component {
+class ChangePassword extends Component {
   static propTypes = {
     ...reduxFormPropTypes
   }
@@ -47,9 +53,10 @@ class ResetPassword extends Component {
 
     return (
       <form onSubmit={handleSubmit}>
+        <Field name="currentPassword" type="password" component={this._renderField} label="Current password" />
         <Field name="newPassword" type="password" component={this._renderField} label="New password" />
         <Field name="confirmPassword" type="password" component={this._renderField} label="Confirm password" />
-        <div className="ResetPassword-footer">
+        <div className="ChangePassword-footer">
           <button type="submit" className="btn-info" disabled={submitting}>Change</button>
         </div>
       </form>
@@ -57,48 +64,27 @@ class ResetPassword extends Component {
   }
 }
 
-const ResetPasswordContainer = reduxForm({
-  form: 'resetPasswordForm',
+const ChangePasswordContainer = reduxForm({
+  form: 'changePasswordForm',
   validate,
-})(ResetPassword);
+})(ChangePassword);
 
-class ResetPasswordWrapper extends Component {
-  static contextTypes = {
-    location: PropTypes.object.isRequired
-  }
-
+class ChangePasswordWrapper extends Component {
   state = {
-    isWaiting: true,
-    message: '',
-    showForm: false
-  }
-
-  componentDidMount() {
-    checkToken(this.context.location.query.token).then(() => {
-      this.setState({
-        isWaiting: false,
-        showForm: true
-      });
-    }).catch((err) => {
-      let message = 'Error! Something is wrong';
-
-      if (err.response.status === 498) {
-        message = 'Reset password expired';
-      }
-
-      this.setState({
-        isWaiting: false,
-        message
-      });
-    });
+    isWaiting: false,
+    message: ''
   }
 
   _change = (values) => {
-    resetPassword(this.context.location.query.token, values).then(() => {
+    changePassword(values).then(() => {
       this.setState({
         isWaiting: false,
-        showForm: false,
-        message: 'Password reseted success'
+        message: 'Password changed success'
+      });
+    }).catch(() => {
+      this.setState({
+        isWaiting: false,
+        message: 'New password is not match current one'
       });
     });
 
@@ -107,24 +93,20 @@ class ResetPasswordWrapper extends Component {
 
   render() {
     const {
-      isWaiting, message, showForm
+      isWaiting, message
     } = this.state;
 
     if (isWaiting) {
       return <Spinner />;
     }
 
-    if (!showForm) {
-      return <h3>{message}</h3>;
-    }
-
     return (
-      <div className="ResetPassword">
-        <h3 className="ResetPassword-message">{message}</h3>
-        <ResetPasswordContainer onSubmit={this._change} />
+      <div className="ChangePassword">
+        <h3 className="ChangePassword-message">{message}</h3>
+        <ChangePasswordContainer onSubmit={this._change} />
       </div>
     );
   }
 }
 
-export default ResetPasswordWrapper;
+export default ChangePasswordWrapper;

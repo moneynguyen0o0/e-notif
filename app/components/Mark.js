@@ -29,7 +29,7 @@ class Mark extends Component {
     markVocabulary(_id)
     .then(() => this.setState({ marked: !this.state.marked, isWaiting: true }))
     .catch(() => {
-      router.push('/500');
+      router.push('/internal-server-error');
     });
     this.setState({ isWaiting: false });
   }

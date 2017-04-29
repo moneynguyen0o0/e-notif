@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import ForgotPassword from '../components/ForgotPassword';
+import ForgotPasswordComponent from '../components/user/ForgotPassword';
 
-class ForgotPasswordPage extends Component {
+class ForgotPassword extends Component {
   render() {
     return (
       <div className="ForgotPasswordPage">
         <Helmet title="Forgot password | ENotif" />
         <div className="container">
-          <ForgotPassword />
+          <ForgotPasswordComponent />
         </div>
       </div>
     );
   }
 }
 
-export default ForgotPasswordPage;
+export default ForgotPassword;

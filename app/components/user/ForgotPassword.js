@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import React, { Component } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { forgotPassword } from '../utils/api';
-import Spinner from './icons/Spinner';
+import { forgotPassword } from '../../utils/api';
+import Spinner from '../icons/Spinner';
 
 const validate = (values) => {
   const errors = {};

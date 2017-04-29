@@ -4,6 +4,7 @@ import uuidV4 from 'uuid/v4';
 import moment from 'moment';
 import User from '../../services/User';
 import { sendMail } from '../../utils/MailUtil';
+import { pickUser } from '../../utils/UserUtil';
 
 const getRootUrl = (req) => {
   return req.protocol + '://' + req.get('host');
@@ -11,30 +12,24 @@ const getRootUrl = (req) => {
 
 export const create = (req, res) => {
   const {
-    firstname,
-    lastname,
-    email,
-    password
+    user: userData = {}
   } = req.body;
 
-  const token = uuidV4();
-
-  const newUser = {
-    firstname,
-    lastname,
-    email,
-    password,
-    token
-  };
+  const { email } = userData;
 
   User.findByEmail(email, (err, user) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
     if (user) return res.status(409).json({ message: 'Account with this email address already exists!' });
 
+    const token = uuidV4();
+
+    const newUser = _.pick(userData, ['firstname', 'lastname', 'email', 'password']);
+    newUser.token = token;
+
     User.create(newUser, (err, user) => {
       if (err) return res.status(500).send({ message: 'Something went wrong creating the data', error: err });
 
-      const url = getRootUrl(req) + '/verify-mail?token=' + token;
+      const url = getRootUrl(req) + '/users/verify-mail?token=' + token;
       const content = `
         <a href="${url}">Verify</a>
       `;
@@ -58,17 +53,14 @@ export const get = (req, res) => {
   User.findById(user._id, (err, user) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
 
-    return res.json(_.pick(user, [ '_id', 'email', 'firstname', 'lastname', 'roles', 'dob', 'gender', 'created']));
+    return res.json(pickUser(user));
   });
 };
 
 export const update = (req, res) => {
   const {
     body: {
-      firstname,
-      lastname,
-      dob,
-      gender
+      user: userData = {}
     },
     user
   } = req;
@@ -82,10 +74,10 @@ export const update = (req, res) => {
   User.findById(_id, (err, user) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
 
-    User.update({ _id, firstname, lastname, dob, gender }, (err) => {
+    User.update({ _id, ..._.pick(userData, ['firstname', 'lastname', 'dob', 'gender']) }, (err, user) => {
       if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
 
-      return res.sendStatus(200);
+      return res.json(pickUser(user));
     });
   });
 };
@@ -178,7 +170,7 @@ export const forgotPassword = (req, res) => {
     User.update({ _id, token, resetPasswordExpires: moment(moment()).add(1, 'day') }, (err) => {
       if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
 
-      const url = getRootUrl(req) + '/reset-password?token=' + token;
+      const url = getRootUrl(req) + '/users/reset-password?token=' + token;
       const content = `
         <a href="${url}">Reset</a>
       `;
@@ -205,6 +197,7 @@ export const resetPassword = (req, res) => {
     }
 
     user.password = newPassword;
+    user.token = '';
 
     user.save((err) => {
       if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });

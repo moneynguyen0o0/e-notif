@@ -1,22 +1,23 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { isAdmin } from '../utils/UserUtil';
+import { isAdmin } from './utils/UserUtil';
 import {
   App,
   Home,
-  SearchPage,
-  MarkedVocabularies,
-  VocabularyDetail,
-  VocabularyManagement,
+  Search,
+  MyVocabularies,
+  Vocabulary,
+  ManageVocabularies,
   About,
   Login,
   Signup,
-  VerifyMailPage,
-  ForgotPasswordPage,
-  ResetPasswordPage,
+  VerifyMail,
+  ForgotPassword,
+  ResetPassword,
   Profile,
-  NotFoundPage,
-  InternalServerErrorPage
+  NotFound,
+  InternalServerError,
+  AccessDenied
 } from './pages';
 
 const requireAdminAuth = (authenticated, isAdmin) => {
@@ -28,7 +29,7 @@ const requireAdminAuth = (authenticated, isAdmin) => {
       });
     } else if (!isAdmin) {
       replace({
-        pathname: '/403',
+        pathname: '/access-denied',
         state: { nextPathname: nextState.location.pathname }
       });
     }
@@ -65,24 +66,25 @@ const redirectAuth = (authenticated) => {
  * state from the store after it has been authenticated.
  */
 export default (store) => {
-  const { user: { authenticated, roles } } = store.getState();
+  const { user: { authenticated, data: user } } = store.getState();
 
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
-      <Route path="search" component={SearchPage} />
-      <Route path="vocabularies/:id" component={VocabularyDetail} />
-      <Route path="my-vocabularies" component={MarkedVocabularies} onEnter={requireAuth(authenticated)} />
-      <Route path="vocabulary-management" component={VocabularyManagement} onEnter={requireAdminAuth(authenticated, isAdmin(roles))} />
+      <Route path="search" component={Search} />
+      <Route path="vocabularies/:id" component={Vocabulary} />
+      <Route path="profile/:id/vocabularies" component={MyVocabularies} onEnter={requireAuth(authenticated)} />
+      <Route path="manage/vocabularies" component={ManageVocabularies} onEnter={requireAdminAuth(authenticated, isAdmin(user))} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth(authenticated)} />
       <Route path="signup" component={Signup} onEnter={redirectAuth(authenticated)} />
-      <Route path="verify-mail" component={VerifyMailPage} />
-      <Route path="forgot-password" component={ForgotPasswordPage} />
-      <Route path="reset-password" component={ResetPasswordPage} />
-      <Route path="profile" component={Profile} onEnter={requireAuth(authenticated)} />
-      <Route path="500" component={InternalServerErrorPage} />
-      <Route path="*" component={NotFoundPage} />
+      <Route path="users/verify-mail" component={VerifyMail} />
+      <Route path="users/forgot-password" component={ForgotPassword} />
+      <Route path="users/reset-password" component={ResetPassword} />
+      <Route path="profile/:id" component={Profile} onEnter={requireAuth(authenticated)} />
+      <Route path="internal-server-error" component={InternalServerError} />
+      <Route path="access-denied" component={AccessDenied} />
+      <Route path="*" component={NotFound} />
     </Route>
   );
 };
