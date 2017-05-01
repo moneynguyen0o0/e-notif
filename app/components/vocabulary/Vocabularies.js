@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Mark from './Mark';
+import Mark from '../Mark';
 
 class DailyVocabularies extends Component {
   static propTypes = {
@@ -13,7 +13,13 @@ class DailyVocabularies extends Component {
       vocabularies
     } = this.props;
 
-    const { user: { _id: userId } } = this.props;
+    const {
+      user: {
+        data: {
+          _id: userId
+        }
+      }
+    } = this.props;
 
     const content = vocabularies.map((vocabulary, index) => {
       const {
@@ -42,7 +48,7 @@ class DailyVocabularies extends Component {
       });
 
       return (
-        <div key={index}>
+        <div key={index} className="Vocabulary">
           <div className="Vocabulary-word">{word}</div>
           <div className="Vocabulary-pronunciation">[ {pronunciation} ]</div>
           <div className="Vocabulary-title">P.O.S</div>
@@ -51,13 +57,13 @@ class DailyVocabularies extends Component {
           <div className="Vocabulary-definition">{definitionContent}</div>
           <div className="Vocabulary-title">Exmaples</div>
           <div className="Vocabulary-example">{exampleContent}</div>
-          <div className="Vocabulary-mark">{markContent}</div>
+          <div className="Vocabulary-mark text-right">{markContent}</div>
         </div>
       );
     });
 
     return (
-      <div className="DailyVocabularies">
+      <div className="Vocabularies">
         {content}
       </div>
     );

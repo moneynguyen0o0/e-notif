@@ -1,8 +1,9 @@
 import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { resetPassword, checkToken } from '../utils/api';
-import Spinner from './icons/Spinner';
+import { resetPassword, checkToken } from '../../utils/api';
+import Spinner from '../icons/Spinner';
+import Message from '../shared/Message';
 
 const validate = (values) => {
   const errors = {};
@@ -70,7 +71,8 @@ class ResetPasswordWrapper extends Component {
   state = {
     isWaiting: true,
     message: '',
-    showForm: false
+    showForm: false,
+    showMessage: true
   }
 
   componentDidMount() {
@@ -102,12 +104,16 @@ class ResetPasswordWrapper extends Component {
       });
     });
 
-    this.setState({ isWaiting: true });
+    this.setState({ isWaiting: true, showMessage: true });
+  }
+
+  _closeMessage() {
+    this.setState({ showMessage: false });
   }
 
   render() {
     const {
-      isWaiting, message, showForm
+      isWaiting, message, showForm, showMessage
     } = this.state;
 
     if (isWaiting) {
@@ -115,12 +121,17 @@ class ResetPasswordWrapper extends Component {
     }
 
     if (!showForm) {
-      return <h3>{message}</h3>;
+      return <Message type="info" text={message} />;
+    }
+
+    if (message && showMessage) {
+      return (
+        <Message type="error" text={message} close={() => this._closeMessage()} />
+      );
     }
 
     return (
       <div className="ResetPassword">
-        <h3 className="ResetPassword-message">{message}</h3>
         <ResetPasswordContainer onSubmit={this._change} />
       </div>
     );

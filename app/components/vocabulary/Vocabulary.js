@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import { findVocabulary } from '../utils/api';
-import Spinner from './icons/Spinner';
-import Mark from './Mark';
+import { findVocabulary } from '../../utils/api';
+import Spinner from '../icons/Spinner';
+import Mark from '../Mark';
 
 class Vocabulary extends Component {
   static propTypes = {
@@ -35,7 +35,13 @@ class Vocabulary extends Component {
       return <Spinner />;
     }
 
-    const { user: { _id: userId } } = this.props;
+    const {
+      user: {
+        data: {
+          _id: userId
+        }
+      }
+    } = this.props;
 
     const {
       _id,
@@ -73,7 +79,7 @@ class Vocabulary extends Component {
         <div className="Vocabulary-definition">{definitionContent}</div>
         <div className="Vocabulary-title">Exmaples</div>
         <div className="Vocabulary-example">{exampleContent}</div>
-        <div className="Vocabulary-mark">{markContent}</div>
+        <div className="Vocabulary-mark text-right">{markContent}</div>
       </div>
     );
   }

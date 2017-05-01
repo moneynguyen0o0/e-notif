@@ -7,7 +7,7 @@ import { createMemoryHistory, match } from 'react-router';
 import createRoutes from '../../app/routes';
 import configureStore from '../../app/store/configureStore';
 import { isDevelopment } from '../../config/app';
-import { isAdmin } from '../utils/UserUtil';
+import { pickUser } from '../utils/UserUtil';
 
 const renderHtml = (content, initialState, assets, helmet) => {
   return `
@@ -42,8 +42,7 @@ export default () => {
     const history = createMemoryHistory();
     const store = configureStore({
       user: {
-        _id: user._id || '',
-        isAdmin: isAdmin(user),
+        data: pickUser(user),
         authenticated
       }
     }, history);
@@ -68,9 +67,6 @@ export default () => {
         );
         const initialState = store.getState();
         const helmet = Helmet.rewind();
-
-        console.log("======== HTML ========");
-        console.log(content);
 
         res.send(renderHtml(content, initialState, assets, helmet));
       } else {

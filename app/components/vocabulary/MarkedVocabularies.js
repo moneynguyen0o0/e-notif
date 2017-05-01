@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import { Link } from 'react-router';
-import { getMarkedVocabularies } from '../utils/api';
-import Spinner from './icons/Spinner';
-import Mark from './Mark';
+import { getMarkedVocabularies } from '../../utils/api';
+import Spinner from '../icons/Spinner';
+import Mark from '../Mark';
 
 class MarkedVocabularies extends Component {
   state = {

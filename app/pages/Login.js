@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import LoginComponent from '../components/Login';
+import LoginComponent from '../components/user/Login';
 
 class Login extends Component {
   render() {

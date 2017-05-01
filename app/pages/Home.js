@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import DailyVocabularies from '../components/DailyVocabularies';
+import DailyVocabularies from '../components/vocabulary/DailyVocabularies';
 
 class Home extends Component {
   render() {

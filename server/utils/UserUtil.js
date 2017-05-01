@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import * as Role from '../constants/Role';
 
-const isAdmin = (user = {}) => {
+export const isAdmin = (user = {}) => {
   return _.includes(user.roles, Role.ADMIN);
 };
 
-export default {
-  isAdmin
+export const pickUser = (user) => {
+  return _.pick(user, [ '_id', 'email', 'firstname', 'lastname', 'roles', 'dob', 'gender', 'created']);
 };

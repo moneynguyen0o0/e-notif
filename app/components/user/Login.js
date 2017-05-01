@@ -2,40 +2,29 @@ import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { signup } from '../actions/users';
-import Spinner from './icons/Spinner';
+import { login } from '../../actions/users';
+import Spinner from '../icons/Spinner';
+import Message from '../shared/Message';
 
-const validate = (account) => {
+const validate = (user) => {
   const errors = {};
 
-  if (!account.firstname) {
-    errors.firstname = 'Required';
-  } else if (account.firstname.length > 15) {
-    errors.firstname = 'Must be 15 characters or less';
-  }
-
-  if (!account.lastname) {
-    errors.lastname = 'Required';
-  } else if (account.lastname.length > 15) {
-    errors.lastname = 'Must be 15 characters or less';
-  }
-
-  if (!account.email) {
-    errors.email = 'Required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(account.email)) {
+  if (!user.email) {
+    user.email = 'Required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(user.email)) {
     errors.email = 'Invalid email address';
   }
 
-  if (!account.password) {
+  if (!user.password) {
     errors.password = 'Required';
-  } else if (account.password.length > 15) {
+  } else if (user.password.length > 15) {
     errors.password = 'Must be 15 characters or less';
   }
 
   return errors;
 };
 
-class SignupForm extends Component {
+class LoginForm extends Component {
   static propTypes = {
     ...reduxFormPropTypes
   }
@@ -62,36 +51,38 @@ class SignupForm extends Component {
 
     return (
       <form onSubmit={handleSubmit}>
-        <Field name="firstname" type="text" component={this._renderField} label="First name" />
-        <Field name="lastname" type="text" component={this._renderField} label="Last name" />
         <Field name="email" type="email" component={this._renderField} label="Email" />
         <Field name="password" type="password" component={this._renderField} label="Password" />
-        <div className="Signup-footer">
-          <button type="submit" className="btn-info" disabled={submitting}>Sign Up</button>
+        <div className="Login-extra"><a href="/signup">Sign up now!</a><div className="Login-forgotPassword"><a href="/users/forgot-password">Forgot password!</a></div></div>
+        <div className="Login-footer">
+          <button type="submit" className="btn-info" disabled={submitting}>Log In</button>
         </div>
       </form>
     );
   }
 }
 
-const SignupContainer = reduxForm({
-  form: 'registerForm',
+const LoginContainer = reduxForm({
+  form: 'loginForm',
   validate,
-})(SignupForm);
+})(LoginForm);
 
-class SignupWrapper extends Component {
+class LoginWrapper extends Component {
   static propTypes = {
     user: PropTypes.object,
-    signup: PropTypes.func.isRequired
+    login: PropTypes.func.isRequired
   }
 
   state = {
-    showMessage: true
+    showMessage: false
   }
 
-  _signup = (account) => {
-    this.props.signup(account);
-    this.state.showMessage = true;
+  _login = (user) => {
+    this.props.login(user);
+
+    this.setState({
+      showMessage: true
+    });
   }
 
   _closeMessage() {
@@ -111,16 +102,13 @@ class SignupWrapper extends Component {
 
     if (message && showMessage) {
       return (
-        <div>
-          <h3 className="Signup-message">{message}</h3>
-          <div onClick={() => this._closeMessage()}>X</div>
-        </div>
+        <Message type="error" text={message} close={() => this._closeMessage()} />
       );
     }
 
     return (
-      <div className="Signup">
-        <SignupContainer onSubmit={this._signup} />
+      <div className="Login">
+        <LoginContainer onSubmit={this._login} />
       </div>
     );
   }
@@ -135,4 +123,4 @@ const mapStateToProps = ({ user }) => {
 // Connects React component to the redux store
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
-export default connect(mapStateToProps, { signup })(SignupWrapper);
+export default connect(mapStateToProps, { login })(LoginWrapper);

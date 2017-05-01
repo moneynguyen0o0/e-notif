@@ -1,32 +1,31 @@
 import classnames from 'classnames';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { getProfile, updateProfile } from '../utils/api';
-import Spinner from './icons/Spinner';
+import { update as updateProfile } from '../../actions/users';
+import Spinner from '../icons/Spinner';
 
 const GENDER = ['male', 'female'];
 
-const validate = (account) => {
+const validate = (user) => {
   const errors = {};
 
-  if (!account.firstname) {
+  if (!user.firstname) {
     errors.firstname = 'Required';
-  } else if (account.firstname.length > 15) {
+  } else if (user.firstname.length > 15) {
     errors.firstname = 'Must be 15 characters or less';
   }
 
-  if (!account.lastname) {
+  if (!user.lastname) {
     errors.lastname = 'Required';
-  } else if (account.lastname.length > 15) {
+  } else if (user.lastname.length > 15) {
     errors.lastname = 'Must be 15 characters or less';
   }
 
-  if (!moment().subtract('years', 13).isAfter(moment(account.dob))) {
+  if (!moment().subtract('years', 13).isAfter(moment(user.dob))) {
     errors.dob = 'Date of birth must be greater than 13';
   }
-
-  console.log(account);
 
   return errors;
 };
@@ -54,10 +53,11 @@ class ProfileForm extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, initialValues } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
+        <input name="_id" type="hidden" value={initialValues._id} />
         <Field name="firstname" type="text" component={this._renderField} label="First name" />
         <Field name="lastname" type="text" component={this._renderField} label="Last name" />
         <Field name="dob" type="date" component={this._renderField} label="Date of birth" />
@@ -82,33 +82,23 @@ class ProfileForm extends Component {
 }
 
 class ProfileWrapper extends Component {
-  state = {
-    account: null,
-    isWaiting: true,
-    message: ''
+  static propTypes = {
+    user: PropTypes.object,
+    updateProfile: PropTypes.func.isRequired
   }
 
-  componentDidMount() {
-    getProfile().then((account) => this.setState({ account, isWaiting: false }));
-  }
-
-  _change = (account) => {
-    updateProfile(account).then(() => {
-      this.setState({ account, message: 'Your profile changed success', isWaiting: false });
-    })
-    .catch(() => {
-      this.setState({ message: 'Error! Something is wrong', isWaiting: false });
-    });
-
-    this.setState({ isWaiting: true });
+  _change = (user) => {
+    this.props.updateProfile(user);
   }
 
   render() {
     const {
-      account,
-      isWaiting,
-      message
-    } = this.state;
+      user: {
+        data: user,
+        isWaiting,
+        message
+      }
+    } = this.props;
 
     if (isWaiting) {
       return <Spinner />;
@@ -117,29 +107,33 @@ class ProfileWrapper extends Component {
     const {
       gender,
       dob
-    } = account;
+    } = user;
 
     if (!gender) {
-      account.gender = GENDER[0];
+      user.gender = GENDER[0];
     }
 
     if (dob) {
-      account.dob = moment(dob).format('YYYY-MM-DD');
+      user.dob = moment(dob).format('YYYY-MM-DD');
     }
 
     const ProfileContainer = reduxForm({
       form: 'profileForm',
       validate,
-      initialValues: account
+      initialValues: user
     })(ProfileForm);
 
     return (
       <div className="Profile">
-        <h3 className="Profile-message">{message}</h3>
+        {message && <div className="Profile-message">{message}</div>}
         <ProfileContainer onSubmit={this._change} />
       </div>
     );
   }
 }
 
-export default ProfileWrapper;
+const mapStateToProps = ({ user }) => {
+  return { user };
+};
+
+export default connect(mapStateToProps, { updateProfile })(ProfileWrapper);

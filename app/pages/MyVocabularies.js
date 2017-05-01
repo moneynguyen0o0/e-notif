@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import MarkedVocabularies from '../components/MarkedVocabularies';
+import MarkedVocabularies from '../components/vocabulary/MarkedVocabularies';
 
-class MarkedVocabulariesPage extends Component {
+class MyVocabularies extends Component {
   render() {
     return (
-      <div className="MarkedVocabulariesPage">
+      <div className="MyVocabulariesPage">
         <Helmet title="My vocabularies | ENotif" />
         <div className="container-fluid">
           <MarkedVocabularies />
@@ -15,4 +15,4 @@ class MarkedVocabulariesPage extends Component {
   }
 }
 
-export default MarkedVocabulariesPage;
+export default MyVocabularies;

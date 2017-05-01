@@ -3,7 +3,13 @@
 }
 
 .Spinner {
-  height: 50px;
-  width: 50px;
-  background: url('../images/spinner.svg') no-repeat;
+  width: 100%;
+  text-align: center;
+
+  &-icon {
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    background: url('../images/spinner.svg') no-repeat;
+  }
 }

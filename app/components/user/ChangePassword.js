@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import React, { Component } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { changePassword } from '../utils/api';
-import Spinner from './icons/Spinner';
+import { changePassword } from '../../utils/api';
+import Spinner from '../icons/Spinner';
 
 const validate = (values) => {
   const errors = {};
@@ -102,7 +102,7 @@ class ChangePasswordWrapper extends Component {
 
     return (
       <div className="ChangePassword">
-        <h3 className="ChangePassword-message">{message}</h3>
+        {message && <div className="ChangePassword-message">{message}</div>}
         <ChangePasswordContainer onSubmit={this._change} />
       </div>
     );

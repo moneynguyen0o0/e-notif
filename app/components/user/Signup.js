@@ -2,11 +2,24 @@ import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { login } from '../actions/users';
-import Spinner from './icons/Spinner';
+import { signup } from '../../actions/users';
+import Spinner from '../icons/Spinner';
+import Message from '../shared/Message';
 
 const validate = (account) => {
   const errors = {};
+
+  if (!account.firstname) {
+    errors.firstname = 'Required';
+  } else if (account.firstname.length > 15) {
+    errors.firstname = 'Must be 15 characters or less';
+  }
+
+  if (!account.lastname) {
+    errors.lastname = 'Required';
+  } else if (account.lastname.length > 15) {
+    errors.lastname = 'Must be 15 characters or less';
+  }
 
   if (!account.email) {
     errors.email = 'Required';
@@ -23,7 +36,7 @@ const validate = (account) => {
   return errors;
 };
 
-class LoginForm extends Component {
+class SignupForm extends Component {
   static propTypes = {
     ...reduxFormPropTypes
   }
@@ -50,29 +63,41 @@ class LoginForm extends Component {
 
     return (
       <form onSubmit={handleSubmit}>
+        <Field name="firstname" type="text" component={this._renderField} label="First name" />
+        <Field name="lastname" type="text" component={this._renderField} label="Last name" />
         <Field name="email" type="email" component={this._renderField} label="Email" />
         <Field name="password" type="password" component={this._renderField} label="Password" />
-        <div className="Login-footer">
-          <button type="submit" className="btn-info" disabled={submitting}>Log In</button>
+        <a href="/login">Do you have an account? Log in here!</a>
+        <div className="Signup-footer">
+          <button type="submit" className="btn-info" disabled={submitting}>Sign Up</button>
         </div>
       </form>
     );
   }
 }
 
-const LoginContainer = reduxForm({
-  form: 'loginForm',
+const SignupContainer = reduxForm({
+  form: 'registerForm',
   validate,
-})(LoginForm);
+})(SignupForm);
 
-class LoginWrapper extends Component {
+class SignupWrapper extends Component {
   static propTypes = {
     user: PropTypes.object,
-    login: PropTypes.func.isRequired
+    signup: PropTypes.func.isRequired
   }
 
-  _login = (account) => {
-    this.props.login(account);
+  state = {
+    showMessage: true
+  }
+
+  _signup = (account) => {
+    this.props.signup(account);
+    this.state.showMessage = true;
+  }
+
+  _closeMessage() {
+    this.setState({ showMessage: false });
   }
 
   render() {
@@ -80,14 +105,21 @@ class LoginWrapper extends Component {
       user: { isWaiting, message } = {}
     } = this.props;
 
+    const { showMessage } = this.state;
+
     if (isWaiting) {
       return <Spinner />;
     }
 
+    if (message && showMessage) {
+      return (
+        <Message type="error" text={message} close={() => this._closeMessage()} />
+      );
+    }
+
     return (
-      <div className="Login">
-        <h3 className="Login-message">{message}</h3>
-        <LoginContainer onSubmit={this._login} />
+      <div className="Signup">
+        <SignupContainer onSubmit={this._signup} />
       </div>
     );
   }
@@ -102,4 +134,4 @@ const mapStateToProps = ({ user }) => {
 // Connects React component to the redux store
 // It does not modify the component class passed to it
 // Instead, it returns a new, connected component class, for you to use.
-export default connect(mapStateToProps, { login })(LoginWrapper);
+export default connect(mapStateToProps, { signup })(SignupWrapper);

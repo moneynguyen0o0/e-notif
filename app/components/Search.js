@@ -2,9 +2,9 @@ import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { searchVocabularies } from '../utils/api';
 import Spinner from './icons/Spinner';
-import Vocabularies from './Vocabularies';
+import Vocabularies from './vocabulary/Vocabularies';
 
-class SearchVocabularies extends Component {
+class Search extends Component {
   static contextTypes = {
     location: PropTypes.object.isRequired
   }
@@ -50,11 +50,11 @@ class SearchVocabularies extends Component {
     }
 
     return (
-      <div className="DailyVocabularies">
+      <div className="SearchVocabularies">
         <Vocabularies vocabularies={vocabularies} />
       </div>
     );
   }
 }
 
-export default SearchVocabularies;
+export default Search;

@@ -3,9 +3,10 @@ import ReactTable from 'react-table';
 import Modal from 'react-modal';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../actions/vocabulary';
-import Spinner from './icons/Spinner';
-import Mark from './Mark';
+import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../../actions/vocabulary';
+import { getPOS } from '../../utils/api';
+import Spinner from '../icons/Spinner';
+import Mark from '../Mark';
 import VocabularyForm from './VocabularyForm';
 
 const editStyles = {
@@ -26,6 +27,7 @@ class VocabularyList extends Component {
   }
 
   state = {
+    POS: [],
     vocabularies: [],
     vocabulary: undefined,
     isEditingModal: false,
@@ -34,6 +36,7 @@ class VocabularyList extends Component {
 
   componentDidMount() {
     this.props.fetchVocabularies();
+    getPOS().then(data => this.setState({ POS: data }));
   }
 
   _edit(vocabulary) {
@@ -97,14 +100,21 @@ class VocabularyList extends Component {
     const {
       vocabulary,
       isEditingModal,
-      isDeletingModal
+      isDeletingModal,
+      POS
     } = this.state;
 
     if (!vocabularies) {
       return <Spinner />;
     }
 
-    const { user: { _id: userId } } = this.props;
+    const {
+      user: {
+        data: {
+          _id: userId
+        }
+      }
+    } = this.props;
 
     const customRow = {
       whiteSpace: 'normal'
@@ -153,7 +163,7 @@ class VocabularyList extends Component {
 
             return (
               <div className="text-center">
-                <Mark id={_id} marked={marked} />
+                <Mark key={_id} id={_id} marked={marked} />
               </div>
             );
           }
@@ -203,7 +213,7 @@ class VocabularyList extends Component {
           {isWaiting && <h3>Saving</h3>}
           {message && <h4>{message}</h4>}
 
-          <VocabularyForm vocabulary={vocabulary} saveVocabulary={(vocabulary) => this._saveVocabulary(vocabulary)} />
+          <VocabularyForm POS={POS} vocabulary={vocabulary} saveVocabulary={(vocabulary) => this._saveVocabulary(vocabulary)} />
         </Modal>
         <ReactTable
           data={vocabularies}

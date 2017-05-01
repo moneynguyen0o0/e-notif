@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import Vocabulary from '../../services/Vocabulary';
 import { isAdmin } from '../../utils/UserUtil';
+import Vocabulary from '../../services/Vocabulary';
+import POS from '../../constants/POS';
 
 export const getAll = (req, res) => {
   if (!isAdmin(req.user)) {
@@ -12,6 +13,14 @@ export const getAll = (req, res) => {
 
     return res.json(vocabularies);
   });
+};
+
+export const getPOS = (req, res) => {
+  if (!isAdmin(req.user)) {
+    return res.sendStatus(401);
+  }
+
+  return res.json(POS);;
 };
 
 export const findById = (req, res) => {
@@ -44,22 +53,12 @@ export const create = (req, res) => {
   }
 
   const {
-    word,
-    pronunciation,
-    pos,
-    definitions,
-    examples
+    vocabulary: vocabularyData = {}
   } = req.body;
 
-  const vocabulary = {
-    word,
-    pronunciation,
-    pos,
-    definitions,
-    examples
-  };
+  const newVocabulary = _.pick(vocabularyData, ['word', 'pronunciation', 'pos', 'definitions', 'examples']);
 
-  Vocabulary.create(vocabulary, (err, vocabulary) => {
+  Vocabulary.create(newVocabulary, (err, vocabulary) => {
     if (err) return res.status(500).send({ message: 'Something went wrong creating the data', error: err });
 
     return res.json(vocabulary);
@@ -72,23 +71,12 @@ export const update = (req, res) => {
   }
 
   const {
-    _id,
-    word,
-    pronunciation,
-    pos,
-    definitions,
-    examples
+    vocabulary: vocabularyData = {}
   } = req.body;
 
-  const vocabulary = {
-    _id,
-    word,
-    pronunciation,
-    pos,
-    definitions,
-    examples,
-    updated: new Date()
-  };
+  const vocabulary = _.pick(vocabularyData, ['_id', 'word', 'pronunciation', 'pos', 'definitions', 'examples']);
+
+  vocabulary.updated = new Date();
 
   Vocabulary.update(vocabulary, (err, vocabulary) => {
     if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });

@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import SearchVocabularies from '../components/SearchVocabularies';
+import SearchCompenent from '../components/Search';
 
-class SearchPage extends Component {
+class Search extends Component {
   render() {
     return (
       <div className="SearchPage">
         <Helmet title="Search | ENotif" />
         <div className="container">
-          <SearchVocabularies />
+          <SearchCompenent />
         </div>
       </div>
     );
   }
 }
 
-export default SearchPage;
+export default Search;

@@ -4,9 +4,82 @@ import uuidV4 from 'uuid/v4';
 import moment from 'moment';
 import User from '../../services/User';
 import { sendMail } from '../../utils/MailUtil';
+import { pickUser } from '../../utils/UserUtil';
 
 const getRootUrl = (req) => {
   return req.protocol + '://' + req.get('host');
+};
+
+export const create = (req, res) => {
+  const {
+    user: userData = {}
+  } = req.body;
+
+  const { email } = userData;
+
+  User.findByEmail(email, (err, user) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+    if (user) return res.status(409).json({ message: 'Account with this email address already exists!' });
+
+    const token = uuidV4();
+
+    const newUser = _.pick(userData, ['firstname', 'lastname', 'email', 'password']);
+    newUser.token = token;
+
+    User.create(newUser, (err, user) => {
+      if (err) return res.status(500).send({ message: 'Something went wrong creating the data', error: err });
+
+      const url = getRootUrl(req) + '/users/verify-mail?token=' + token;
+      const content = `
+        <a href="${url}">Verify</a>
+      `;
+
+      sendMail({ email, subject: 'Enotif - Verify your mail', content }).then(() => {
+        return res.sendStatus(200);
+      }).catch(err => {
+        return res.status(500).send({ message: 'Send mail error', error: err });
+      });
+    });
+  });
+};
+
+export const get = (req, res) => {
+  const { user } = req;
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  User.findById(user._id, (err, user) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    return res.json(pickUser(user));
+  });
+};
+
+export const update = (req, res) => {
+  const {
+    body: {
+      user: userData = {}
+    },
+    user
+  } = req;
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  const { _id } = user;
+
+  User.findById(_id, (err, user) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    User.update({ _id, ..._.pick(userData, ['firstname', 'lastname', 'dob', 'gender']) }, (err, user) => {
+      if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
+
+      return res.json(pickUser(user));
+    });
+  });
 };
 
 export const login = (req, res) => {
@@ -29,45 +102,6 @@ export const logout = (req, res) => {
   // Do email and password validation for the server
   req.logout();
   res.redirect('/');
-};
-
-export const signup = (req, res) => {
-  const {
-    firstname,
-    lastname,
-    email,
-    password
-  } = req.body;
-
-  const token = uuidV4();
-
-  const newUser = {
-    firstname,
-    lastname,
-    email,
-    password,
-    token
-  };
-
-  User.findByEmail(email, (err, user) => {
-    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
-    if (user) return res.status(409).json({ message: 'Account with this email address already exists!' });
-
-    User.create(newUser, (err, user) => {
-      if (err) return res.status(500).send({ message: 'Something went wrong creating the data', error: err });
-
-      const url = getRootUrl(req) + '/verify-mail?token=' + token;
-      const content = `
-        <a href="${url}">Verify</a>
-      `;
-
-      sendMail({ email, subject: 'Enotif - Verify your mail', content }).then(() => {
-        return res.sendStatus(200);
-      }).catch(err => {
-        return res.status(500).send({ message: 'Send mail error', error: err });
-      });
-    });
-  });
 };
 
 export const verifyMail = (req, res) => {
@@ -130,13 +164,13 @@ export const forgotPassword = (req, res) => {
     const token = uuidV4();
 
     if (resetPasswordExpires && resetPasswordExpires.getTime() > (new Date()).getTime()) {
-      return res.status(500).send({ message: 'Can not handle now', error: err });
+      return res.status(498).send({ message: 'Can not handle now', error: err });
     }
 
     User.update({ _id, token, resetPasswordExpires: moment(moment()).add(1, 'day') }, (err) => {
       if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
 
-      const url = getRootUrl(req) + '/reset-password?token=' + token;
+      const url = getRootUrl(req) + '/users/reset-password?token=' + token;
       const content = `
         <a href="${url}">Reset</a>
       `;
@@ -163,6 +197,7 @@ export const resetPassword = (req, res) => {
     }
 
     user.password = newPassword;
+    user.token = '';
 
     user.save((err) => {
       if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
@@ -185,47 +220,5 @@ export const checkToken = (req, res) => {
     }
 
     return res.sendStatus(200);
-  });
-};
-
-export const getProfile = (req, res) => {
-  const { user } = req;
-
-  if (!user) {
-    return res.sendStatus(401);
-  }
-
-  User.findById(user._id, (err, user) => {
-    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
-
-    return res.json(_.pick(user, [ '_id', 'email', 'firstname', 'lastname', 'dob', 'gender', 'created']));
-  });
-};
-
-export const updateProfile = (req, res) => {
-  const {
-    body: {
-      firstname,
-      lastname,
-      dob,
-      gender
-    },
-    user
-  } = req;
-
-  if (!user) {
-    return res.sendStatus(401);
-  }
-
-  const { _id } = user;
-
-  User.findById(_id, (err, user) => {
-    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
-
-    User.update({ _id, firstname, lastname, dob, gender }, (err) => {
-      if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
-
-      return res.sendStatus(200);
-    });
   });
 };

@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
   firstname: { type: String, required: true, trim: true, minlength: 2, maxlength: 10 },
   lastname: { type: String, required: true, trim: true, minlength: 2, maxlength: 10 },
   dob: Date,
-  gender: String,
+  gender: { type: String, enum: ['male', 'female'] },
   roles: { type: [{ type: String, enum: [Role.USER, Role.ADMIN] }], default: [Role.USER] },
   created: { type: Date, default: Date.now },
   enable: { type: Boolean, default: false },

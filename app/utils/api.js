@@ -1,18 +1,26 @@
 import { request } from './request';
 
-const getAllVocabularies = () => {
+/**
+*
+*
+  VOCABULARY
+*
+*
+*/
+
+export const getAllVocabularies = () => {
   return request({ url: '/vocabularies' });
 };
 
-const getDailyVocabularies = () => {
+export const getDailyVocabularies = () => {
   return request({ url: '/vocabularies/daily' });
 };
 
-const findVocabulary = (_id) => {
+export const findVocabulary = (_id) => {
   return request({ url: `/vocabularies/${_id}` });
 };
 
-const searchVocabularies = (params = {}) => {
+export const searchVocabularies = (params = {}) => {
   let paramString = '';
 
   Object.keys(params).forEach((key) => {
@@ -25,78 +33,82 @@ const searchVocabularies = (params = {}) => {
   return request({ url: `/vocabularies/search?${paramString}` });
 };
 
-const createVocabulary = (data) => {
-  return request({ method: 'post', url: '/vocabularies', data });
+export const getPOS = () => {
+  return request({ url: '/vocabularies/pos' });
 };
 
-const updateVocabulary = (data) => {
-  return request({ method: 'put', url: `/vocabularies/${data._id}`, data });
+export const createVocabulary = (vocabulary) => {
+  return request({ method: 'post', url: '/vocabularies', data: { vocabulary } });
 };
 
-const saveVocabulary = (data) => {
-  if (data._id) {
-    return updateVocabulary(data);
+export const updateVocabulary = (vocabulary) => {
+  return request({ method: 'put', url: `/vocabularies/${vocabulary._id}`, data: { vocabulary } });
+};
+
+export const saveVocabulary = (vocabulary) => {
+  if (vocabulary._id) {
+    return updateVocabulary(vocabulary);
   }
 
-  return createVocabulary(data);
+  return createVocabulary(vocabulary);
 };
 
-const removeVocabulary = (_id) => {
+export const removeVocabulary = (_id) => {
   return request({ method: 'delete', url: `/vocabularies/${_id}` });
 };
 
-const markVocabulary = (_id) => {
-  return request({ url: `/vocabularies/mark/${_id}` });
+export const markVocabulary = (_id) => {
+  return request({ url: `/vocabularies/${_id}/mark` });
 };
 
-const getMarkedVocabularies = () => {
+export const getMarkedVocabularies = () => {
   return request({ url: '/vocabularies/marked' });
 };
 
-const verifyMail = (token) => {
-  return request({ url: `/verify-mail/${token}` });
+/**
+*
+*
+  USER
+*
+*
+*/
+
+export const login = (user) => {
+  return request({ method: 'post', url: '/users/login', data: user });
 };
 
-const changePassword = (data) => {
-  return request({ method: 'post', url: '/change-password', data });
+export const signup = (user) => {
+  return request({ method: 'post', url: '/users', data: { user } });
 };
 
-const forgotPassword = (data) => {
-  return request({ method: 'post', url: '/forgot-password', data });
+export const logout = () => {
+  return request({ url: '/users/logout' });
 };
 
-const resetPassword = (token, data) => {
-  return request({ method: 'post', url: `/reset-password/${token}`, data });
+export const verifyMail = (token) => {
+  return request({ url: `/users/verify-mail/${token}` });
 };
 
-const checkToken = (token) => {
-  return request({ url: `/check-token/${token}` });
+export const changePassword = (data) => {
+  return request({ method: 'post', url: '/users/change-password', data });
 };
 
-const getProfile = () => {
-  return request({ url: '/profile' });
+export const forgotPassword = (data) => {
+  return request({ method: 'post', url: '/users/forgot-password', data });
 };
 
-const updateProfile = (data) => {
-  return request({ method: 'post', url: '/profile/update', data });
+export const resetPassword = (token, data) => {
+  return request({ method: 'post', url: `/users/reset-password/${token}`, data });
 };
 
-export {
-  getAllVocabularies,
-  getDailyVocabularies,
-  findVocabulary,
-  searchVocabularies,
-  saveVocabulary,
-  createVocabulary,
-  updateVocabulary,
-  removeVocabulary,
-  markVocabulary,
-  getMarkedVocabularies,
-  verifyMail,
-  changePassword,
-  forgotPassword,
-  resetPassword,
-  checkToken,
-  getProfile,
-  updateProfile
+export const checkToken = (token) => {
+  return request({ url: `/users/check-token/${token}` });
+};
+
+export const getProfile = (id) => {
+  return request({ url: `/users/${id}` });
+};
+
+export const updateProfile = (user) => {
+  return request({ method: 'put', url: `/users/${user._id}`, data: { user } });
 };
