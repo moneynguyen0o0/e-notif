@@ -6,7 +6,11 @@ class AccessDenied extends Component {
     return (
       <div className="AccessDeniedPage">
         <Helmet title="Access denied | ENotif" />
-        <h1>403 - Access denied</h1>
+        <div className="container">
+          <div className="ErrorPage">
+            <h1>403 - Access denied</h1>
+          </div>
+        </div>
       </div>
     );
   }

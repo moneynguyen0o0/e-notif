@@ -6,7 +6,9 @@ class Vocabulary extends Component {
     return (
       <div className="VocabularyPage">
         <div className="container">
-          <VocabularyComponent />
+          <div className="VocabularyPage-main">
+            <VocabularyComponent />
+          </div>
         </div>
       </div>
     );

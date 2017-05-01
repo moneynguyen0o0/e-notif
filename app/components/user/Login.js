@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
 import { login } from '../../actions/users';
 import Spinner from '../icons/Spinner';
+import Message from '../shared/Message';
 
 const validate = (user) => {
   const errors = {};
@@ -52,6 +53,7 @@ class LoginForm extends Component {
       <form onSubmit={handleSubmit}>
         <Field name="email" type="email" component={this._renderField} label="Email" />
         <Field name="password" type="password" component={this._renderField} label="Password" />
+        <div className="Login-extra"><a href="/signup">Sign up now!</a><div className="Login-forgotPassword"><a href="/users/forgot-password">Forgot password!</a></div></div>
         <div className="Login-footer">
           <button type="submit" className="btn-info" disabled={submitting}>Log In</button>
         </div>
@@ -71,8 +73,20 @@ class LoginWrapper extends Component {
     login: PropTypes.func.isRequired
   }
 
+  state = {
+    showMessage: false
+  }
+
   _login = (user) => {
     this.props.login(user);
+
+    this.setState({
+      showMessage: true
+    });
+  }
+
+  _closeMessage() {
+    this.setState({ showMessage: false });
   }
 
   render() {
@@ -80,13 +94,20 @@ class LoginWrapper extends Component {
       user: { isWaiting, message } = {}
     } = this.props;
 
+    const { showMessage } = this.state;
+
     if (isWaiting) {
       return <Spinner />;
     }
 
+    if (message && showMessage) {
+      return (
+        <Message type="error" text={message} close={() => this._closeMessage()} />
+      );
+    }
+
     return (
       <div className="Login">
-        <h3 className="Login-message">{message}</h3>
         <LoginContainer onSubmit={this._login} />
       </div>
     );

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
 import { forgotPassword } from '../../utils/api';
 import Spinner from '../icons/Spinner';
+import Message from '../shared/Message';
 
 const validate = (values) => {
   const errors = {};
@@ -60,43 +61,67 @@ const ForgotPasswordContainer = reduxForm({
 class ForgotPasswordWrapper extends Component {
   state = {
     isWaiting: false,
-    message: ''
+    message: null,
+    showMessage: true
   }
 
   _send = (values) => {
     forgotPassword(values).then(() => {
       this.setState({
         isWaiting: false,
-        message: 'A mail sent. Please check it'
+        message: {
+          type: 'success',
+          text: 'A mail sent. Please check it'
+        },
+        showMessage: true
       });
     }).catch((err) => {
-      let message = 'A mail sent. Please check it';
+      let text = 'Error! Something is wrong!';
 
-      if (err.response.status === 404) {
-        message = 'Email not found';
+      const { status } = err.response;
+
+      if (status === 404) {
+        text = 'Email not found';
+      } else if (status === 498) {
+        text = 'Can not handle now';
       }
 
       this.setState({
         isWaiting: false,
-        message
+        message: {
+          type: 'error',
+          text
+        },
+        showMessage: true
       });
     });
 
     this.setState({ isWaiting: true });
   }
 
+  _closeMessage() {
+    this.setState({ showMessage: false });
+  }
+
   render() {
     const {
-      isWaiting, message
+      isWaiting, message, showMessage
     } = this.state;
 
     if (isWaiting) {
       return <Spinner />;
     }
 
+    if (message && showMessage) {
+      const { type, text } = message;
+
+      return (
+        <Message type={type} text={text} close={() => this._closeMessage()} />
+      );
+    }
+
     return (
       <div className="ForgotPassword">
-        <h3 className="ForgotPassword-message">{message}</h3>
         <ForgotPasswordContainer onSubmit={this._send} />
       </div>
     );

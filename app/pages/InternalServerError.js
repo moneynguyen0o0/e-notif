@@ -6,7 +6,11 @@ class InternalServerError extends Component {
     return (
       <div className="InternalServerErrorPage">
         <Helmet title="Internal server error | ENotif" />
-        <h1>500 - Internal Server Error</h1>
+        <div className="container">
+          <div className="ErrorPage">
+            <h1>500 - Internal Server Error</h1>
+          </div>
+        </div>
       </div>
     );
   }

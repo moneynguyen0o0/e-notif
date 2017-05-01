@@ -1,0 +1,39 @@
+.Login, .Signup, .ForgotPassword, .ResetPassword, .Profile, .ChangePassword {
+  margin-top: 20px;
+  width: 100%;
+
+  &-message {
+    padding: 15px 0;
+    background: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+
+  form {
+    margin: 10px auto 20px;
+
+    width: 500px;
+    padding: 40px;
+
+    background-color: #FFFFFF;
+
+    button {
+      margin-top: 15px;
+    }
+  }
+
+  &-footer {
+    text-align: right;
+  }
+}
+
+.Login {
+  &-extra {
+    width: 100%;
+  }
+
+  &-forgotPassword {
+    float: right;
+  }
+}

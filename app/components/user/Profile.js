@@ -125,7 +125,7 @@ class ProfileWrapper extends Component {
 
     return (
       <div className="Profile">
-        <h3 className="Profile-message">{message}</h3>
+        {message && <div className="Profile-message">{message}</div>}
         <ProfileContainer onSubmit={this._change} />
       </div>
     );

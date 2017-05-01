@@ -164,7 +164,7 @@ export const forgotPassword = (req, res) => {
     const token = uuidV4();
 
     if (resetPasswordExpires && resetPasswordExpires.getTime() > (new Date()).getTime()) {
-      return res.status(500).send({ message: 'Can not handle now', error: err });
+      return res.status(498).send({ message: 'Can not handle now', error: err });
     }
 
     User.update({ _id, token, resetPasswordExpires: moment(moment()).add(1, 'day') }, (err) => {

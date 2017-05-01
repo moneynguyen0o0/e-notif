@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
 import { signup } from '../../actions/users';
 import Spinner from '../icons/Spinner';
+import Message from '../shared/Message';
 
 const validate = (account) => {
   const errors = {};
@@ -66,6 +67,7 @@ class SignupForm extends Component {
         <Field name="lastname" type="text" component={this._renderField} label="Last name" />
         <Field name="email" type="email" component={this._renderField} label="Email" />
         <Field name="password" type="password" component={this._renderField} label="Password" />
+        <a href="/login">Do you have an account? Log in here!</a>
         <div className="Signup-footer">
           <button type="submit" className="btn-info" disabled={submitting}>Sign Up</button>
         </div>
@@ -111,10 +113,7 @@ class SignupWrapper extends Component {
 
     if (message && showMessage) {
       return (
-        <div>
-          <h3 className="Signup-message">{message}</h3>
-          <div onClick={() => this._closeMessage()}>X</div>
-        </div>
+        <Message type="error" text={message} close={() => this._closeMessage()} />
       );
     }
 

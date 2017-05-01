@@ -48,7 +48,7 @@ class DailyVocabularies extends Component {
       });
 
       return (
-        <div key={index}>
+        <div key={index} className="Vocabulary">
           <div className="Vocabulary-word">{word}</div>
           <div className="Vocabulary-pronunciation">[ {pronunciation} ]</div>
           <div className="Vocabulary-title">P.O.S</div>
@@ -57,13 +57,13 @@ class DailyVocabularies extends Component {
           <div className="Vocabulary-definition">{definitionContent}</div>
           <div className="Vocabulary-title">Exmaples</div>
           <div className="Vocabulary-example">{exampleContent}</div>
-          <div className="Vocabulary-mark">{markContent}</div>
+          <div className="Vocabulary-mark text-right">{markContent}</div>
         </div>
       );
     });
 
     return (
-      <div className="DailyVocabularies">
+      <div className="Vocabularies">
         {content}
       </div>
     );

@@ -6,7 +6,11 @@ class About extends Component {
     return (
       <div className="AboutPage">
         <Helmet title="About | ENotif" />
-        <h3>About</h3>
+        <div className="container">
+          <div className="AboutPage-main">
+            <div>...</div>
+          </div>
+        </div>
       </div>
     );
   }

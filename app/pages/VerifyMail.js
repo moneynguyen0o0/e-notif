@@ -7,7 +7,9 @@ class VerifyMail extends Component {
     return (
       <div className="VerifyMailPage">
         <Helmet title="Verify mail | ENotif" />
-        <VerifyMailComponent />
+        <div className="container">
+          <VerifyMailComponent />
+        </div>
       </div>
     );
   }

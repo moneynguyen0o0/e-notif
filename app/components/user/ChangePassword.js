@@ -102,7 +102,7 @@ class ChangePasswordWrapper extends Component {
 
     return (
       <div className="ChangePassword">
-        <h3 className="ChangePassword-message">{message}</h3>
+        {message && <div className="ChangePassword-message">{message}</div>}
         <ChangePasswordContainer onSubmit={this._change} />
       </div>
     );

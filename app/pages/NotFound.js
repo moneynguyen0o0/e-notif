@@ -6,7 +6,11 @@ class NotFound extends Component {
     return (
       <div className="NotFoundPage">
         <Helmet title="Page not found | ENotif" />
-        <h1>404 - Page Not Found</h1>
+        <div className="container">
+          <div className="ErrorPage">
+            <h1>404 - Page Not Found</h1>
+          </div>
+        </div>
       </div>
     );
   }

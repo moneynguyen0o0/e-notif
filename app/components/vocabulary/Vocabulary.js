@@ -79,7 +79,7 @@ class Vocabulary extends Component {
         <div className="Vocabulary-definition">{definitionContent}</div>
         <div className="Vocabulary-title">Exmaples</div>
         <div className="Vocabulary-example">{exampleContent}</div>
-        <div className="Vocabulary-mark">{markContent}</div>
+        <div className="Vocabulary-mark text-right">{markContent}</div>
       </div>
     );
   }
