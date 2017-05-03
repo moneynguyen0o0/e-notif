@@ -4,7 +4,7 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { isAdmin } from '../../utils/UserUtil';
 import { logout } from '../../actions/users';
-import Notification from '../Notification';
+import Notification from '../media/Notification';
 
 class Header extends Component {
   static propTypes = {
@@ -26,7 +26,7 @@ class Header extends Component {
 
     const rightNav = [];
 
-    rightNav.push(<Notification key={rightNav.length} />);
+    rightNav.push(<a key={rightNav.length}><Notification /></a>);
 
     if (authenticated) {
       const userId = user._id;

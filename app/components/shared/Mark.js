@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { markVocabulary } from '../utils/api';
+import { markVocabulary } from '../../utils/api';
 
 class Mark extends Component {
   static propTypes = {
@@ -42,9 +42,9 @@ class Mark extends Component {
     };
 
     return (
-      <a {...props}>
+      <div className="Mark" {...props}>
         <i className={`fa ${marked ? 'fa-bookmark' : 'fa-bookmark-o'}`} />
-      </a>
+      </div>
     );
   }
 }

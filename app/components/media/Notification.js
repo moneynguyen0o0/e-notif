@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import store from 'store';
 import { connect } from 'react-redux';
-import { notify, close as closeNotification } from '../utils/notify';
-import { getMarkedVocabularies, searchVocabularies } from '../utils/api';
+import { notify, close as closeNotification } from '../../utils/notify';
+import { getMarkedVocabularies, searchVocabularies } from '../../utils/api';
 
 const notifyKey = '_nofify';
 
-const TIMEOUT = 5000;
+const TIMEOUT = 5 * 60 * 1000;
 
 class Notificaton extends Component {
   static propTypes = {
@@ -81,6 +81,8 @@ class Notificaton extends Component {
   }
 
   _startNotificationInterval() {
+    this._notifyVocabulary();
+    
     this.notificationInterval = setInterval(() => this._notifyVocabulary(), TIMEOUT);
   }
 
@@ -107,9 +109,15 @@ class Notificaton extends Component {
         definitions
       } = vocabulary;
 
+      let body = '';
+
+      definitions.forEach(definition => {
+        body += `- ${definition}\n`;
+      });
+
       this.notificationVoca = notify(word, {
         icon: '/favicon.ico',
-        body: definitions.toString()
+        body
       }, {
         onclick: () => {
           window.open(`${location.protocol}//${location.host}/vocabularies/${_id}`, '_blank');
@@ -132,9 +140,9 @@ class Notificaton extends Component {
     const { ring } = this.state;
 
     return (
-      <a className="Notification">
+      <div className="Notification">
         <i className={`fa ${ring ? 'fa-bell' : 'fa-bell-o'}`} onClick={() => this._ringBell()} />
-      </a>
+      </div>
     );
   }
 }

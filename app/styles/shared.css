@@ -1,3 +1,8 @@
+.Mark {
+  display: inline-block;
+  cursor: pointer;
+}
+
 .Message {
   background-color: #FFFFFF;
   padding: 20px 15px;
