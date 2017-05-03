@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../../actions/vocabulary';
 import { getPOS } from '../../utils/api';
 import Spinner from '../icons/Spinner';
-import Mark from '../Mark';
+import Mark from '../shared/Mark';
+import Audio from '../media/Audio';
 import VocabularyForm from './VocabularyForm';
 
 const editStyles = {
@@ -152,6 +153,17 @@ class VocabularyList extends Component {
           accessor: vocabulary => vocabulary.examples.map((example, index) => {
             return <div key={index} style={customRow}>- {example}</div>;
           })
+        }, {
+          header: '',
+          id: 'audio',
+          width: 50,
+          accessor: vocabulary => {
+            return (
+              <div className="text-center">
+                <Audio src={vocabulary.audio} />
+              </div>
+            );
+          }
         }, {
           header: '',
           id: 'mark',

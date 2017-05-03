@@ -53,12 +53,10 @@ export const create = (req, res) => {
   }
 
   const {
-    vocabulary: vocabularyData = {}
+    vocabulary = {}
   } = req.body;
 
-  const newVocabulary = _.pick(vocabularyData, ['word', 'pronunciation', 'pos', 'definitions', 'examples']);
-
-  Vocabulary.create(newVocabulary, (err, vocabulary) => {
+  Vocabulary.create(vocabulary, (err, vocabulary) => {
     if (err) return res.status(500).send({ message: 'Something went wrong creating the data', error: err });
 
     return res.json(vocabulary);
@@ -71,12 +69,8 @@ export const update = (req, res) => {
   }
 
   const {
-    vocabulary: vocabularyData = {}
+    vocabulary = {}
   } = req.body;
-
-  const vocabulary = _.pick(vocabularyData, ['_id', 'word', 'pronunciation', 'pos', 'definitions', 'examples']);
-
-  vocabulary.updated = new Date();
 
   Vocabulary.update(vocabulary, (err, vocabulary) => {
     if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });

@@ -9,13 +9,19 @@ const getAll = (done) => {
 };
 
 const create = (vocabulary, done) => {
+  vocabulary = _.pick(vocabulary, ['word', 'audio', 'pronunciation', 'pos', 'definitions', 'examples']);
+
   Vocabulary.create(vocabulary, (err, vocabulary) => {
     done(err, vocabulary);
   });
 };
 
 const update = (vocabulary, done) => {
+  vocabulary = _.pick(vocabulary, ['_id', 'word', 'audio', 'pronunciation', 'pos', 'definitions', 'examples', 'users']);
+
   const { _id } = vocabulary;
+
+  vocabulary.updated = new Date();
 
   Vocabulary.findOneAndUpdate({ _id }, _.omit(vocabulary, ['_id', '__v']), { new: true }, (err, vocabulary) => {
     done(err, vocabulary);

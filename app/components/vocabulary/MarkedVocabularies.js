@@ -3,7 +3,8 @@ import ReactTable from 'react-table';
 import { Link } from 'react-router';
 import { getMarkedVocabularies } from '../../utils/api';
 import Spinner from '../icons/Spinner';
-import Mark from '../Mark';
+import Audio from '../media/Audio';
+import Mark from '../shared/Mark';
 
 class MarkedVocabularies extends Component {
   state = {
@@ -61,6 +62,17 @@ class MarkedVocabularies extends Component {
           accessor: vocabulary => vocabulary.examples.map((example, index) => {
             return <div key={index} style={customRow}>- {example}</div>;
           })
+        }, {
+          header: '',
+          id: 'audio',
+          width: 50,
+          accessor: vocabulary => {
+            return (
+              <div className="text-center">
+                <Audio src={vocabulary.audio} />
+              </div>
+            );
+          }
         }, {
           header: '',
           id: 'mark',

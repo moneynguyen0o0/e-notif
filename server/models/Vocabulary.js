@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const VocabularySchema = new Schema({
   word: { type: String, required: true, maxlength: 25 },
+  audio: { type: String, required: true },
   pronunciation: { type: String, required: true, maxlength: 25 },
   pos: { type: [{ type: String, enum: POS }], required: true },
   definitions: { type: [{ type: String, maxlength: 250, required: true }], required: true },

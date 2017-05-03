@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Mark from '../Mark';
+import Audio from '../media/Audio';
+import Mark from '../shared/Mark';
 
 class DailyVocabularies extends Component {
   static propTypes = {
@@ -25,6 +26,7 @@ class DailyVocabularies extends Component {
       const {
         _id,
         word,
+        audio,
         pronunciation,
         pos,
         definitions,
@@ -51,6 +53,7 @@ class DailyVocabularies extends Component {
         <div key={index} className="Vocabulary">
           <div className="Vocabulary-word">{word}</div>
           <div className="Vocabulary-pronunciation">[ {pronunciation} ]</div>
+          <div className="Vocabulary-audio"><Audio src={audio} /></div>
           <div className="Vocabulary-title">P.O.S</div>
           <div className="Vocabulary-pos">{posContent}</div>
           <div className="Vocabulary-title">Definitions</div>

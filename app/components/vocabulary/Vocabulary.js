@@ -3,7 +3,8 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { findVocabulary } from '../../utils/api';
 import Spinner from '../icons/Spinner';
-import Mark from '../Mark';
+import Audio from '../media/Audio';
+import Mark from '../shared/Mark';
 
 class Vocabulary extends Component {
   static propTypes = {
@@ -46,6 +47,7 @@ class Vocabulary extends Component {
     const {
       _id,
       word,
+      audio,
       pronunciation,
       pos,
       definitions,
@@ -72,6 +74,7 @@ class Vocabulary extends Component {
       <div className="Vocabulary">
         {vocabulary && <Helmet title={`${vocabulary.word} | ENotif`} />}
         <div className="Vocabulary-word">{word}</div>
+        <div className="Vocabulary-audio"><Audio src={audio} /></div>
         <div className="Vocabulary-pronunciation">[ {pronunciation} ]</div>
         <div className="Vocabulary-title">P.O.S</div>
         <div className="Vocabulary-pos">{posContent}</div>

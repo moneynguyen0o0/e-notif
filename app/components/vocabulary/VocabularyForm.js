@@ -18,6 +18,7 @@ class VocabularyForm extends Component {
   _validate = (vocabulary) => {
     const {
       word,
+      audio,
       pronunciation,
       definitions,
       examples
@@ -27,6 +28,10 @@ class VocabularyForm extends Component {
 
     if (!word) {
       errors.word = 'Required';
+    }
+
+    if (!audio) {
+      errors.audio = 'Required';
     }
 
     if (!pronunciation) {
@@ -151,6 +156,7 @@ class VocabularyForm extends Component {
         <div className="form-body">
           {_id && <input name="_id" type="hidden" value={_id} />}
           <Field name="word" type="text" component={this._renderField} label="Word" />
+          <Field name="audio" type="url" component={this._renderField} label="Audio" />
           <Field name="pronunciation" type="text" component={this._renderField} label="Pronunciation" />
           <div>
             <label htmlFor="pos">P.O.S</label>
