@@ -69,6 +69,12 @@ const getDaily = (done) => {
   });
 };
 
+const getRandom = (done) => {
+  Vocabulary.aggregate({ $sample: { size: 5 } }).exec((err, vocabularies) => {
+    done(err, vocabularies);
+  });
+};
+
 export default {
   getAll,
   findById,
@@ -77,5 +83,6 @@ export default {
   remove,
   search,
   getMarked,
-  getDaily
+  getDaily,
+  getRandom
 };

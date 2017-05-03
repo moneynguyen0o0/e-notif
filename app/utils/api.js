@@ -16,6 +16,10 @@ export const getDailyVocabularies = () => {
   return request({ url: '/vocabularies/daily' });
 };
 
+export const getRandomVocabularies = () => {
+  return request({ url: '/vocabularies/random' });
+};
+
 export const findVocabulary = (_id) => {
   return request({ url: `/vocabularies/${_id}` });
 };
