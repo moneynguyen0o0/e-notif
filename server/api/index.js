@@ -19,6 +19,7 @@ import {
   update as updateVocabulary,
   remove as removeVocabulary,
   getDaily as getDailyVocabularies,
+  getRandom as getRandomVocabularies,
   getMarked as getMarkedVocabularies,
   getPOS
 } from './middlewares/Vocabulary';
@@ -37,6 +38,7 @@ export default (router) => {
         .get((req, res) => getUser(req, res))
         .put((req, res) => updateUser(req, res));
 
+  router.get('/vocabularies/random', (req, res) => getRandomVocabularies(req, res));
   router.get('/vocabularies/daily', (req, res) => getDailyVocabularies(req, res));
   router.get('/vocabularies/search', (req, res) => searchVocabularies(req, res));
   router.get('/vocabularies/:id/mark', (req, res) => markVocabulary(req, res));

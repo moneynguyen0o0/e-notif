@@ -1,1 +1,1 @@
-export default ['noun', 'verb', 'adjective'];
+export default ['noun', 'verb', 'adjective', 'adverb', 'preposition'];

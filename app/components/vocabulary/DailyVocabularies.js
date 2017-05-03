@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getDailyVocabularies } from '../../utils/api';
+import { getRandomVocabularies } from '../../utils/api';
 import Spinner from '../icons/Spinner';
 import Vocabularies from './Vocabularies';
 
@@ -9,7 +9,7 @@ class DailyVocabularies extends Component {
   }
 
   componentDidMount() {
-    getDailyVocabularies().then((vocabularies) => {
+    getRandomVocabularies().then((vocabularies) => {
       this.setState({ vocabularies });
     });
   }
