@@ -147,3 +147,26 @@ export const getRandom = (req, res) => {
     return res.json(vocabularies);
   });
 };
+
+export const download = (req, res) => {
+  const { user } = req;
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  Vocabulary.getAll((err, vocabularies) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    const data = JSON.stringify(vocabularies);
+
+    res.setHeader('Content-disposition', 'attachment; filename=data.json');
+    res.setHeader('Content-type', 'application/json');
+
+    res.write(data, (err) => {
+      if (err) return res.status(500).send({ message: 'Something went wrong downloading the data', error: err });
+
+      res.end();
+    });
+  });
+};
