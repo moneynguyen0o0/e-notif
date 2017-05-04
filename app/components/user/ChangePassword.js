@@ -81,10 +81,16 @@ class ChangePasswordWrapper extends Component {
         isWaiting: false,
         message: 'Password changed success'
       });
-    }).catch(() => {
+    }).catch((err) => {
+      let message = 'Something went wrong updating the data';
+
+      if (err.response.status === 401) {
+        message = 'New password is not match current one';
+      }
+
       this.setState({
         isWaiting: false,
-        message: 'New password is not match current one'
+        message
       });
     });
 
