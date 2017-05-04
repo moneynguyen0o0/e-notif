@@ -21,6 +21,7 @@ import {
   getDaily as getDailyVocabularies,
   getRandom as getRandomVocabularies,
   getMarked as getMarkedVocabularies,
+  download as downloadVocabularies,
   getPOS
 } from './middlewares/Vocabulary';
 
@@ -44,6 +45,7 @@ export default (router) => {
   router.get('/vocabularies/:id/mark', (req, res) => markVocabulary(req, res));
   router.get('/vocabularies/marked', (req, res) => getMarkedVocabularies(req, res));
   router.get('/vocabularies/pos', (req, res) => getPOS(req, res));
+  router.get('/vocabularies/download', (req, res) => downloadVocabularies(req, res));
 
   router.route('/vocabularies')
         .get((req, res) => getAllVocabularies(req, res))

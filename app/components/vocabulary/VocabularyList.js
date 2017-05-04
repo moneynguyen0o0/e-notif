@@ -234,6 +234,7 @@ class VocabularyList extends Component {
           columns={columns}
           defaultPageSize={10}
         />
+        <div className="btn-container"><a className="button btn-success" href="/api/vocabularies/download" target="_blank">Export</a></div>
       </div>
     );
   }
