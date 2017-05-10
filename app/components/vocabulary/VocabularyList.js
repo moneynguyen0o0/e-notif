@@ -128,15 +128,15 @@ class VocabularyList extends Component {
           header: 'Word',
           accessor: 'word',
           render: props => <Link to={`/vocabularies/${props.row._id}`}>{props.value}</Link>,
-          width: 200
+          width: 150
         }, {
           header: 'Pronunciation',
           accessor: 'pronunciation',
-          width: 200
+          width: 150
         }, {
           header: 'P.O.S',
           id: 'pos',
-          width: 200,
+          width: 150,
           accessor: vocabulary => vocabulary.pos.map((item, index) => {
             const content = `${index !== 0 ? ', ' : ''}${item}`;
             return <span key={index}>{content}</span>;
@@ -184,7 +184,7 @@ class VocabularyList extends Component {
         }, {
           header: '',
           id: 'options',
-          width: 100,
+          width: 75,
           accessor: vocabulary => <div className="text-center">
             <a onClick={() => this._edit(vocabulary)}>
               <i className="fa fa-pencil-square-o" />
