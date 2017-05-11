@@ -42,4 +42,28 @@
   &-pos, &-definition, &-example {
     padding-left: 30px;
   }
+
+  @media screen and (max-width: 1200px) {
+    &-word {
+      font-size: 6em;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    &-word {
+      font-size: 5em;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    &-word {
+      font-size: 4em;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    &-word {
+      font-size: 2.5em;
+    }
+  }
 }

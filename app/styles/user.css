@@ -26,6 +26,19 @@
   &-footer {
     text-align: right;
   }
+
+  @media screen and (max-width: 640px) {
+    form {
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    form {
+      width: 100%;
+      padding: 20px;
+    }
+  }
 }
 
 .Login {

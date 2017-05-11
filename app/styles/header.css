@@ -49,15 +49,18 @@
   }
 
   @media screen and (max-width: 768px) {
+    &-search {
+      width: calc(100% - 52px - 77px);
+    }
+
     &-left, &-right {
       float: none;
       display: block;
     }
 
     &-left {
-      a:first-child {
-        display: block;
-      }
+      margin-left: 0;
+      clear: both;
     }
 
     a {
@@ -65,15 +68,15 @@
     }
 
     a.icon {
-      float: right;
       display: block;
+      position: absolute;
+      right: 15px;
+      top: 10px;
     }
 
     &.responsive {
-      a.icon {
-        position: absolute;
-        right: 15px;
-        top: 0;
+      a.notification {
+        display: none;
       }
 
       a {
@@ -112,5 +115,13 @@
     color: #34495e;
     font-size: 10pt;
     padding: initial;
+  }
+
+  @media screen and (max-width: 640px) {
+    width: 100%;
+
+    input {
+      width: calc(100% - 52px);
+    }
   }
 }

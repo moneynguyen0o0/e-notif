@@ -26,7 +26,7 @@ class Header extends Component {
 
     const rightNav = [];
 
-    rightNav.push(<a key={rightNav.length}><Notification /></a>);
+    rightNav.push(<a key={rightNav.length} className="notification"><Notification /></a>);
 
     if (authenticated) {
       const userId = user._id;
