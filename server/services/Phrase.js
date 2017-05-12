@@ -33,9 +33,16 @@ const remove = (_id, done) => {
   });
 };
 
+const getAllByUser = (userId, done) => {
+  Phrase.find({ users: userId }).sort({ created: 'desc' }).exec((err, phrases) => {
+    done(err, phrases);
+  });
+};
+
 export default {
   getAll,
   create,
   update,
-  remove
+  remove,
+  getAllByUser
 };

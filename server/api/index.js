@@ -27,7 +27,7 @@ import {
 } from './middlewares/Vocabulary';
 
 import {
-  getAll as getAllPhrases,
+  getAllByUser as getAllPhrasesByUser,
   create as createPhrase,
   update as updatePhrase,
   remove as removePhrase
@@ -64,7 +64,7 @@ export default (router) => {
         .delete((req, res) => removeVocabulary(req, res));
 
   router.route('/phrases')
-        .get((req, res) => getAllPhrases(req, res))
+        .get((req, res) => getAllPhrasesByUser(req, res))
         .post((req, res) => createPhrase(req, res));
   router.route('/phrases/:id')
         .put((req, res) => updatePhrase(req, res))

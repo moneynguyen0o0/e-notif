@@ -13,6 +13,22 @@ export const getAll = (req, res) => {
   });
 };
 
+export const getAllByUser = (req, res) => {
+  const {
+    user
+  } = req;
+
+  if (!user) {
+    return res.sendStatus(401);
+  }
+
+  Phrase.getAllByUser(user._id, (err, phrases) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    return res.json(phrases);
+  });
+};
+
 export const remove = (req, res) => {
   if (!req.user) {
     return res.sendStatus(401);
