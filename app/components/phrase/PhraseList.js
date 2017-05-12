@@ -43,7 +43,7 @@ class PhraseList extends Component {
     this.setState({ isDeletingModal: false });
   }
 
-  _saveVocabulary(phrase) {
+  _savePhrase(phrase) {
     this.props.savePhrase(phrase);
 
     this.setState({
@@ -93,10 +93,6 @@ class PhraseList extends Component {
     if (!phrases) {
       return <Spinner />;
     }
-
-    const customRow = {
-      whiteSpace: 'normal'
-    };
 
     const columns = [{
       header: 'PHRASES',

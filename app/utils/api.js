@@ -77,28 +77,28 @@ export const getMarkedVocabularies = () => {
 *
 */
 
-export const getAllPharses = () => {
-  return request({ url: '/pharses' });
+export const getAllPhrases = () => {
+  return request({ url: '/phrases' });
 };
 
-export const createPharse = (pharse) => {
-  return request({ method: 'post', url: '/pharses', data: { pharse } });
+export const createPhrase = (phrase) => {
+  return request({ method: 'post', url: '/phrases', data: { phrase } });
 };
 
-export const updatePharse = (pharse) => {
-  return request({ method: 'put', url: `/pharses/${vocabulary._id}`, data: { pharse } });
+export const updatePhrase = (phrase) => {
+  return request({ method: 'put', url: `/phrases/${phrase._id}`, data: { phrase } });
 };
 
-export const savePharse = (pharse) => {
-  if (pharse._id) {
-    return updateVocabulary(pharse);
+export const savePhrase = (phrase) => {
+  if (phrase._id) {
+    return updateVocabulary(phrase);
   }
 
-  return createVocabulary(pharse);
+  return createVocabulary(phrase);
 };
 
-export const removePharse = (_id) => {
-  return request({ method: 'delete', url: `/pharses/${_id}` });
+export const removePhrase = (_id) => {
+  return request({ method: 'delete', url: `/phrases/${_id}` });
 };
 
 /**

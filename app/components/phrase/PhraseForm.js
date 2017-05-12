@@ -11,8 +11,7 @@ class PhraseForm extends Component {
 
   _validate = (phrase) => {
     const {
-      content,
-      note
+      content
     } = phrase;
 
     const errors = {};
@@ -24,7 +23,7 @@ class PhraseForm extends Component {
     if (!_.isEmpty(errors)) {
       throw new SubmissionError(errors);
     } else {
-      this.props.saveVocabulary(phrase);
+      this.props.savePhrase(phrase);
     }
   }
 
@@ -55,7 +54,7 @@ class PhraseForm extends Component {
           {_id && <input name="_id" type="hidden" value={_id} />}
           <Field name="content" type="text" component={this._renderField} label="Content" />
           <div>
-            <label>Notes</label>
+            <label htmlFor="note">Notes</label>
             <div>
               <Field name="note" component="textarea" />
             </div>
@@ -76,11 +75,11 @@ class PhraseFormWrapper extends Component {
   }
 
   render() {
-    const { phrase, savePhrase } = this.props;
+    const { phrase = {}, savePhrase } = this.props;
 
     const PhraseFormContainer = reduxForm({
       form: 'phraseForm',  // a unique identifier for this form
-      initialValues: phrase
+      initialValues: phrase,
       savePhrase
     })(PhraseForm);
 

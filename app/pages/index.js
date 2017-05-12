@@ -4,6 +4,7 @@ export { default as Search } from './Search';
 export { default as Vocabulary } from './Vocabulary';
 export { default as MyVocabularies } from './MyVocabularies';
 export { default as ManageVocabularies } from './ManageVocabularies';
+export { default as ManagePhrases } from './ManagePhrases';
 export { default as About } from './About';
 export { default as Login } from './Login';
 export { default as Signup } from './Signup';
