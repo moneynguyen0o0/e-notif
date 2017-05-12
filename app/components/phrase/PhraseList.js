@@ -94,15 +94,21 @@ class PhraseList extends Component {
       return <Spinner />;
     }
 
+    const customRow = {
+      whiteSpace: 'normal'
+    };
+
     const columns = [{
       header: 'PHRASES',
       columns: [
         {
           header: 'Content',
-          accessor: 'content'
+          accessor: 'content',
+          render: props => <div style={customRow}>{props.value}</div>
         }, {
           header: 'Notes',
-          accessor: 'note'
+          accessor: 'note',
+          render: props => <div style={customRow}>{props.value}</div>
         }, {
           header: '',
           id: 'options',

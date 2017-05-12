@@ -91,10 +91,10 @@ export const updatePhrase = (phrase) => {
 
 export const savePhrase = (phrase) => {
   if (phrase._id) {
-    return updateVocabulary(phrase);
+    return updatePhrase(phrase);
   }
 
-  return createVocabulary(phrase);
+  return createPhrase(phrase);
 };
 
 export const removePhrase = (_id) => {

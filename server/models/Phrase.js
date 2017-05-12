@@ -7,7 +7,7 @@ const PhraseSchema = new Schema({
   note: { type: String, maxlength: 250 },
   created: { type: Date, default: Date.now },
   updated: Date,
-  users: String
+  user: String
 });
 
 export default mongoose.model('Phrase', PhraseSchema);

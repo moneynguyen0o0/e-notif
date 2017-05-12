@@ -8,7 +8,7 @@ const getAll = (done) => {
 };
 
 const create = (phrase, done) => {
-  phrase = _.pick(phrase, ['content', 'note', 'users']);
+  phrase = _.pick(phrase, ['content', 'note', 'user']);
 
   Phrase.create(phrase, (err, phrase) => {
     done(err, phrase);
@@ -34,7 +34,7 @@ const remove = (_id, done) => {
 };
 
 const getAllByUser = (userId, done) => {
-  Phrase.find({ users: userId }).sort({ created: 'desc' }).exec((err, phrases) => {
+  Phrase.find({ user: userId }).sort({ created: 'desc' }).exec((err, phrases) => {
     done(err, phrases);
   });
 };
