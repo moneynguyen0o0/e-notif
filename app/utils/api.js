@@ -72,6 +72,38 @@ export const getMarkedVocabularies = () => {
 /**
 *
 *
+  PHRASE
+*
+*
+*/
+
+export const getAllPharses = () => {
+  return request({ url: '/pharses' });
+};
+
+export const createPharse = (pharse) => {
+  return request({ method: 'post', url: '/pharses', data: { pharse } });
+};
+
+export const updatePharse = (pharse) => {
+  return request({ method: 'put', url: `/pharses/${vocabulary._id}`, data: { pharse } });
+};
+
+export const savePharse = (pharse) => {
+  if (pharse._id) {
+    return updateVocabulary(pharse);
+  }
+
+  return createVocabulary(pharse);
+};
+
+export const removePharse = (_id) => {
+  return request({ method: 'delete', url: `/pharses/${_id}` });
+};
+
+/**
+*
+*
   USER
 *
 *
