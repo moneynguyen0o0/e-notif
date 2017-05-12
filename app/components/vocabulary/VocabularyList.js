@@ -29,7 +29,6 @@ class VocabularyList extends Component {
 
   state = {
     POS: [],
-    vocabularies: [],
     vocabulary: undefined,
     isEditingModal: false,
     isDeletingModal: false

@@ -10,6 +10,7 @@ import {
   forgotPassword,
   resetPassword,
   checkToken } from './middlewares/User';
+
 import {
   getAll as getAllVocabularies,
   findById as findByIdVocabulary,
@@ -24,6 +25,13 @@ import {
   download as downloadVocabularies,
   getPOS
 } from './middlewares/Vocabulary';
+
+import {
+  getAllByUser as getAllPhrasesByUser,
+  create as createPhrase,
+  update as updatePhrase,
+  remove as removePhrase
+} from './middlewares/Phrase';
 
 export default (router) => {
   router.post('/users', (req, res) => createUser(req, res));
@@ -54,6 +62,13 @@ export default (router) => {
         .get((req, res) => findByIdVocabulary(req, res))
         .put((req, res) => updateVocabulary(req, res))
         .delete((req, res) => removeVocabulary(req, res));
+
+  router.route('/phrases')
+        .get((req, res) => getAllPhrasesByUser(req, res))
+        .post((req, res) => createPhrase(req, res));
+  router.route('/phrases/:id')
+        .put((req, res) => updatePhrase(req, res))
+        .delete((req, res) => removePhrase(req, res));
 
   return router;
 }

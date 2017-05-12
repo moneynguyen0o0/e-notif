@@ -36,6 +36,7 @@ class Header extends Component {
       }
 
       rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}/vocabularies`}>My vocabularies</Link>);
+      rightNav.push(<Link key={rightNav.length} to="/manage/phrases">My phrases</Link>);
       rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}`}>Profile</Link>);
       rightNav.push(<Link key={rightNav.length} onClick={() => logout()} to="/">Logout</Link>);
     } else {

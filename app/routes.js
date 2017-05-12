@@ -8,6 +8,7 @@ import {
   MyVocabularies,
   Vocabulary,
   ManageVocabularies,
+  ManagePhrases,
   About,
   Login,
   Signup,
@@ -74,6 +75,7 @@ export default (store) => {
       <Route path="search" component={Search} />
       <Route path="vocabularies/:id" component={Vocabulary} />
       <Route path="profile/:id/vocabularies" component={MyVocabularies} onEnter={requireAuth(authenticated)} />
+      <Route path="manage/phrases" component={ManagePhrases} onEnter={requireAuth(authenticated)} />
       <Route path="manage/vocabularies" component={ManageVocabularies} onEnter={requireAdminAuth(authenticated, isAdmin(user))} />
       <Route path="about" component={About} />
       <Route path="login" component={Login} onEnter={redirectAuth(authenticated)} />

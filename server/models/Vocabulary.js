@@ -4,7 +4,7 @@ import POS from '../constants/POS';
 const Schema = mongoose.Schema;
 
 const VocabularySchema = new Schema({
-  word: { type: String, required: true, maxlength: 25 },
+  word: { type: String, unique: true, required: true, maxlength: 25 },
   audio: { type: String, required: true },
   pronunciation: { type: String, required: true, maxlength: 25 },
   pos: { type: [{ type: String, enum: POS }], required: true },
