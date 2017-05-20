@@ -18,7 +18,6 @@ class VocabularyForm extends Component {
   _validate = (vocabulary) => {
     const {
       word,
-      audio,
       pronunciation,
       definitions,
       examples
@@ -28,10 +27,6 @@ class VocabularyForm extends Component {
 
     if (!word) {
       errors.word = 'Required';
-    }
-
-    if (!audio) {
-      errors.audio = 'Required';
     }
 
     if (!pronunciation) {
