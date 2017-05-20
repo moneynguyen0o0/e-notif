@@ -161,7 +161,7 @@ class VocabularyList extends Component {
 
             return (
               <div className="text-center">
-                <Audio key={_id} src={audio} />
+                {audio && <Audio key={_id} src={audio} />}
               </div>
             );
           }

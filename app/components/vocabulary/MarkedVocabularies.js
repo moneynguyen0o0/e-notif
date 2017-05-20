@@ -67,9 +67,11 @@ class MarkedVocabularies extends Component {
           id: 'audio',
           width: 50,
           accessor: vocabulary => {
+            const { _id, audio } = vocabulary;
+
             return (
               <div className="text-center">
-                <Audio src={vocabulary.audio} />
+                {audio && <Audio key={_id} src={audio} />}
               </div>
             );
           }
