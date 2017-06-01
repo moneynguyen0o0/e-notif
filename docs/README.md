@@ -1,6 +1,6 @@
 # TODO
 - Autocomplete search
-- Refactor to athenticate middleware
+- Use middleware for athentication
 - CSRF token
 - Update spinner when CRUD
 # Authenticate and authority
