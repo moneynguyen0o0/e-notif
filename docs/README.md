@@ -1,6 +1,9 @@
 # TODO
+- Autocomplete search
+- Refactor to athenticate middleware
 - CSRF token
 - Update spinner when CRUD
+# Authenticate and authority
 - https://medium.com/@rajaraodv/securing-react-redux-apps-with-jwt-tokens-fcfe81356ea0
 - http://blog.slatepeak.com/build-a-react-redux-app-with-json-web-token-jwt-authentication/
 # Notification
@@ -26,9 +29,6 @@ https://github.com/gokulkrishh/how-to-setup-webpack-2
 
 https://github.com/postcss/postcss-loader
 
-# Deploying React + Redux to Heroku
-http://www.thegreatcodeadventure.com/deploying-react-redux-to-heroku/
-
 # Hits
 http://stackoverflow.com/questions/32642685/babel-cli-copy-nonjs-files
 http://stackoverflow.com/questions/37013851/error-when-running-babel-node
@@ -51,3 +51,6 @@ http://stackoverflow.com/questions/18148166/find-document-with-array-that-contai
 
 # Send email
 http://javascript.tutorialhorizon.com/2015/07/02/send-email-node-js-express/
+
+# Deploying React + Redux to Heroku
+http://www.thegreatcodeadventure.com/deploying-react-redux-to-heroku/
