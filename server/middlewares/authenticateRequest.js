@@ -3,8 +3,6 @@ import pathToRegexp from 'path-to-regexp';
 import { interceptUrls } from '../../config/security';
 import { isAdmin } from '../utils/UserUtil';
 
-// http://thejackalofjavascript.com/architecting-a-restful-node-js-app/
-
 export default () => {
   return (req, res, next) => {
     const {

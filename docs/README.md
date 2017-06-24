@@ -1,6 +1,4 @@
 # TODO
-- Autocomplete search
-- Use middleware for athentication
 - CSRF token
 - Update spinner when CRUD
 # Fuzzy search
@@ -41,6 +39,9 @@ https://www.robinwieruch.de/react-eslint-webpack-babel/
 # React form validation
 https://medium.com/@KozhukharenkoN/react-form-validation-with-mobx-8ce00233ae27
 https://github.com/lorenseanstewart/react-controlled-form-components
+
+# Middleware for athentication
+http://thejackalofjavascript.com/architecting-a-restful-node-js-app/
 
 # CRUD
 https://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4
