@@ -16,6 +16,7 @@ import {
   findById as findByIdVocabulary,
   mark as markVocabulary,
   search as searchVocabularies,
+  searchFuzzy as searchFuzzyVocabularies,
   create as createVocabulary,
   update as updateVocabulary,
   remove as removeVocabulary,
@@ -50,6 +51,7 @@ export default (router) => {
   router.get('/vocabularies/random', (req, res) => getRandomVocabularies(req, res));
   router.get('/vocabularies/daily', (req, res) => getDailyVocabularies(req, res));
   router.get('/vocabularies/search', (req, res) => searchVocabularies(req, res));
+  router.get('/vocabularies/search/autocomplete', (req, res) => searchFuzzyVocabularies(req, res));
   router.get('/vocabularies/:id/mark', (req, res) => markVocabulary(req, res));
   router.get('/vocabularies/marked', (req, res) => getMarkedVocabularies(req, res));
   router.get('/vocabularies/pos', (req, res) => getPOS(req, res));

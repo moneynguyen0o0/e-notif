@@ -2,6 +2,10 @@ import _ from 'lodash';
 import moment from 'moment';
 import Vocabulary from '../models/Vocabulary';
 
+const escapeRegex = (text) => {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 const getAll = (done) => {
   Vocabulary.find({}).sort({ created: 'desc' }).exec((err, vocabularies) => {
     done(err, vocabularies);
@@ -55,9 +59,23 @@ const search = (params, done) => {
     criteria['$text'] = { $search : keyword };
   }
 
-  Vocabulary.find(criteria).skip(start).limit(end).sort({ created: 'desc' }).exec((err, vocabularies) => {
+  Vocabulary.find(criteria).skip(parseInt(start)).limit(parseInt(end)).sort({ created: 'desc' }).exec((err, vocabularies) => {
     done(err, vocabularies);
   });
+};
+
+const searchFuzzy = (params, done) => {
+  const { keyword = '', limit = 5 } = params;
+
+  if (keyword.length > 1) {
+    const regex = new RegExp(escapeRegex(keyword), 'gi');
+
+    Vocabulary.find({ word: regex }).limit(parseInt(limit)).exec((err, vocabularies) => {
+      done(err, vocabularies);
+    });
+  } else {
+    done(null, null);
+  }
 };
 
 const getDaily = (done) => {
@@ -82,6 +100,7 @@ export default {
   update,
   remove,
   search,
+  searchFuzzy,
   getMarked,
   getDaily,
   getRandom

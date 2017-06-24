@@ -89,6 +89,16 @@ export const search = (req, res) => {
   });
 };
 
+export const searchFuzzy = (req, res) => {
+  const { query } = req;
+
+  Vocabulary.searchFuzzy(query, (err, vocabularies) => {
+    if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
+
+    return res.json(vocabularies);
+  });
+};
+
 export const getMarked = (req, res) => {
   const { user } = req;
 
