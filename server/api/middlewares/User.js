@@ -44,13 +44,9 @@ export const create = (req, res) => {
 };
 
 export const get = (req, res) => {
-  const { user } = req;
+  const { user: { _id } = {} } = req;
 
-  if (!user) {
-    return res.sendStatus(401);
-  }
-
-  User.findById(user._id, (err, user) => {
+  User.findById(_id, (err, user) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
 
     return res.json(pickUser(user));
@@ -62,14 +58,8 @@ export const update = (req, res) => {
     body: {
       user: userData = {}
     },
-    user
+    user: { _id } = {}
   } = req;
-
-  if (!user) {
-    return res.sendStatus(401);
-  }
-
-  const { _id } = user;
 
   User.findById(_id, (err, user) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
@@ -126,22 +116,16 @@ export const changePassword = (req, res) => {
       currentPassword,
       newPassword
     },
-    user
+    user: { _id } = {}
   } = req;
 
-  if (!user) {
-    return res.sendStatus(401);
-  }
-
-  User.findById(user._id, (err, user) => {
+  User.findById(_id, (err, user) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
 
     user.comparePassword(currentPassword, (err, isMatch) => {
       if (!isMatch) {
         return res.sendStatus(401);
       }
-
-      const { _id } = user;
 
       user.password = newPassword;
 

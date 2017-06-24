@@ -27,8 +27,26 @@ const update = (phrase, done) => {
   });
 };
 
+const updateByUser = (phrase, userId, done) => {
+  phrase = _.pick(phrase, ['_id', 'content', 'note']);
+
+  const { _id } = phrase;
+
+  phrase.updated = new Date();
+
+  Phrase.findOneAndUpdate({ _id, user: userId }, _.omit(phrase, ['_id', '__v']), { new: true }, (err, phrase) => {
+    done(err, phrase);
+  });
+};
+
 const remove = (_id, done) => {
   Phrase.findOneAndRemove({ _id }, (err) => {
+    done(err);
+  });
+};
+
+const removeByUser = (_id, userId, done) => {
+  Phrase.findOneAndRemove({ _id, user: userId }, (err) => {
     done(err);
   });
 };
@@ -43,6 +61,8 @@ export default {
   getAll,
   create,
   update,
+  updateByUser,
   remove,
+  removeByUser,
   getAllByUser
 };

@@ -1,13 +1,8 @@
 import _ from 'lodash';
-import { isAdmin } from '../../utils/UserUtil';
 import Vocabulary from '../../services/Vocabulary';
 import POS from '../../constants/POS';
 
 export const getAll = (req, res) => {
-  if (!isAdmin(req.user)) {
-    return res.sendStatus(401);
-  }
-
   Vocabulary.getAll((err, vocabularies) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
 
@@ -16,10 +11,6 @@ export const getAll = (req, res) => {
 };
 
 export const getPOS = (req, res) => {
-  if (!isAdmin(req.user)) {
-    return res.sendStatus(401);
-  }
-
   return res.json(POS);;
 };
 
@@ -35,10 +26,6 @@ export const findById = (req, res) => {
 };
 
 export const remove = (req, res) => {
-  if (!isAdmin(req.user)) {
-    return res.sendStatus(401);
-  }
-
   const { params: { id: _id } } = req;
 
   Vocabulary.remove(_id, (err) => {
@@ -48,13 +35,7 @@ export const remove = (req, res) => {
 };
 
 export const create = (req, res) => {
-  if (!isAdmin(req.user)) {
-    return res.sendStatus(401);
-  }
-
-  const {
-    vocabulary = {}
-  } = req.body;
+  const { vocabulary = {} } = req.body;
 
   Vocabulary.create(vocabulary, (err, vocabulary) => {
     if (err) return res.status(500).send({ message: 'Something went wrong creating the data', error: err });
@@ -64,13 +45,7 @@ export const create = (req, res) => {
 };
 
 export const update = (req, res) => {
-  if (!isAdmin(req.user)) {
-    return res.sendStatus(401);
-  }
-
-  const {
-    vocabulary = {}
-  } = req.body;
+  const { vocabulary = {} } = req.body;
 
   Vocabulary.update(vocabulary, (err, vocabulary) => {
     if (err) return res.status(500).send({ message: 'Something went wrong updating the data', error: err });
@@ -102,10 +77,6 @@ export const searchFuzzy = (req, res) => {
 export const getMarked = (req, res) => {
   const { user } = req;
 
-  if (!user) {
-    return res.sendStatus(401);
-  }
-
   Vocabulary.getMarked(user._id, (err, vocabularies) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
 
@@ -115,10 +86,6 @@ export const getMarked = (req, res) => {
 
 export const mark = (req, res) => {
   const { params: { id: _id }, user } = req;
-
-  if (!user) {
-    return res.sendStatus(401);
-  }
 
   Vocabulary.findById(_id, (err, vocabulary) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
@@ -160,10 +127,6 @@ export const getRandom = (req, res) => {
 
 export const download = (req, res) => {
   const { user } = req;
-
-  if (!user) {
-    return res.sendStatus(401);
-  }
 
   Vocabulary.getAll((err, vocabularies) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
