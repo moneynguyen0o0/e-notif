@@ -31,8 +31,8 @@ import {
 import {
   getAllByUser as getAllPhrasesByUser,
   create as createPhrase,
-  update as updatePhrase,
-  remove as removePhrase
+  updateByUser as updatePhraseByUser,
+  removeByUser as removePhraseByUser
 } from './middlewares/Phrase';
 
 export default (router) => {
@@ -69,8 +69,8 @@ export default (router) => {
         .get((req, res) => getAllPhrasesByUser(req, res))
         .post((req, res) => createPhrase(req, res));
   router.route(URL.PHRASES_ID)
-        .put((req, res) => updatePhrase(req, res))
-        .delete((req, res) => removePhrase(req, res));
+        .put((req, res) => updatePhraseByUser(req, res))
+        .delete((req, res) => removePhraseByUser(req, res));
 
   return router;
 }
