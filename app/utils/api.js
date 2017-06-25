@@ -1,5 +1,18 @@
 import { request } from './request';
 
+const buildParamsString = (params) => {
+  let paramString = '';
+
+  Object.keys(params).forEach((key) => {
+    if (params.length) {
+      paramString += '&';
+    }
+    paramString += `${key}=${params[key]}`;
+  });
+
+  return paramString;
+};
+
 /**
 *
 *
@@ -25,16 +38,11 @@ export const findVocabulary = (_id) => {
 };
 
 export const searchVocabularies = (params = {}) => {
-  let paramString = '';
+  return request({ url: `/vocabularies/search?${buildParamsString(params)}` });
+};
 
-  Object.keys(params).forEach((key) => {
-    if (params.length) {
-      paramString += '&';
-    }
-    paramString += `${key}=${params[key]}`;
-  });
-
-  return request({ url: `/vocabularies/search?${paramString}` });
+export const searchAutocompleteVocabularies = (params = {}) => {
+  return request({ url: `/vocabularies/search/autocomplete?${buildParamsString(params)}` });
 };
 
 export const getPOS = () => {

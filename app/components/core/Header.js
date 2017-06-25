@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import classnames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { isAdmin } from '../../utils/UserUtil';
 import { logout } from '../../actions/users';
+import { searchAutocompleteVocabularies } from '../../utils/api';
 import Notification from '../media/Notification';
 
 class Header extends Component {
@@ -26,21 +28,21 @@ class Header extends Component {
 
     const rightNav = [];
 
-    rightNav.push(<a key={rightNav.length} className="notification"><Notification /></a>);
+    rightNav.push(<a key={rightNav.length} className="menu-item notification"><Notification /></a>);
 
     if (authenticated) {
       const userId = user._id;
 
       if (isAdmin(user)) {
-        rightNav.push(<Link key={rightNav.length} to="/manage/vocabularies">Manage vocabularies</Link>);
+        rightNav.push(<Link key={rightNav.length} to="/manage/vocabularies" className="menu-item">Manage vocabularies</Link>);
       }
 
-      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}/vocabularies`}>My vocabularies</Link>);
-      rightNav.push(<Link key={rightNav.length} to="/manage/phrases">My phrases</Link>);
-      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}`}>Profile</Link>);
-      rightNav.push(<Link key={rightNav.length} onClick={() => logout()} to="/">Logout</Link>);
+      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}/vocabularies`} className="menu-item">My vocabularies</Link>);
+      rightNav.push(<Link key={rightNav.length} to="/manage/phrases" className="menu-item">My phrases</Link>);
+      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}`} className="menu-item">Profile</Link>);
+      rightNav.push(<Link key={rightNav.length} onClick={() => logout()} to="/" className="menu-item">Logout</Link>);
     } else {
-      rightNav.push(<Link key={rightNav.length} to="/login">Login</Link>);
+      rightNav.push(<Link key={rightNav.length} to="/login" className="menu-item">Login</Link>);
     }
 
     const navClassnames = classnames(
@@ -51,18 +53,18 @@ class Header extends Component {
     return (
       <div className={navClassnames}>
         <div className="container-fluid">
-          <div className="Header-logo" />
+          <Link to="/"><div className="Header-logo" /></Link>
           <div className="Header-search">
             <SearchBar />
           </div>
           <div className="Header-left">
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
+            <Link to="/" className="menu-item">Home</Link>
+            <Link to="/about" className="menu-item">About</Link>
           </div>
           <div className="Header-right">
             { rightNav }
           </div>
-          <a className="icon" onClick={() => this._toggleNav()}>&#9776;</a>
+          <a className="menu-item icon" onClick={() => this._toggleNav()}>&#9776;</a>
         </div>
       </div>
     );
@@ -71,7 +73,12 @@ class Header extends Component {
 
 class SearchBar extends Component {
   state = {
-    keyword: ''
+    keyword: '',
+    vocabularies: []
+  }
+
+  componentWillMount() {
+    this._searchAutoComplete = _.debounce(this._searchAutoComplete, 500, { maxWait: 500 });
   }
 
   _search() {
@@ -93,16 +100,45 @@ class SearchBar extends Component {
   }
 
   _handleChange(event) {
-    this.setState({ keyword: event.target.value });
+    const value = event.target.value;
+
+    this._searchAutoComplete(value);
+
+    this.setState({ keyword: value });
+  }
+
+  _searchAutoComplete(keyword) {
+    if (keyword.length > 1) {
+      searchAutocompleteVocabularies({ keyword }).then(vocabularies => {
+        this.setState({ vocabularies });
+      });
+    }
+
+    this.setState({ vocabularies: [] });
   }
 
   render() {
-    const { keyword } = this.state;
+    const { keyword, vocabularies } = this.state;
 
     return (
-      <div className="SearchBar">
-        <input type="search" placeholder="Search..." value={keyword} onChange={(e) => this._handleChange(e)} onKeyPress={(e) => this._handleKeyPress(e)} />
-        <button className="icon" onClick={() => this._search()}><i className="fa fa-search" /></button>
+      <div className="Search">
+        <div className="SearchBar">
+          <input type="search" placeholder="Search..." value={keyword} onChange={(e) => this._handleChange(e)} onKeyPress={(e) => this._handleKeyPress(e)} />
+          <button className="icon" onClick={() => this._search()}><i className="fa fa-search" /></button>
+        </div>
+        {
+          vocabularies.length > 0 && <div className="SearchResult">
+            <ul>
+              {
+                vocabularies.map((vocabulary, index) => {
+                  const { _id, word } = vocabulary;
+
+                  return <a key={index} href={`/vocabularies/${_id}`}><li>{word}</li></a>;
+                })
+              }
+            </ul>
+          </div>
+        }
       </div>
     );
   }
