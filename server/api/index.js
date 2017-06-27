@@ -1,3 +1,4 @@
+import * as URL from '../constants/URL';
 import {
   get as getUser,
   update as updateUser,
@@ -35,40 +36,39 @@ import {
 } from './middlewares/Phrase';
 
 export default (router) => {
-  router.post('/users', (req, res) => createUser(req, res));
-  router.post('/users/login', (req, res) => login(req, res));
-  router.get('/users/logout', (req, res) => logout(req, res));
-  router.get('/users/verify-mail/:token', (req, res) => verifyMail(req, res));
-  router.post('/users/change-password', (req, res) => changePassword(req, res));
-  router.post('/users/forgot-password', (req, res) => forgotPassword(req, res));
-  router.post('/users/reset-password/:token', (req, res) => resetPassword(req, res));
-  router.get('/users/check-token/:token', (req, res) => checkToken(req, res));
+  router.post(URL.USER, (req, res) => createUser(req, res));
+  router.post(URL.USER_LOGIN, (req, res) => login(req, res));
+  router.get(URL.USER_LOGOUT, (req, res) => logout(req, res));
+  router.get(URL.USER_VERIFY_MAIL, (req, res) => verifyMail(req, res));
+  router.post(URL.USER_PASSWORD_CHANGE, (req, res) => changePassword(req, res));
+  router.post(URL.USER_PASSWORD_FORGOT, (req, res) => forgotPassword(req, res));
+  router.post(URL.USER_PASSWORD_RESET, (req, res) => resetPassword(req, res));
+  router.get(URL.USER_CHECK_TOKEN, (req, res) => checkToken(req, res));
 
-  router.route('/users/:id')
+  router.route(URL.USER_ID)
         .get((req, res) => getUser(req, res))
         .put((req, res) => updateUser(req, res));
 
-  router.get('/vocabularies/random', (req, res) => getRandomVocabularies(req, res));
-  router.get('/vocabularies/daily', (req, res) => getDailyVocabularies(req, res));
-  router.get('/vocabularies/search', (req, res) => searchVocabularies(req, res));
-  router.get('/vocabularies/search/autocomplete', (req, res) => searchFuzzyVocabularies(req, res));
-  router.get('/vocabularies/:id/mark', (req, res) => markVocabulary(req, res));
-  router.get('/vocabularies/marked', (req, res) => getMarkedVocabularies(req, res));
-  router.get('/vocabularies/pos', (req, res) => getPOS(req, res));
-  router.get('/vocabularies/download', (req, res) => downloadVocabularies(req, res));
+  router.get(URL.VOCABULARIES_RANDOM, (req, res) => getRandomVocabularies(req, res));
+  router.get(URL.VOCABULARIES_DAILY, (req, res) => getDailyVocabularies(req, res));
+  router.get(URL.VOCABULARIES_SEARCH, (req, res) => searchVocabularies(req, res));
+  router.get(URL.VOCABULARIES_ID_MARK, (req, res) => markVocabulary(req, res));
+  router.get(URL.VOCABULARIES_MARKED, (req, res) => getMarkedVocabularies(req, res));
+  router.get(URL.VOCABULARIES_POS, (req, res) => getPOS(req, res));
+  router.get(URL.VOCABULARIES_DOWNLOAD, (req, res) => downloadVocabularies(req, res));
 
-  router.route('/vocabularies')
+  router.route(URL.VOCABULARIES)
         .get((req, res) => getAllVocabularies(req, res))
         .post((req, res) => createVocabulary(req, res));
-  router.route('/vocabularies/:id')
+  router.route(URL.VOCABULARIES_ID)
         .get((req, res) => findByIdVocabulary(req, res))
         .put((req, res) => updateVocabulary(req, res))
         .delete((req, res) => removeVocabulary(req, res));
 
-  router.route('/phrases')
+  router.route(URL.PHRASES)
         .get((req, res) => getAllPhrasesByUser(req, res))
         .post((req, res) => createPhrase(req, res));
-  router.route('/phrases/:id')
+  router.route(URL.PHRASES_ID)
         .put((req, res) => updatePhrase(req, res))
         .delete((req, res) => removePhrase(req, res));
 
