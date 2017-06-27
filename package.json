@@ -35,6 +35,7 @@
     "normalize.css": "^6.0.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "path-to-regexp": "^1.7.0",
     "react": "^15.4.2",
     "react-checkbox-group": "^3.1.0",
     "react-dom": "^15.4.2",

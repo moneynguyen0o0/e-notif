@@ -10,9 +10,11 @@ import connect from './db/connect';
 import api from './api';
 import renderLayout from './middlewares/renderLayout';
 import authentication from './middlewares/authentication';
+import authenticateRequest from './middlewares/authenticateRequest';
 import { PORT, ENV } from '../config/env';
 import { isProduction, isDevelopment } from '../config/app';
 import { sessionSecret } from '../config/secrets';
+import { API } from './constants/URL';
 
 const app = express();
 
@@ -51,7 +53,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/api', api(Router()));
+app.use(authenticateRequest());
+app.use(API, api(Router()));
 
 app.use(renderLayout());
 
