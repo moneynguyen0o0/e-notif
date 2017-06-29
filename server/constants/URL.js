@@ -15,6 +15,7 @@ export const VOCABULARIES_ID = '/vocabularies/:id';
 export const VOCABULARIES_RANDOM = '/vocabularies/random';
 export const VOCABULARIES_DAILY = '/vocabularies/daily';
 export const VOCABULARIES_SEARCH = '/vocabularies/search';
+export const VOCABULARIES_SEARCH_AUTOCOMPLETE = '/vocabularies/search/autocomplete';
 export const VOCABULARIES_ID_MARK = '/vocabularies/:id/mark';
 export const VOCABULARIES_MARKED = '/vocabularies/marked';
 export const VOCABULARIES_POS = '/vocabularies/pos';
