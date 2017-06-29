@@ -52,6 +52,7 @@ export default (router) => {
   router.get(URL.VOCABULARIES_RANDOM, (req, res) => getRandomVocabularies(req, res));
   router.get(URL.VOCABULARIES_DAILY, (req, res) => getDailyVocabularies(req, res));
   router.get(URL.VOCABULARIES_SEARCH, (req, res) => searchVocabularies(req, res));
+  router.get(URL.VOCABULARIES_SEARCH_AUTOCOMPLETE, (req, res) => searchFuzzyVocabularies(req, res));
   router.get(URL.VOCABULARIES_ID_MARK, (req, res) => markVocabulary(req, res));
   router.get(URL.VOCABULARIES_MARKED, (req, res) => getMarkedVocabularies(req, res));
   router.get(URL.VOCABULARIES_POS, (req, res) => getPOS(req, res));
