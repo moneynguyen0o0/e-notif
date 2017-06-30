@@ -1,11 +1,16 @@
 # TODO
 - CSRF token
 - Update spinner when CRUD
+
+https://responsivevoice.org/
+
 # Fuzzy search
 https://stackoverflow.com/questions/38421664/fuzzy-searching-with-mongodb
+
 # Authenticate and authority
 https://medium.com/@rajaraodv/securing-react-redux-apps-with-jwt-tokens-fcfe81356ea0
 http://blog.slatepeak.com/build-a-react-redux-app-with-json-web-token-jwt-authentication/
+
 # Notification
 https://developer.mozilla.org/en-US/docs/Web/API/notification
 
