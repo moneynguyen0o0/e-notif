@@ -3,6 +3,7 @@
 - Update spinner when CRUD
 
 https://responsivevoice.org/
+https://sdkcarlos.github.io/sites/artyom.html
 
 # Fuzzy search
 https://stackoverflow.com/questions/38421664/fuzzy-searching-with-mongodb
