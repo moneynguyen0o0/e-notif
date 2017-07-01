@@ -14,7 +14,7 @@ class Search extends Component {
   }
 
   componentWillMount() {
-    this._search = _.debounce(this._search, 500, { maxWait: 500 });
+    this._search = _.debounce(this._search, 500, { maxWait: 500, leading: true });
   }
 
   componentDidMount() {

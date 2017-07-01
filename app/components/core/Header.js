@@ -78,7 +78,7 @@ class SearchBar extends Component {
   }
 
   componentWillMount() {
-    this._searchAutoComplete = _.debounce(this._searchAutoComplete, 500, { maxWait: 500 });
+    this._searchAutoComplete = _.debounce(this._searchAutoComplete, 500, { maxWait: 500, leading: true });
   }
 
   _search() {
