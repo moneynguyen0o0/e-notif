@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import { findVocabulary } from '../../utils/api';
+import { findVocabulary } from '../../utils/API';
 import Spinner from '../icons/Spinner';
 import Audio from '../media/Audio';
 import Mark from '../shared/Mark';

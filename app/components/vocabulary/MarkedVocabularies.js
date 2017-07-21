@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import { Link } from 'react-router';
-import { getMarkedVocabularies } from '../../utils/api';
+import { getMarkedVocabularies } from '../../utils/API';
 import Spinner from '../icons/Spinner';
 import Audio from '../media/Audio';
 import Mark from '../shared/Mark';

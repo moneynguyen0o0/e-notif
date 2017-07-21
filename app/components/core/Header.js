@@ -5,7 +5,7 @@ import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { isAdmin } from '../../utils/UserUtil';
 import { logout } from '../../actions/users';
-import { searchAutocompleteVocabularies } from '../../utils/api';
+import { searchAutocompleteVocabularies } from '../../utils/API';
 import Notification from '../media/Notification';
 
 class Header extends Component {

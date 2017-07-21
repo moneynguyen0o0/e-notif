@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import * as API from '../utils/api';
+import * as API from '../utils/API';
 import * as types from '../constants/types';
 
 export const beginLogin = () => {

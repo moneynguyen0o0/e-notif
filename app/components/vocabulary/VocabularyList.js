@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../../actions/vocabulary';
-import { getPOS } from '../../utils/api';
+import { getPOS } from '../../utils/API';
 import Spinner from '../icons/Spinner';
 import Mark from '../shared/Mark';
 import Audio from '../media/Audio';
@@ -88,6 +88,10 @@ class VocabularyList extends Component {
     this.setState({
       isDeletingModal: false
     });
+  }
+
+  _download() {
+    window.open('/api/vocabularies/download', '_blank');
   }
 
   render() {
@@ -233,7 +237,7 @@ class VocabularyList extends Component {
           columns={columns}
           defaultPageSize={10}
         />
-        <div className="btn-container"><a className="button btn-success" href="/api/vocabularies/download" target="_blank">Export</a></div>
+        <div className="btn-container"><a className="button btn-success" onClick={() => this._download()}>Export</a></div>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import { getAllVocabularies, saveVocabulary, removeVocabulary } from '../utils/api';
+import { getAllVocabularies, saveVocabulary, removeVocabulary } from '../utils/API';
 import * as types from '../constants/types';
 
 export const wait = () => {

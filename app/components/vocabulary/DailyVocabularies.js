@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getRandomVocabularies } from '../../utils/api';
+import { getRandomVocabularies } from '../../utils/API';
 import Spinner from '../icons/Spinner';
 import Vocabularies from './Vocabularies';
 

@@ -2,11 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import store from 'store';
 import { connect } from 'react-redux';
 import { notify, close as closeNotification } from '../../utils/notify';
-import { getMarkedVocabularies, searchVocabularies } from '../../utils/api';
+import { getMarkedVocabularies, searchVocabularies } from '../../utils/API';
 
 const notifyKey = '_nofify';
 
 const TIMEOUT = 5 * 60 * 1000;
+const NUMBER_OF_ITEM = 36;
 
 class Notificaton extends Component {
   static propTypes = {
@@ -35,7 +36,7 @@ class Notificaton extends Component {
         this.setState({ vocabularies });
       });
     } else {
-      searchVocabularies().then((vocabularies) => {
+      searchVocabularies({ start: 0, end: NUMBER_OF_ITEM }).then((vocabularies) => {
         this.setState({ vocabularies });
       });
     }
@@ -82,7 +83,7 @@ class Notificaton extends Component {
 
   _startNotificationInterval() {
     this._notifyVocabulary();
-    
+
     this.notificationInterval = setInterval(() => this._notifyVocabulary(), TIMEOUT);
   }
 

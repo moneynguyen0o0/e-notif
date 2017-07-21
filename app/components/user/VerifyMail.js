@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { verifyMail } from '../../utils/api';
+import { verifyMail } from '../../utils/API';
 import Message from '../shared/Message';
 
 export default class VerifyEmail extends Component {
