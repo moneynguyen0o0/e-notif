@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React, { Component } from 'react';
 import { reduxForm, propTypes as reduxFormPropTypes, Field } from 'redux-form';
-import { forgotPassword } from '../../utils/api';
+import { forgotPassword } from '../../utils/API';
 import Spinner from '../icons/Spinner';
 import Message from '../shared/Message';
 

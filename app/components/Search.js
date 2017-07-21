@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
-import { searchVocabularies } from '../utils/api';
+import { searchVocabularies } from '../utils/API';
 import Spinner from './icons/Spinner';
 import Vocabularies from './vocabulary/Vocabularies';
 

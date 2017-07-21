@@ -4,9 +4,10 @@ const buildParamsString = (params) => {
   let paramString = '';
 
   Object.keys(params).forEach((key) => {
-    if (params.length) {
+    if (paramString.length) {
       paramString += '&';
     }
+
     paramString += `${key}=${params[key]}`;
   });
 

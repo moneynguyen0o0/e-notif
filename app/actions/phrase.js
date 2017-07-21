@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux';
-import { getAllPhrases, savePhrase, removePhrase } from '../utils/api';
+import { getAllPhrases, savePhrase, removePhrase } from '../utils/API';
 import * as types from '../constants/types';
 
 export const wait = () => {

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { markVocabulary } from '../../utils/api';
+import { markVocabulary } from '../../utils/API';
 
 class Mark extends Component {
   static propTypes = {
