@@ -16,6 +16,7 @@ import {
   ForgotPassword,
   ResetPassword,
   Profile,
+  Quiz,
   NotFound,
   InternalServerError,
   AccessDenied
@@ -84,6 +85,7 @@ export default (store) => {
       <Route path="users/forgot-password" component={ForgotPassword} />
       <Route path="users/reset-password" component={ResetPassword} />
       <Route path="profile/:id" component={Profile} onEnter={requireAuth(authenticated)} />
+      <Route path="quiz" component={Quiz} />
       <Route path="internal-server-error" component={InternalServerError} />
       <Route path="access-denied" component={AccessDenied} />
       <Route path="*" component={NotFound} />
