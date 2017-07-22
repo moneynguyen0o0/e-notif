@@ -26,6 +26,11 @@ class Header extends Component {
     const { user: { authenticated, data: user }, logout } = this.props;
     const { toggle } = this.state;
 
+    const linkProps = {
+      className: 'menu-item',
+      onClick: () => this._toggleNav()
+    };
+
     const rightNav = [];
 
     rightNav.push(<a key={rightNav.length} className="menu-item notification"><Notification /></a>);
@@ -34,15 +39,15 @@ class Header extends Component {
       const userId = user._id;
 
       if (isAdmin(user)) {
-        rightNav.push(<Link key={rightNav.length} to="/manage/vocabularies" className="menu-item">Manage vocabularies</Link>);
+        rightNav.push(<Link key={rightNav.length} to="/manage/vocabularies" {...linkProps}>Manage vocabularies</Link>);
       }
 
-      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}/vocabularies`} className="menu-item">My vocabularies</Link>);
-      rightNav.push(<Link key={rightNav.length} to="/manage/phrases" className="menu-item">My phrases</Link>);
-      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}`} className="menu-item">Profile</Link>);
-      rightNav.push(<Link key={rightNav.length} onClick={() => logout()} to="/" className="menu-item">Logout</Link>);
+      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}/vocabularies`} {...linkProps}>My vocabularies</Link>);
+      rightNav.push(<Link key={rightNav.length} to="/manage/phrases" {...linkProps}>My phrases</Link>);
+      rightNav.push(<Link key={rightNav.length} to={`/profile/${userId}`} {...linkProps}>Profile</Link>);
+      rightNav.push(<Link key={rightNav.length} onClick={() => logout()} to="/" {...linkProps}>Logout</Link>);
     } else {
-      rightNav.push(<Link key={rightNav.length} to="/login" className="menu-item">Login</Link>);
+      rightNav.push(<Link key={rightNav.length} to="/login" {...linkProps}>Login</Link>);
     }
 
     const navClassnames = classnames(
@@ -58,13 +63,13 @@ class Header extends Component {
             <SearchBar />
           </div>
           <div className="Header-left">
-            <Link to="/" className="menu-item">Home</Link>
-            <Link to="/about" className="menu-item">About</Link>
+            <Link to="/" {...linkProps}>Home</Link>
+            <Link to="/about" {...linkProps}>About</Link>
           </div>
           <div className="Header-right">
             { rightNav }
           </div>
-          <a className="menu-item icon" onClick={() => this._toggleNav()}>&#9776;</a>
+          <a {...linkProps} className="menu-item icon">&#9776;</a>
         </div>
       </div>
     );
