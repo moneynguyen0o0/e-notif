@@ -87,8 +87,10 @@ const getDaily = (done) => {
   });
 };
 
-const getRandom = (done) => {
-  Vocabulary.aggregate({ $sample: { size: 5 } }).exec((err, vocabularies) => {
+const getRandom = (params, done) => {
+  const { size = 5 } = params;
+
+  Vocabulary.aggregate({ $sample: { size: parseInt(size) } }).exec((err, vocabularies) => {
     done(err, vocabularies);
   });
 };

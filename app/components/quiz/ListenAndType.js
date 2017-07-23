@@ -3,12 +3,34 @@ import { getRandomVocabularies } from '../../utils/API';
 import Audio from '../media/Audio';
 import Spinner from '../icons/Spinner';
 
+const SIZE = 25;
+
+const RATE = {
+  poor: {
+    min: 0,
+    max: 39
+  },
+  average: {
+    min: 40,
+    max: 69
+  },
+  good: {
+    min: 70,
+    max: 84
+  },
+  excellent: {
+    min: 85,
+    max: 100
+  }
+};
+
 const defaultState = {
   vocabularies: [],
   answers: [],
   currentQuestIndex: 0,
   inputValue: '',
-  finish: false
+  finish: false,
+  showHint: false
 };
 
 class ListenAndType extends Component {
@@ -21,7 +43,8 @@ class ListenAndType extends Component {
   }
 
   _getVocabularies() {
-    getRandomVocabularies().then((vocabularies) => {
+    getRandomVocabularies({ size: SIZE }).then((vocabularies) => {
+      console.log(vocabularies);
       this.setState({ vocabularies });
     });
   }
@@ -50,7 +73,8 @@ class ListenAndType extends Component {
     this.setState({
       answers: this._addAnswer(),
       currentQuestIndex: currentQuestIndex + 1,
-      inputValue: nextAnswer
+      inputValue: nextAnswer,
+      showHint: false
     });
   }
 
@@ -65,7 +89,8 @@ class ListenAndType extends Component {
 
     const nextState = {
       currentQuestIndex: currentQuestIndex - 1,
-      inputValue: prevAnswer
+      inputValue: prevAnswer,
+      showHint: false
     };
 
     if (inputValue) {
@@ -89,6 +114,10 @@ class ListenAndType extends Component {
     return answers;
   }
 
+  _showHint() {
+    this.setState({ showHint: true });
+  }
+
   _onChangeInput(e) {
     this.setState({ inputValue: e.target.value });
   }
@@ -99,14 +128,15 @@ class ListenAndType extends Component {
       answers,
       currentQuestIndex,
       inputValue,
-      finish
+      finish,
+      showHint
     } = this.state;
 
     if (!vocabularies.length) {
       return <Spinner />;
     }
 
-    const { audio } = vocabularies[currentQuestIndex];
+    const { audio, definitions } = vocabularies[currentQuestIndex];
 
     let resultContent;
 
@@ -134,9 +164,17 @@ class ListenAndType extends Component {
         );
       });
 
+      const rs = (mark / vocabularies.length) * 100;
+      const rate = Object.keys(RATE).find(item => {
+        const { min, max } = RATE[item];
+
+        return rs >= min && rs <= max;
+      });
+
       resultContent = (
         <div className="ListenAndType-result">
-          <div>{mark} / {vocabularies.length}</div>
+          <div>Result: {mark} / {vocabularies.length}</div>
+          <div>{rate}</div>
           <table className="table table-hover">
             <thead>
               <tr>
@@ -164,15 +202,17 @@ class ListenAndType extends Component {
             <div className="ListenAndType-main">
               <div>Question {currentQuestIndex + 1}</div>
               <div className="ListenAndType-audio"><Audio key={currentQuestIndex} src={audio} /></div>
+              <div className="ListenAndType-hint">
+                <div onClick={() => this._showHint()}>Hint <i className="fa fa-lightbulb-o" /></div>
+                { showHint && <div>{definitions[Math.floor(Math.random() * definitions.length)]}</div> }
+              </div>
               <div className="ListenAndType-input">
                 <input type="text" placeholder="Your answer..." value={inputValue} onChange={(e) => this._onChangeInput(e)} />
               </div>
             </div>
             <div className="ListenAndType-control">
               { currentQuestIndex ? <button type="button" className="btn-info" onClick={() => this._onBack()}>Back</button> : null }
-              {
-                currentQuestIndex === vocabularies.length - 1 ? <button type="button" className="btn-info" onClick={() => this._onFinish()}>Finish</button> : <button type="button" className="btn-info" onClick={() => this._onNext()}>Next</button>
-              }
+              { currentQuestIndex === vocabularies.length - 1 ? <button type="button" className="btn-info" onClick={() => this._onFinish()}>Finish</button> : <button type="button" className="btn-info" onClick={() => this._onNext()}>Next</button> }
             </div>
           </div>
         }

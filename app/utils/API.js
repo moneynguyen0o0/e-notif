@@ -30,8 +30,8 @@ export const getDailyVocabularies = () => {
   return request({ url: '/vocabularies/daily' });
 };
 
-export const getRandomVocabularies = () => {
-  return request({ url: '/vocabularies/random' });
+export const getRandomVocabularies = (params = {}) => {
+  return request({ url: `/vocabularies/random?${buildParamsString(params)}` });
 };
 
 export const findVocabulary = (_id) => {
