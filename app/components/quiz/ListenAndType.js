@@ -148,7 +148,13 @@ class ListenAndType extends Component {
         const { word } = vocabulary;
         const answer = answers[index];
 
-        const check = answer.toLowerCase() === word.toLowerCase();
+        let check = false;
+
+        if (word.includes('/')) {
+          check = word.split('/').some(item => item.trim().toLowerCase() === answer.toLowerCase());
+        } else {
+          check = answer.toLowerCase() === word.toLowerCase();
+        }
 
         if (check) {
           mark += 1;
