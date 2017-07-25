@@ -1,0 +1,62 @@
+.ListenAndType {
+  &-question {
+    margin: 3em auto;
+    width: 75%;
+    padding: 40px;
+    background-color: #FFFFFF;
+  }
+
+  &-title {
+    font-size: 3em;
+    text-transform: uppercase;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+
+    padding: 15px 0;
+  }
+
+  &-audio {
+    width: 135px;
+    display: inline-block;
+
+    .Audio {
+      i {
+        font-size: 7em;
+      }
+    }
+  }
+
+  &-text {
+    width: 100%;
+    display: inline-block;
+
+    input {
+      font-size: 2em;
+    }
+  }
+
+  &-hintIcon {
+    float: left;
+    padding: 10px 20px;
+
+    color: #FFFFFF;
+    background-color: #f1c40f;
+    border: none;
+
+    i {
+      font-size: 2em;
+    }
+  }
+
+  &-controls {
+    text-align: right;
+    margin-top: 15px;
+
+    button:last-child {
+      margin-left: 10px;
+    }
+  }
+}

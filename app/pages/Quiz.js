@@ -7,7 +7,7 @@ class Quiz extends Component {
     return (
       <div className="Quiz">
         <Helmet title="Listen & Type | ENotif" />
-        <div className="container-fluid">
+        <div className="container">
           <ListenAndType />
         </div>
       </div>

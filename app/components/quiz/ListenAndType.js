@@ -3,7 +3,7 @@ import { getRandomVocabularies } from '../../utils/API';
 import Audio from '../media/Audio';
 import Spinner from '../icons/Spinner';
 
-const SIZE = 25;
+const SIZE = 5;
 
 const RATE = {
   poor: {
@@ -206,19 +206,21 @@ class ListenAndType extends Component {
         {
           finish ? resultContent : <div className="ListenAndType-question">
             <div className="ListenAndType-main">
-              <div>Question {currentQuestIndex + 1}</div>
-              <div className="ListenAndType-audio"><Audio key={currentQuestIndex} src={audio} /></div>
+              <div className="ListenAndType-title">Quest {currentQuestIndex + 1}</div>
               <div className="ListenAndType-hint">
-                <div onClick={() => this._showHint()}>Hint <i className="fa fa-lightbulb-o" /></div>
-                { showHint && <div>{definitions[Math.floor(Math.random() * definitions.length)]}</div> }
+                { showHint && <div><i className="fa fa-info-circle" /> {definitions[Math.floor(Math.random() * definitions.length)]}</div> }
               </div>
-              <div className="ListenAndType-input">
-                <input type="text" placeholder="Your answer..." value={inputValue} onChange={(e) => this._onChangeInput(e)} />
+              <div className="ListenAndType-content">
+                <div className="ListenAndType-audio"><Audio key={currentQuestIndex} src={audio} /></div>
+                <div className="ListenAndType-text">
+                  <input type="text" placeholder="Your answer..." value={inputValue} onChange={(e) => this._onChangeInput(e)} />
+                </div>
               </div>
             </div>
-            <div className="ListenAndType-control">
-              { currentQuestIndex ? <button type="button" className="btn-info" onClick={() => this._onBack()}>Back</button> : null }
-              { currentQuestIndex === vocabularies.length - 1 ? <button type="button" className="btn-info" onClick={() => this._onFinish()}>Finish</button> : <button type="button" className="btn-info" onClick={() => this._onNext()}>Next</button> }
+            <div className="ListenAndType-controls">
+              <button className="ListenAndType-hintIcon" onClick={() => this._showHint()}><i className="fa fa-lightbulb-o" /></button>
+              { currentQuestIndex ? <button type="button" className="btn-default" onClick={() => this._onBack()}>Back</button> : null }
+              { currentQuestIndex === vocabularies.length - 1 ? <button type="button" className="btn-success" onClick={() => this._onFinish()}>Finish</button> : <button type="button" className="btn-info" onClick={() => this._onNext()}>Next</button> }
             </div>
           </div>
         }

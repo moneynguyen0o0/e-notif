@@ -10,6 +10,7 @@
 @import './media';
 @import './user';
 @import './vocabulary';
+@import './quiz';
 
 a {
   cursor: pointer;
