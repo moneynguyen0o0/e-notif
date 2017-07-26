@@ -3,7 +3,7 @@ import { getRandomVocabularies } from '../../utils/API';
 import Audio from '../media/Audio';
 import Spinner from '../icons/Spinner';
 
-const SIZE = 5;
+const SIZE = 25;
 
 const RATE = {
   poor: {
@@ -44,7 +44,6 @@ class ListenAndType extends Component {
 
   _getVocabularies() {
     getRandomVocabularies({ size: SIZE }).then((vocabularies) => {
-      console.log(vocabularies);
       this.setState({ vocabularies });
     });
   }
@@ -161,11 +160,11 @@ class ListenAndType extends Component {
         }
 
         trContent.push(
-          <tr key={index}>
+          <tr key={index} className={check ? 'success' : 'danger'}>
             <td>{index + 1}</td>
             <td>{word}</td>
             <td>{answer}</td>
-            <td>{ check ? <i className="fa fa-check" /> : <i className="fa fa-times" /> }</td>
+            <td>{ check ? <i className="fa fa-check" /> : <i className={`${check ? 'text-success' : 'text-danger'} fa fa-times`} /> }</td>
           </tr>
         );
       });
@@ -179,8 +178,8 @@ class ListenAndType extends Component {
 
       resultContent = (
         <div className="ListenAndType-result">
-          <div>Result: {mark} / {vocabularies.length}</div>
-          <div>{rate}</div>
+          <div className="ListenAndType-result-mark">{mark} / {vocabularies.length}</div>
+          <div className={`ListenAndType-result-rate ListenAndType-result-rate--${rate}`}>{rate}!!!</div>
           <table className="table table-hover">
             <thead>
               <tr>
@@ -194,8 +193,8 @@ class ListenAndType extends Component {
               {trContent}
             </tbody>
           </table>
-          <div className="ListenAndType-control">
-            <button type="button" className="btn-info" onClick={() => this._rePlay()}>Play again</button>
+          <div className="ListenAndType-controls">
+            <button type="button" className="btn-primary" onClick={() => this._rePlay()}>Play again</button>
           </div>
         </div>
       );

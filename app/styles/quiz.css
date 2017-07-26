@@ -59,4 +59,36 @@
       margin-left: 10px;
     }
   }
+
+  &-result {
+    padding: 3em 4em;
+    background-color: #FFFFFF;
+
+    &-mark {
+      text-align: center;
+      font-size: 5em;
+    }
+
+    &-rate {
+      font-size: 7em;
+      text-align: center;
+      text-transform: uppercase;
+
+      &--poor {
+        color: #e74c3c;
+      }
+
+      &--average {
+        color: #e67e22;
+      }
+
+      &--good {
+        color: #f1c40f;
+      }
+
+      &--excellent {
+        color: #2ecc71;
+      }
+    }
+  }
 }
