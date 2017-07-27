@@ -2,6 +2,8 @@
 - CSRF token
 - Update spinner when CRUD
 
+https://stackoverflow.com/questions/11969175/alternative-to-require-paths-to-edit-require-search-directories-programmatically
+
 # Voice
 https://responsivevoice.org/
 https://sdkcarlos.github.io/sites/artyom.html
