@@ -3,7 +3,7 @@ import { getRandomVocabularies } from '../../utils/API';
 import Audio from '../media/Audio';
 import Spinner from '../icons/Spinner';
 
-const SIZE = 25;
+const SIZE = 5;
 
 const RATE = {
   poor: {
