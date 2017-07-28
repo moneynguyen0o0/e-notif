@@ -1,0 +1,209 @@
+.ListenAndType {
+  &-question {
+    margin: 3em auto;
+    width: 75%;
+    padding: 40px;
+    background-color: #FFFFFF;
+  }
+
+  &-title {
+    font-size: 3em;
+    text-transform: uppercase;
+  }
+
+  &-content {
+    display: flex;
+    align-items: center;
+
+    padding: 15px 0;
+  }
+
+  &-audio {
+    width: 135px;
+    display: inline-block;
+
+    .Audio {
+      i {
+        font-size: 7em;
+      }
+    }
+  }
+
+  &-text {
+    width: 100%;
+    display: inline-block;
+
+    input {
+      font-size: 2em;
+    }
+  }
+
+  &-hintIcon {
+    float: left;
+    padding: 10px 20px;
+
+    color: #FFFFFF;
+    background-color: #f1c40f;
+    border: none;
+
+    i {
+      font-size: 2em;
+    }
+  }
+
+  &-controls {
+    text-align: right;
+    margin-top: 15px;
+
+    button:last-child {
+      margin-left: 10px;
+    }
+  }
+
+  &-result {
+    padding: 3em 4em;
+    background-color: #FFFFFF;
+
+    &-mark {
+      text-align: center;
+      font-size: 5em;
+    }
+
+    &-rate {
+      font-size: 7em;
+      text-align: center;
+      text-transform: uppercase;
+
+      &--poor {
+        color: #e74c3c;
+      }
+
+      &--average {
+        color: #e67e22;
+      }
+
+      &--good {
+        color: #f1c40f;
+      }
+
+      &--excellent {
+        color: #2ecc71;
+      }
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    &-result {
+      &-mark {
+        font-size: 4.5em;
+      }
+
+      &-rate {
+        font-size: 6em;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    &-audio {
+      width: 110px;
+
+      .Audio {
+        i {
+          font-size: 5em;
+        }
+      }
+    }
+
+    &-text {
+      input {
+        font-size: 1.5em;
+      }
+    }
+
+    &-result {
+      &-mark {
+        font-size: 4em;
+      }
+
+      &-rate {
+        font-size: 5em;
+      }
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    &-question {
+      margin: 2em auto;
+      width: 85%;
+      padding: 30px;
+    }
+
+    &-content {
+      display: block;
+      align-items: baseline;
+    }
+
+    &-audio {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+
+    &-text {
+      display: block;
+      margin-top: 10px;
+
+      input {
+        font-size: 2em;
+      }
+    }
+
+    &-controls {
+      button {
+        width: 100%;
+        margin: 5px 0;
+
+        &:last-child {
+          margin-left: 0;
+        }
+      }
+    }
+
+    &-result {
+      padding: 2em 3em;
+
+      &-mark {
+        font-size: 3em;
+      }
+
+      &-rate {
+        font-size: 3.5em;
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    &-question {
+      margin: 1em auto;
+      width: 95%;
+      padding: 20px;
+    }
+
+    &-title {
+      font-size: 2.5em;
+    }
+
+    &-result {
+      padding: 1em 2em;
+
+      &-mark {
+        font-size: 2.3em;
+      }
+
+      &-rate {
+        font-size: 2.5em;
+      }
+    }
+  }
+}

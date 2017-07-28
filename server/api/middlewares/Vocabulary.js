@@ -118,7 +118,9 @@ export const getDaily = (req, res) => {
 };
 
 export const getRandom = (req, res) => {
-  Vocabulary.getRandom((err, vocabularies) => {
+  const { query } = req;
+
+  Vocabulary.getRandom(query, (err, vocabularies) => {
     if (err) return res.status(500).send({ message: 'Something went wrong getting the data', error: err });
 
     return res.json(vocabularies);

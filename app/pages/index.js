@@ -12,6 +12,7 @@ export { default as VerifyMail } from './VerifyMail';
 export { default as ForgotPassword } from './ForgotPassword';
 export { default as ResetPassword } from './ResetPassword';
 export { default as Profile } from './Profile';
+export { default as Quiz } from './Quiz';
 export { default as NotFound } from './NotFound';
 export { default as InternalServerError } from './InternalServerError';
 export { default as AccessDenied } from './AccessDenied';

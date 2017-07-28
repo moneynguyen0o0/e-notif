@@ -34,6 +34,7 @@ class Header extends Component {
     const rightNav = [];
 
     rightNav.push(<a key={rightNav.length} className="menu-item notification"><Notification /></a>);
+    rightNav.push(<Link key={rightNav.length} to="/quiz" {...linkProps}>Quiz</Link>);
 
     if (authenticated) {
       const userId = user._id;

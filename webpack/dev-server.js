@@ -9,6 +9,12 @@ const { server: { port, options }, webpack } = config;
 
 const compiler = require('webpack')(webpack);
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    next();
+});
+
 app.use(require('webpack-dev-middleware')(compiler, options));
 app.use(require('webpack-hot-middleware')(compiler));
 
