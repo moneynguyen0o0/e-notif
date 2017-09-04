@@ -12,6 +12,15 @@
     height: 50px;
     width: 50px;
     display: inline-block;
-    background: url('../images/spinner.svg') no-repeat;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  &-spin {
+    background-image: url('../images/spin.svg');
+  }
+
+  &-bars {
+    background-image: url('../images/bars.svg');
   }
 }

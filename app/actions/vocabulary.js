@@ -48,6 +48,12 @@ export const fetch = () => {
   };
 };
 
+export const setMessage = (message = '') => {
+  return (dispatch) => {
+    dispatch(showMessage(message));
+  };
+};
+
 export const save = (vocabulary) => {
   return (dispatch) => {
     dispatch(wait());
@@ -56,8 +62,9 @@ export const save = (vocabulary) => {
       .then((response) => {
         dispatch(saveSuccess(response));
       })
-      .catch(() => {
-        dispatch(push('/internal-server-error'));
+      .catch((response) => {
+        console.log(response.message);
+        dispatch(showMessage('Error zzz'));
       });
   };
 };

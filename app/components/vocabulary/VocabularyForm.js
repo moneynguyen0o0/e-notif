@@ -86,7 +86,7 @@ class VocabularyForm extends Component {
     return (
       <div>
         {fields.map((field, index) =>
-          <div key={index}>
+          <div key={index} className="form-group-wrapper">
             <Field
               name={field}
               type="text"
@@ -94,11 +94,8 @@ class VocabularyForm extends Component {
               label={`${lable} #${index + 1}`}
             />
             { index !== 0 ?
-              <button
-                type="button"
-                className="btn-danger"
-                onClick={() => fields.remove(index)}
-              >x</button> : null
+              <span className="CancelIcon" onClick={() => fields.remove(index)}>
+                <i className="fa fa-times" /></span> : null
             }
           </div>
         )}
@@ -147,7 +144,7 @@ class VocabularyForm extends Component {
     );
 
     return (
-      <form onSubmit={handleSubmit(this._validate)}>
+      <form className="VocabularyForm" onSubmit={handleSubmit(this._validate)}>
         <div className="form-body">
           {_id && <input name="_id" type="hidden" value={_id} />}
           <Field name="word" type="text" component={this._renderField} label="Word" />

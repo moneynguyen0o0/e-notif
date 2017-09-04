@@ -51,6 +51,7 @@ const isWaiting = (
       return true;
     case types.SAVE_VOCABULARY_SUCCESS:
     case types.DELETE_VOCABULARY_SUCCESS:
+    case types.SHOW_VOCABULARY_MESSAGE:
       return false;
     default:
       return state;

@@ -3,7 +3,7 @@ import ReactTable from 'react-table';
 import Modal from 'react-modal';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary } from '../../actions/vocabulary';
+import { fetch as fetchVocabularies, save as saveVocabulary, remove as removeVocabulary, setMessage as setVocabularyMessage } from '../../actions/vocabulary';
 import { getPOS } from '../../utils/API';
 import Spinner from '../icons/Spinner';
 import Mark from '../shared/Mark';
@@ -16,6 +16,19 @@ const editStyles = {
   }
 };
 
+const loadingStyles = {
+  content: {
+    width: '200px',
+    padding: '35px'
+  }
+};
+
+/**
+ * GET all errors message
+ * Turn off the modal when saving successfully // using a variable "success"?
+ * Hold the vocabulary when having any error
+ */
+
 class VocabularyList extends Component {
   static propTypes = {
     user: PropTypes.object,
@@ -24,7 +37,8 @@ class VocabularyList extends Component {
     isWaiting: PropTypes.bool,
     fetchVocabularies: PropTypes.func.isRequired,
     saveVocabulary: PropTypes.func.isRequired,
-    removeVocabulary: PropTypes.func.isRequired
+    removeVocabulary: PropTypes.func.isRequired,
+    setVocabularyMessage: PropTypes.func.isRequired
   }
 
   state = {
@@ -58,10 +72,6 @@ class VocabularyList extends Component {
 
   _saveVocabulary(vocabulary) {
     this.props.saveVocabulary(vocabulary);
-
-    this.setState({
-      isEditingModal: false
-    });
   }
 
   _openEditingModal() {
@@ -90,15 +100,24 @@ class VocabularyList extends Component {
     });
   }
 
+  _handleCloseErrorMessageModal() {
+    this.props.setVocabularyMessage();
+  }
+
   _download() {
     window.open('/api/vocabularies/download', '_blank');
   }
 
   render() {
     const {
-      vocabularies,
-      message,
-      isWaiting
+      vocabularies = [],
+      user: {
+        data: {
+          _id: userId
+        }
+      },
+      isWaiting,
+      message
     } = this.props;
 
     const {
@@ -108,17 +127,9 @@ class VocabularyList extends Component {
       POS
     } = this.state;
 
-    if (!vocabularies) {
+    if (!vocabularies.length) {
       return <Spinner />;
     }
-
-    const {
-      user: {
-        data: {
-          _id: userId
-        }
-      }
-    } = this.props;
 
     const customRow = {
       whiteSpace: 'normal'
@@ -223,12 +234,17 @@ class VocabularyList extends Component {
 
           <div className="Modal-title">
             <h1>Vocabulary form</h1>
-            <button className="btn-danger" onClick={() => this._closeEditingModal()}>X</button>
+            <button className="btn-danger" onClick={() => this._closeEditingModal()}><i className="fa fa-times" /></button>
           </div>
 
-          {/* TODO: implement later */}
-          {isWaiting && <h3>Saving</h3>}
-          {message && <h4>{message}</h4>}
+          <Modal isOpen={isWaiting} style={loadingStyles} contentLabel="Handling">
+            <Spinner type="bars" />
+          </Modal>
+          <Modal isOpen={message !== ''} contentLabel="Error-message" onRequestClose={() => this._handleCloseErrorMessageModal()}>
+            <div className="text-danger">
+              {message}
+            </div>
+          </Modal>
 
           <VocabularyForm POS={POS} vocabulary={vocabulary} saveVocabulary={(vocabulary) => this._saveVocabulary(vocabulary)} />
         </Modal>
@@ -247,4 +263,4 @@ const mapStateToProps = ({ vocabulary, user }) => {
   return { ...vocabulary, user };
 };
 
-export default connect(mapStateToProps, { fetchVocabularies, saveVocabulary, removeVocabulary })(VocabularyList);
+export default connect(mapStateToProps, { fetchVocabularies, saveVocabulary, removeVocabulary, setVocabularyMessage })(VocabularyList);

@@ -67,3 +67,17 @@
     }
   }
 }
+
+.VocabularyForm {
+  .form-group-wrapper {
+    position: relative;
+
+    .CancelIcon {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+      cursor: pointer;
+    }
+  }
+}
