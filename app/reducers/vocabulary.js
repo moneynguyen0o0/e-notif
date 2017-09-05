@@ -37,6 +37,9 @@ const getMessage = (
   switch (action.type) {
     case types.SHOW_VOCABULARY_MESSAGE:
       return action.message;
+    case types.SAVE_VOCABULARY_SUCCESS:
+    case types.WAIT_VOCABULARY_ACTION:
+      return '';
     default:
       return state;
   }
@@ -58,10 +61,23 @@ const isWaiting = (
   }
 };
 
+const saveSuccess = (state = false, action) => {
+  switch (action.type) {
+    case types.SAVE_VOCABULARY_SUCCESS:
+      return true;
+    case types.WAIT_VOCABULARY_ACTION:
+    case types.SHOW_VOCABULARY_MESSAGE:
+      return false;
+    default:
+      return state;
+  }
+};
+
 const vocabularyReducer = combineReducers({
   vocabularies: getVocabularies,
   message: getMessage,
-  isWaiting
+  isWaiting,
+  success: saveSuccess
 });
 
 export default vocabularyReducer;
