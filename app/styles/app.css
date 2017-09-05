@@ -33,6 +33,14 @@ button, .button {
   text-align: right;
 }
 
+.margin-left {
+  margin-left: 15px
+}
+
+.margin-right {
+  margin-right: 15px
+}
+
 /* MODAL */
 
 .ReactModal__Overlay {

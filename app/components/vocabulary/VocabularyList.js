@@ -16,12 +16,20 @@ const editStyles = {
   }
 };
 
+const loadingStyles = {
+  content: {
+    width: '200px',
+    padding: '35px'
+  }
+};
+
 class VocabularyList extends Component {
   static propTypes = {
     user: PropTypes.object,
     vocabularies: PropTypes.array,
     message: PropTypes.string,
     isWaiting: PropTypes.bool,
+    success: PropTypes.bool,
     fetchVocabularies: PropTypes.func.isRequired,
     saveVocabulary: PropTypes.func.isRequired,
     removeVocabulary: PropTypes.func.isRequired
@@ -31,12 +39,27 @@ class VocabularyList extends Component {
     POS: [],
     vocabulary: undefined,
     isEditingModal: false,
-    isDeletingModal: false
+    isDeletingModal: false,
+    showErrorMessage: false
   }
 
   componentDidMount() {
     this.props.fetchVocabularies();
     getPOS().then(data => this.setState({ POS: data }));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { message, success } = nextProps;
+
+    if (success) {
+      this._closeEditingModal();
+    }
+
+    if (message !== '') {
+      this.setState({
+        showErrorMessage: true
+      });
+    }
   }
 
   _edit(vocabulary) {
@@ -60,7 +83,7 @@ class VocabularyList extends Component {
     this.props.saveVocabulary(vocabulary);
 
     this.setState({
-      isEditingModal: false
+      vocabulary
     });
   }
 
@@ -90,35 +113,39 @@ class VocabularyList extends Component {
     });
   }
 
+  _handleCloseErrorMessageModal() {
+    this.setState({
+      showErrorMessage: false
+    });
+  }
+
   _download() {
     window.open('/api/vocabularies/download', '_blank');
   }
 
   render() {
     const {
-      vocabularies,
-      message,
-      isWaiting
+      vocabularies = [],
+      user: {
+        data: {
+          _id: userId
+        }
+      },
+      isWaiting,
+      message
     } = this.props;
 
     const {
       vocabulary,
       isEditingModal,
       isDeletingModal,
-      POS
+      POS,
+      showErrorMessage
     } = this.state;
 
-    if (!vocabularies) {
+    if (!vocabularies.length) {
       return <Spinner />;
     }
-
-    const {
-      user: {
-        data: {
-          _id: userId
-        }
-      }
-    } = this.props;
 
     const customRow = {
       whiteSpace: 'normal'
@@ -213,7 +240,7 @@ class VocabularyList extends Component {
 
           <div className="text-right">
             <button className="btn-default" onClick={() => this._closeDeletingModal()}>Cancel</button>
-            <button className="btn-primary" onClick={() => this._remove()}>Delete</button>
+            <button className="btn-primary margin-left" onClick={() => this._remove()}>Delete</button>
           </div>
         </Modal>
         <Modal
@@ -223,12 +250,17 @@ class VocabularyList extends Component {
 
           <div className="Modal-title">
             <h1>Vocabulary form</h1>
-            <button className="btn-danger" onClick={() => this._closeEditingModal()}>X</button>
+            <button className="btn-danger" onClick={() => this._closeEditingModal()}><i className="fa fa-times" /></button>
           </div>
 
-          {/* TODO: implement later */}
-          {isWaiting && <h3>Saving</h3>}
-          {message && <h4>{message}</h4>}
+          <Modal isOpen={isWaiting} style={loadingStyles} contentLabel="Handling">
+            <Spinner type="bars" />
+          </Modal>
+          <Modal isOpen={showErrorMessage} contentLabel="Error-message" onRequestClose={() => this._handleCloseErrorMessageModal()}>
+            <div className="text-danger">
+              {message}
+            </div>
+          </Modal>
 
           <VocabularyForm POS={POS} vocabulary={vocabulary} saveVocabulary={(vocabulary) => this._saveVocabulary(vocabulary)} />
         </Modal>

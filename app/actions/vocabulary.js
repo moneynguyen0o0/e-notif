@@ -56,8 +56,19 @@ export const save = (vocabulary) => {
       .then((response) => {
         dispatch(saveSuccess(response));
       })
-      .catch(() => {
-        dispatch(push('/internal-server-error'));
+      .catch((error) => {
+        const {
+          response: {
+            data: {
+              error: {
+                errmsg
+              } = {}
+            } = {},
+            message
+          } = {}
+        } = error;
+
+        dispatch(showMessage(errmsg || message));
       });
   };
 };

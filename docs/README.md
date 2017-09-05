@@ -1,7 +1,4 @@
 # TODO
-- CSRF token
-- Update spinner when CRUD
-
 https://stackoverflow.com/questions/11969175/alternative-to-require-paths-to-edit-require-search-directories-programmatically
 
 # Voice
