@@ -3,7 +3,7 @@ import { getRandomVocabularies } from '../../utils/API';
 import Audio from '../media/Audio';
 import Spinner from '../icons/Spinner';
 
-const SIZE = 5;
+const SIZE = 25;
 
 const RATE = {
   poor: {
@@ -30,7 +30,7 @@ const defaultState = {
   currentQuestIndex: 0,
   inputValue: '',
   finish: false,
-  showHint: false
+  hint: null
 };
 
 class ListenAndType extends Component {
@@ -73,7 +73,7 @@ class ListenAndType extends Component {
       answers: this._addAnswer(),
       currentQuestIndex: currentQuestIndex + 1,
       inputValue: nextAnswer,
-      showHint: false
+      hint: null
     });
   }
 
@@ -89,7 +89,7 @@ class ListenAndType extends Component {
     const nextState = {
       currentQuestIndex: currentQuestIndex - 1,
       inputValue: prevAnswer,
-      showHint: false
+      hint: null
     };
 
     if (inputValue) {
@@ -114,7 +114,16 @@ class ListenAndType extends Component {
   }
 
   _showHint() {
-    this.setState({ showHint: true });
+    this.setState({
+      hint: this._randomHint()
+    });
+  }
+
+  _randomHint() {
+    const { vocabularies, currentQuestIndex } = this.state;
+    const { definitions } = vocabularies[currentQuestIndex];
+
+    return definitions[Math.floor(Math.random() * definitions.length)];
   }
 
   _onChangeInput(e) {
@@ -128,14 +137,14 @@ class ListenAndType extends Component {
       currentQuestIndex,
       inputValue,
       finish,
-      showHint
+      hint
     } = this.state;
 
     if (!vocabularies.length) {
       return <Spinner />;
     }
 
-    const { audio, definitions } = vocabularies[currentQuestIndex];
+    const { audio } = vocabularies[currentQuestIndex];
 
     let resultContent;
 
@@ -207,7 +216,7 @@ class ListenAndType extends Component {
             <div className="ListenAndType-main">
               <div className="ListenAndType-title">Quest {currentQuestIndex + 1}</div>
               <div className="ListenAndType-hint">
-                { showHint && <div><i className="fa fa-info-circle" /> {definitions[Math.floor(Math.random() * definitions.length)]}</div> }
+                { hint ? <div><i className="fa fa-info-circle" /> {hint}</div> : null }
               </div>
               <div className="ListenAndType-content">
                 <div className="ListenAndType-audio"><Audio key={currentQuestIndex} src={audio} /></div>
