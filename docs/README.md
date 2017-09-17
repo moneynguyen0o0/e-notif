@@ -1,5 +1,9 @@
 # TODO
-https://stackoverflow.com/questions/11969175/alternative-to-require-paths-to-edit-require-search-directories-programmatically
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API
+https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
+https://www.labnol.org/software/add-speech-recognition-to-website/19989/
+https://shapeshed.com/html5-speech-recognition-api/
+https://github.com/psirenny/node-google-speech-api
 
 # Voice
 https://responsivevoice.org/
@@ -63,3 +67,5 @@ http://javascript.tutorialhorizon.com/2015/07/02/send-email-node-js-express/
 
 # Deploying React + Redux to Heroku
 http://www.thegreatcodeadventure.com/deploying-react-redux-to-heroku/
+
+https://stackoverflow.com/questions/11969175/alternative-to-require-paths-to-edit-require-search-directories-programmatically
