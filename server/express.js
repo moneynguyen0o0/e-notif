@@ -37,17 +37,7 @@ if (isProduction) {
 }
 
 app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: sessionSecret,
-  proxy: true, // The "X-Forwarded-Proto" header will be used.
-  name: 'sessionId',
-  // Add HTTPOnly, Secure attributes on Session Cookie
-  // If secure is set, and you access your site over HTTP, the cookie will not be set
-  cookie: {
-    httpOnly: true,
-    secure: false,
-  }
+  secret: sessionSecret
 }));
 
 app.use(passport.initialize());
