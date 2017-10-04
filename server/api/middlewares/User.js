@@ -6,6 +6,8 @@ import User from '../../services/User';
 import { sendMail } from '../../utils/MailUtil';
 import { pickUser } from '../../utils/UserUtil';
 
+const AGE = 30 * 24 * 60 * 60 * 1000;
+
 const getRootUrl = (req) => {
   return req.protocol + '://' + req.get('host');
 };
@@ -83,14 +85,20 @@ export const login = (req, res) => {
     return req.logIn(user, (loginErr) => {
       if (loginErr) return res.status(500).send({ message: 'Authenticated error', error: err });
 
+      if (req.body.remember) {
+        req.session.cookie.maxAge = AGE;
+      } else {
+        req.session.cookie.expires = false;
+      }
+
       return res.sendStatus(200);
     });
   })(req, res);
 };
 
 export const logout = (req, res) => {
-  // Do email and password validation for the server
   req.logout();
+  req.session.destroy();
   res.redirect('/');
 };
 
