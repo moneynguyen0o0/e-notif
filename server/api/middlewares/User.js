@@ -6,7 +6,7 @@ import User from '../../services/User';
 import { sendMail } from '../../utils/MailUtil';
 import { pickUser } from '../../utils/UserUtil';
 
-const AGE = 15 * 24 * 60 * 60 * 1000;
+const AGE = 30 * 24 * 60 * 60 * 1000;
 
 const getRootUrl = (req) => {
   return req.protocol + '://' + req.get('host');
@@ -86,7 +86,6 @@ export const login = (req, res) => {
       if (loginErr) return res.status(500).send({ message: 'Authenticated error', error: err });
 
       if (req.body.remember) {
-        req.session.cookie.expires = new Date(Date.now() + AGE);
         req.session.cookie.maxAge = AGE;
       } else {
         req.session.cookie.expires = false;

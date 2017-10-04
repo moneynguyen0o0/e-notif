@@ -44,6 +44,8 @@
 .Login {
   &-extra {
     width: 100%;
+
+    margin-top: 7px;
   }
 
   &-forgotPassword {

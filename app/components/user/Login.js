@@ -53,6 +53,9 @@ class LoginForm extends Component {
       <form onSubmit={handleSubmit}>
         <Field name="email" type="email" component={this._renderField} label="Email" />
         <Field name="password" type="password" component={this._renderField} label="Password" />
+        <div>
+          <Field name="remember" component="input" type="checkbox" /> <label htmlFor="remember">Remember me</label>
+        </div>
         <div className="Login-extra"><a href="/signup">Sign up now!</a><div className="Login-forgotPassword"><a href="/users/forgot-password">Forgot password!</a></div></div>
         <div className="Login-footer">
           <button type="submit" className="btn-info" disabled={submitting}>Log In</button>
