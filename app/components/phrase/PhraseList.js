@@ -90,7 +90,7 @@ class PhraseList extends Component {
       isDeletingModal
     } = this.state;
 
-    if (!phrases) {
+    if (!phrases.length) {
       return <Spinner />;
     }
 
