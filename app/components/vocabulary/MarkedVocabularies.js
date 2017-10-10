@@ -22,7 +22,7 @@ class MarkedVocabularies extends Component {
       vocabularies
     } = this.state;
 
-    if (!vocabularies) {
+    if (!vocabularies.length) {
       return <Spinner />;
     }
 
