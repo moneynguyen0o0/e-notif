@@ -2,11 +2,11 @@ import * as URL from '../server/constants/URL';
 import { ADMIN, USER } from '../server/constants/Role';
 
 export const interceptUrls = [
-  {
-		pattern: URL.API + URL.VOCABULARIES,
-		accesses: [ADMIN],
-    method: 'GET'
-	},
+  // {
+	// 	pattern: URL.API + URL.VOCABULARIES,
+	// 	accesses: [ADMIN],
+  //   method: 'GET'
+	// },
   {
 		pattern: URL.API + URL.VOCABULARIES,
 		accesses: [ADMIN],

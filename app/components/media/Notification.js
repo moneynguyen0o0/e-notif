@@ -2,12 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import store from 'store';
 import { connect } from 'react-redux';
 import { notify, close as closeNotification } from '../../utils/notify';
-import { getMarkedVocabularies, searchVocabularies } from '../../utils/API';
+import {
+  getMarkedVocabularies,
+  // searchVocabularies
+  getAllVocabularies
+} from '../../utils/API';
 
 const notifyKey = '_nofify';
 
-const TIMEOUT = 5 * 60 * 1000;
-const NUMBER_OF_ITEM = 36;
+const TIMEOUT = 3 * 60 * 1000;
+// const NUMBER_OF_ITEM = 36;
 
 class Notificaton extends Component {
   static propTypes = {
@@ -19,12 +23,13 @@ class Notificaton extends Component {
   }
 
   componentWillMount() {
+    const { user: { authenticated } } = this.props;
     const notification = this._getNotificationFromStore();
-    const { notified, index = 0 } = notification;
+    const { notified, authIndex = 0, anonymIndex = 0 } = notification;
 
     this.setState({
       ring: notified !== undefined ? notified : true,
-      vocabularyIndex: index
+      vocabularyIndex: authenticated ? authIndex : anonymIndex
     });
   }
 
@@ -36,7 +41,9 @@ class Notificaton extends Component {
         this.setState({ vocabularies });
       });
     } else {
-      searchVocabularies({ start: 0, end: NUMBER_OF_ITEM }).then((vocabularies) => {
+      // searchVocabularies({ start: 0, end: NUMBER_OF_ITEM })
+      getAllVocabularies()
+      .then((vocabularies) => {
         this.setState({ vocabularies });
       });
     }
@@ -98,6 +105,7 @@ class Notificaton extends Component {
   }
 
   _notifyVocabulary() {
+    const { user: { authenticated } } = this.props;
     const { vocabularies, vocabularyIndex: currentIndex } = this.state;
 
     if (vocabularies.length) {
@@ -129,10 +137,16 @@ class Notificaton extends Component {
 
       // Store to local
       const notification = this._getNotificationFromStore();
-      notification.index = index;
+      
+      if (authenticated) {
+        notification.authIndex = index; 
+      } else {
+        notification.anonymIndex = index;
+      }
+
       this._setNotificationToStore(notification);
 
-      // Not need to rerender
+      // No need to rerender
       this.state.vocabularyIndex = index;
     }
   }
