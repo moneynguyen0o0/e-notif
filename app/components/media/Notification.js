@@ -10,7 +10,7 @@ import {
 
 const notifyKey = '_nofify';
 
-const TIMEOUT = 3 * 60 * 1000;
+const TIMEOUT = 5 * 60 * 1000;
 // const NUMBER_OF_ITEM = 36;
 
 class Notificaton extends Component {
