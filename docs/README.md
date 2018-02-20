@@ -1,7 +1,7 @@
 # TODO
-Add a clear button for the search bar
-Add search page not found
-Add search filter for the vocas manangement
+- Add a clear button for the search bar
+- Add search page not found
+- Add search filter for the vocas manangement
 
 https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API
 https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
