@@ -49,9 +49,15 @@ class Search extends Component {
       return <Spinner />;
     }
 
+    const {
+      query: {
+        keyword = ''
+      } = {}
+    } = this.context.location;
+
     return (
       <div className="SearchVocabularies">
-        <Vocabularies vocabularies={vocabularies} />
+        { vocabularies.length !== 0 ? <Vocabularies vocabularies={vocabularies} /> : <div className="SearchVocabularies-message">No results were found for <strong>{keyword}</strong></div> }
       </div>
     );
   }

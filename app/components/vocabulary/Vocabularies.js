@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Audio from '../media/Audio';
 import Mark from '../shared/Mark';
 
-class DailyVocabularies extends Component {
+class Vocabularies extends Component {
   static propTypes = {
     vocabularies: PropTypes.array,
     user: PropTypes.object
@@ -77,4 +77,4 @@ const mapStateToProps = ({ user }) => {
   return { user };
 };
 
-export default connect(mapStateToProps)(DailyVocabularies);
+export default connect(mapStateToProps)(Vocabularies);

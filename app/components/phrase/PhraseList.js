@@ -99,18 +99,18 @@ class PhraseList extends Component {
     };
 
     const columns = [{
-      header: 'PHRASES',
+      Header: 'PHRASES',
       columns: [
         {
-          header: 'Content',
+          Header: 'Content',
           accessor: 'content',
           render: props => <div style={customRow}>{props.value}</div>
         }, {
-          header: 'Notes',
+          Header: 'Notes',
           accessor: 'note',
           render: props => <div style={customRow}>{props.value}</div>
         }, {
-          header: '',
+          Header: '',
           id: 'options',
           width: 75,
           accessor: phrase => <div className="text-center">

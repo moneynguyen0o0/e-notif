@@ -27,6 +27,7 @@ const requireAdminAuth = (authenticated, isAdmin) => {
     if (!authenticated) {
       replace({
         pathname: '/login',
+        query: { redirect: encodeURIComponent(nextState.location.pathname) },
         state: { nextPathname: nextState.location.pathname }
       });
     } else if (!isAdmin) {
@@ -44,6 +45,7 @@ const requireAuth = (authenticated) => {
     if (!authenticated) {
       replace({
         pathname: '/login',
+        query: { redirect: encodeURIComponent(nextState.location.pathname) },
         state: { nextPathname: nextState.location.pathname }
       });
     }
