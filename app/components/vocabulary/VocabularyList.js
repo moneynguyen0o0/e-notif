@@ -229,10 +229,6 @@ class VocabularyList extends Component {
       ]
     }];
 
-    const defaultSorted = [{
-      id: 'word'
-    }];
-
     return (
       <div className="VocabularyList">
         <div className="btn-container"><button className="btn-primary" onClick={() => this._openEditingModal()}>Create New</button></div>
@@ -273,7 +269,6 @@ class VocabularyList extends Component {
         <ReactTable
           data={vocabularies}
           columns={columns}
-          defaultSorted={defaultSorted}
           defaultPageSize={10}
         />
         <div className="btn-container"><a className="button btn-success" onClick={() => this._download()}>Export</a></div>
