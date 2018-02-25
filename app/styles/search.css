@@ -1,0 +1,7 @@
+.SearchVocabularies {
+  &-message {
+    padding: 1em;
+    background-color: #FFFFFF;
+    font-size: 25px;
+  }
+}

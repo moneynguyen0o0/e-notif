@@ -31,19 +31,21 @@ class MarkedVocabularies extends Component {
     };
 
     const columns = [{
-      header: 'VOCABULARIES',
+      Header: 'VOCABULARIES',
       columns: [
         {
-          header: 'Word',
+          Header: 'Word',
           accessor: 'word',
           render: props => <Link to={`/vocabularies/${props.row._id}`}>{props.value}</Link>,
-          width: 150
+          width: 150,
+          filterable: true,
+          filterMethod: (filter, row) => row[filter.id].toLowerCase().startsWith(filter.value.toLowerCase())
         }, {
-          header: 'Pronunciation',
+          Header: 'Pronunciation',
           accessor: 'pronunciation',
           width: 150
         }, {
-          header: 'P.O.S',
+          Header: 'P.O.S',
           id: 'pos',
           width: 150,
           accessor: vocabulary => vocabulary.pos.map((item, index) => {
@@ -51,19 +53,19 @@ class MarkedVocabularies extends Component {
             return <span key={index}>{content}</span>;
           })
         }, {
-          header: 'Definitions',
+          Header: 'Definitions',
           id: 'definitions',
           accessor: vocabulary => vocabulary.definitions.map((definition, index) => {
             return <div key={index} style={customRow}>- {definition}</div>;
           })
         }, {
-          header: 'Examples',
+          Header: 'Examples',
           id: 'examples',
           accessor: vocabulary => vocabulary.examples.map((example, index) => {
             return <div key={index} style={customRow}>- {example}</div>;
           })
         }, {
-          header: '',
+          Header: '',
           id: 'audio',
           width: 50,
           accessor: vocabulary => {
@@ -76,7 +78,7 @@ class MarkedVocabularies extends Component {
             );
           }
         }, {
-          header: '',
+          Header: '',
           id: 'mark',
           width: 50,
           accessor: vocabulary => <div className="text-center">

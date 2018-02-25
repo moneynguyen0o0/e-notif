@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux';
+import queryString from 'query-string';
 import * as API from '../utils/API';
 import * as types from '../constants/types';
 
@@ -63,7 +64,10 @@ export const login = (user) => {
     dispatch(beginLogin());
 
     return API.login(user).then(() => {
-        location.href = '/';
+        const searchParams = queryString.parse(location.search);
+        const { redirect = '/' } = searchParams;
+
+        location.href = decodeURIComponent(redirect);
       })
       .catch((error) => {
         const { response } = error;

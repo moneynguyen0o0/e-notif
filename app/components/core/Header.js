@@ -77,11 +77,13 @@ class Header extends Component {
   }
 }
 
+const defaultSearchState = {
+  keyword: '',
+  vocabularies: []
+};
+
 class SearchBar extends Component {
-  state = {
-    keyword: '',
-    vocabularies: []
-  }
+  state = defaultSearchState
 
   componentWillMount() {
     this._searchAutoComplete = _.debounce(this._searchAutoComplete, 500, { maxWait: 500, leading: true });
@@ -89,6 +91,7 @@ class SearchBar extends Component {
 
   _search() {
     const { keyword } = this.state;
+
     if (keyword) {
       browserHistory.push({
         pathname: '/search',
@@ -97,6 +100,10 @@ class SearchBar extends Component {
         }
       });
     }
+  }
+
+  _clear() {
+    this.setState(defaultSearchState);
   }
 
   _handleKeyPress(e) {
@@ -109,7 +116,6 @@ class SearchBar extends Component {
     const value = event.target.value;
 
     this._searchAutoComplete(value);
-
     this.setState({ keyword: value });
   }
 
@@ -125,15 +131,16 @@ class SearchBar extends Component {
 
   render() {
     const { keyword, vocabularies } = this.state;
+    const isDataFound = vocabularies.length > 0;
 
     return (
       <div className="Search">
         <div className="SearchBar">
           <input type="search" placeholder="Search..." value={keyword} onChange={(e) => this._handleChange(e)} onKeyPress={(e) => this._handleKeyPress(e)} />
-          <button className="icon" onClick={() => this._search()}><i className="fa fa-search" /></button>
+          { isDataFound ? <button className="icon" onClick={() => this._clear()}><i className="fa fa-times" /></button> : <button className="icon" onClick={() => this._search()}><i className="fa fa-search" /></button> }
         </div>
         {
-          vocabularies.length > 0 && <div className="SearchResult">
+          isDataFound && <div className="SearchResult">
             <ul>
               {
                 vocabularies.map((vocabulary, index) => {

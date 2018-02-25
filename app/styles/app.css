@@ -11,6 +11,7 @@
 @import './user';
 @import './vocabulary';
 @import './quiz';
+@import './search';
 
 a {
   cursor: pointer;
