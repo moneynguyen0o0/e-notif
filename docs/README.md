@@ -1,12 +1,5 @@
-https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API
-https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API
-https://www.labnol.org/software/add-speech-recognition-to-website/19989/
-https://shapeshed.com/html5-speech-recognition-api/
-https://github.com/psirenny/node-google-speech-api
-
 # Voice
-https://responsivevoice.org/
-https://sdkcarlos.github.io/sites/artyom.html
+https://developers.google.com/web/updates/2014/01/Web-apps-that-talk-Introduction-to-the-Speech-Synthesis-API
 
 # Fuzzy search
 https://stackoverflow.com/questions/38421664/fuzzy-searching-with-mongodb
