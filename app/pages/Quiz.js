@@ -6,7 +6,7 @@ class Quiz extends Component {
   render() {
     return (
       <div className="Quiz">
-        <Helmet title="Listen & Type | ENotif" />
+        <Helmet title="Quizzz | ENotif" />
         <div className="container">
           <ListenAndType />
         </div>
