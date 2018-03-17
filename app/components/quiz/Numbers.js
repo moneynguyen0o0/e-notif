@@ -108,7 +108,8 @@ class Settings extends Component {
 }
 
 const defaultTestingState = {
-  count: 7,
+  timeup: false,
+  starTimer: false,
   value: ''
 };
 
@@ -119,40 +120,28 @@ class Testing extends Component {
   }
 
   state = {
-    core: -1,
+    core: 0,
     ...defaultTestingState
   }
 
   componentDidMount() {
     this._generateQuetion();
-    this.intervalId = setInterval(() => this._timer(), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.intervalId);
-  }
-
-  _timer() {
-    const { count } = this.state;
-
-    this.setState({
-      count: count - 1
-    });
-
-    if (count - 1 === 0) {
-      clearInterval(this.intervalId);
-    }
   }
 
   _generateQuetion() {
-    const { core } = this.state;
     const randomedNumber = this._randomNumber();
 
-    speech(randomedNumber);
+    speech(
+      randomedNumber,
+      {
+        onend: () => {
+          this.setState({ starTimer: true });
+        }
+      }
+    );
 
     this.setState({
       number: randomedNumber,
-      core: core + 1,
       ...defaultTestingState
     });
   }
@@ -168,13 +157,23 @@ class Testing extends Component {
   }
 
   _onChangeInput(event) {
-    if (event.target.value === this.state.number.toString()) {
+    const { 
+      core,
+      number
+    } = this.state;
+    const value = event.target.value;
+
+    if (value === number.toString()) {
       this._generateQuetion();
+
+      this.setState({ core: core + 1 });
     } else {
-      this.setState({
-        value: event.target.value
-      });
+      this.setState({ value });
     }
+  }
+
+  _timeup() {
+    this.setState({ timeup: true });
   }
 
   _repeat() {
@@ -188,14 +187,15 @@ class Testing extends Component {
   render() {
     const {
       value,
-      count,
+      timeup,
       core,
-      number
+      number,
+      starTimer
     } = this.state;
 
     const mainContent = (
       <div className="Testing-main">
-        <div className="Testing-time">{count}</div>
+        { starTimer && <Timer onTimeup={() => this._timeup()} /> }
         <div className="Testing-content">
           <div className="Testing-text">
             <input type="text" placeholder="Your answer..." value={value} onChange={(e) => this._onChangeInput(e)} />
@@ -211,15 +211,58 @@ class Testing extends Component {
         <div className="Testing-result-repeat">
           <i className="fa fa-volume-up" onClick={() => this._repeat()} />
         </div>
-        <div className="Testing-result-next">
-          <button type="button" className="btn-info" onClick={() => this._end()}>Next</button>
+        <div className="Testing-result-replay">
+          <button type="button" className="btn-info" onClick={() => this._end()}>Replay</button>
         </div>
       </div>
     );
 
     return (
       <div className="Testing">
-        { count === 0 ? resultContent : mainContent }
+        { timeup ? resultContent : mainContent }
+      </div>
+    );
+  }
+}
+
+class Timer extends Component {
+  static propTypes = {
+    onTimeup: PropTypes.func.isRequired
+  }
+
+  state = {
+    count: 7
+  }
+
+  componentDidMount() {
+    this.intervalId = setInterval(() => this._timer(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
+
+  _timer() {
+    const { count } = this.state;
+
+    this.setState({
+      count: count - 1
+    });
+
+    if (count - 1 === 0) {
+      this.props.onTimeup();
+      clearInterval(this.intervalId);
+    }
+  }
+
+  render() {
+    const {
+      count
+    } = this.state;
+
+    return (
+      <div className="Timer">
+        {count}
       </div>
     );
   }
