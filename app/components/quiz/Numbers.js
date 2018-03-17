@@ -3,19 +3,26 @@ import { speech } from '../../utils/voice';
 import { getRandomInt } from '../../utils/NumberUtil';
 
 const TYPE_VALUE = {
-  X: 10,
-  XY: 100,
-  XYZ: 1000,
-  XXYZ: 10000,
-  RANDOM: getRandomInt(1, 10)
-};
-
-const TYPE_MAPPING = {
-  X: 'X',
-  XY: 'XY',
-  XYZ: 'XYZ',
-  XXYZ: 'XXYZ',
-  RANDOM: 'RANDOM'
+  X: {
+    text: 'X',
+    value: 10
+  },
+  XY: {
+    text: 'XY',
+    value: 100
+  },
+  XYZ: {
+    text: 'XYZ',
+    value: 1000
+  },
+  XXYZ: {
+    text: 'XXYZ',
+    value: 10000
+  },
+  RANDOM: {
+    text: 'XXYZ',
+    value: getRandomInt(1, 100000)
+  }
 };
 
 class Numbers extends Component {
@@ -60,7 +67,7 @@ class Settings extends Component {
   }
 
   state = {
-    type: TYPE_MAPPING.RANDOM
+    type: 'RANDOM'
   }
 
 
@@ -71,7 +78,7 @@ class Settings extends Component {
 
   _onNext() {
     this.props.onNext({
-      type: this.state.type
+      type: TYPE_MAPPING[this.state.type]
     });
   }
 
@@ -86,12 +93,12 @@ class Settings extends Component {
           {
             Object.keys(TYPE_MAPPING).map((key, index) => {
               const attr = {
-                defaultChecked: key === TYPE_MAPPING.RANDOM
+                defaultChecked: TYPE_MAPPING[key].text === TYPE_MAPPING.RANDOM.text
               }
 
               return (
                 <div key={index}>
-                  <input value={key} name="type" {...attr} /> {TYPE_MAPPING[key]}
+                  <input value={key} name="type" {...attr} /> {TYPE_MAPPING[key].text}
                 </div>
               );
             })
@@ -160,7 +167,7 @@ class Testing extends Component {
       }
     } = this.props;
 
-    return Math.round(Math.random() * type);
+    return Math.round(Math.random() * type.value);
   }
 
   _onChangeInput(event) {

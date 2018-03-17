@@ -33,7 +33,7 @@ const defaultState = {
   hint: null
 };
 
-class ListenAndType extends Component {
+class ListenAndWrite extends Component {
   state = {
     ...defaultState
   }
@@ -186,9 +186,9 @@ class ListenAndType extends Component {
       });
 
       resultContent = (
-        <div className="ListenAndType-result">
-          <div className="ListenAndType-result-mark">{mark} / {vocabularies.length}</div>
-          <div className={`ListenAndType-result-rate ListenAndType-result-rate--${rate}`}>{rate}!!!</div>
+        <div className="ListenAndWrite-result">
+          <div className="ListenAndWrite-result-mark">{mark} / {vocabularies.length}</div>
+          <div className={`ListenAndWrite-result-rate ListenAndWrite-result-rate--${rate}`}>{rate}!!!</div>
           <table className="table table-hover">
             <thead>
               <tr>
@@ -202,7 +202,7 @@ class ListenAndType extends Component {
               {trContent}
             </tbody>
           </table>
-          <div className="ListenAndType-controls">
+          <div className="ListenAndWrite-controls">
             <button type="button" className="btn-primary" onClick={() => this._rePlay()}>Play again</button>
           </div>
         </div>
@@ -210,23 +210,23 @@ class ListenAndType extends Component {
     }
 
     return (
-      <div className="ListenAndType">
+      <div className="ListenAndWrite">
         {
-          finish ? resultContent : <div className="ListenAndType-question">
-            <div className="ListenAndType-main">
-              <div className="ListenAndType-title">Quest {currentQuestIndex + 1}</div>
-              <div className="ListenAndType-hint">
+          finish ? resultContent : <div className="ListenAndWrite-question">
+            <div className="ListenAndWrite-main">
+              <div className="ListenAndWrite-title">Quest {currentQuestIndex + 1}</div>
+              <div className="ListenAndWrite-hint">
                 { hint ? <div><i className="fa fa-info-circle" /> {hint}</div> : null }
               </div>
-              <div className="ListenAndType-content">
-                <div className="ListenAndType-audio"><Audio key={currentQuestIndex} src={audio} /></div>
-                <div className="ListenAndType-text">
+              <div className="ListenAndWrite-content">
+                <div className="ListenAndWrite-audio"><Audio key={currentQuestIndex} src={audio} /></div>
+                <div className="ListenAndWrite-text">
                   <input type="text" placeholder="Your answer..." value={inputValue} onChange={(e) => this._onChangeInput(e)} />
                 </div>
               </div>
             </div>
-            <div className="ListenAndType-controls">
-              <button className="ListenAndType-hintIcon" onClick={() => this._showHint()}><i className="fa fa-lightbulb-o" /></button>
+            <div className="ListenAndWrite-controls">
+              <button className="ListenAndWrite-hintIcon" onClick={() => this._showHint()}><i className="fa fa-lightbulb-o" /></button>
               { currentQuestIndex ? <button type="button" className="btn-default" onClick={() => this._onBack()}>Back</button> : null }
               { currentQuestIndex === vocabularies.length - 1 ? <button type="button" className="btn-success" onClick={() => this._onFinish()}>Finish</button> : <button type="button" className="btn-info" onClick={() => this._onNext()}>Next</button> }
             </div>
@@ -237,4 +237,4 @@ class ListenAndType extends Component {
   }
 }
 
-export default ListenAndType;
+export default ListenAndWrite;
