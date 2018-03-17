@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { speech } from '../../utils/voice';
 import { getRandomInt } from '../../utils/NumberUtil';
 
@@ -20,7 +20,7 @@ const TYPE_VALUE = {
     value: 10000
   },
   RANDOM: {
-    text: 'XXYZ',
+    text: 'RAMDOM',
     value: getRandomInt(1, 100000)
   }
 };
@@ -30,12 +30,13 @@ class Numbers extends Component {
     settings: {
       type: TYPE_VALUE.RANDOM
     },
-    finished: false
+    finished: true
   }
 
   _getSettings(settings) {
     this.setState({
-      settings
+      settings,
+      finished: false
     });
   }
 
@@ -70,35 +71,29 @@ class Settings extends Component {
     type: 'RANDOM'
   }
 
-
   _setType(event) {
-    console.log(event.target.value);
     this.setState({ type: event.target.value });
   }
 
   _onNext() {
     this.props.onNext({
-      type: TYPE_MAPPING[this.state.type]
+      type: TYPE_VALUE[this.state.type]
     });
   }
 
   render() {
-    const {
-      type
-    } = this.state;
-
     return (
       <div className="Settings">
         <div className="Settings-type" onChange={(e) => this._setType(e)}>
           {
-            Object.keys(TYPE_MAPPING).map((key, index) => {
+            Object.keys(TYPE_VALUE).map((key, index) => {
               const attr = {
-                defaultChecked: TYPE_MAPPING[key].text === TYPE_MAPPING.RANDOM.text
-              }
+                defaultChecked: TYPE_VALUE[key].text === TYPE_VALUE.RANDOM.text
+              };
 
               return (
                 <div key={index}>
-                  <input value={key} name="type" {...attr} /> {TYPE_MAPPING[key].text}
+                  <input type="radio" value={key} name="type" {...attr} /> {TYPE_VALUE[key].text}
                 </div>
               );
             })
@@ -133,22 +128,24 @@ class Testing extends Component {
     this.intervalId = setInterval(() => this._timer(), 1000);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearInterval(this.intervalId);
   }
 
   _timer() {
-    this.setState({
-      count: this.state.count - 1
-    })
+    const { count } = this.state;
 
-    if (this.state.count === 0) {
-      this._end();
+    this.setState({
+      count: count - 1
+    });
+
+    if (count - 1 === 0) {
       clearInterval(this.intervalId);
     }
   }
 
   _generateQuetion() {
+    const { core } = this.state;
     const randomedNumber = this._randomNumber();
 
     speech(randomedNumber);
@@ -173,7 +170,15 @@ class Testing extends Component {
   _onChangeInput(event) {
     if (event.target.value === this.state.number.toString()) {
       this._generateQuetion();
+    } else {
+      this.setState({
+        value: event.target.value
+      });
     }
+  }
+
+  _repeat() {
+    speech(this.state.number);
   }
 
   _end() {
@@ -184,11 +189,12 @@ class Testing extends Component {
     const {
       value,
       count,
-      core
+      core,
+      number
     } = this.state;
 
-    return (
-      <div className="Testing">
+    const mainContent = (
+      <div className="Testing-main">
         <div className="Testing-time">{count}</div>
         <div className="Testing-content">
           <div className="Testing-text">
@@ -196,6 +202,24 @@ class Testing extends Component {
           </div>
         </div>
         <div className="Testing-core">{core}</div>
+      </div>
+    );
+
+    const resultContent = (
+      <div className="Testing-result">
+        <div className="Testing-result-number">{number}</div>
+        <div className="Testing-result-repeat">
+          <i className="fa fa-volume-up" onClick={() => this._repeat()} />
+        </div>
+        <div className="Testing-result-next">
+          <button type="button" className="btn-info" onClick={() => this._end()}>Next</button>
+        </div>
+      </div>
+    );
+
+    return (
+      <div className="Testing">
+        { count === 0 ? resultContent : mainContent }
       </div>
     );
   }

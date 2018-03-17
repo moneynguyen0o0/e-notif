@@ -14,7 +14,7 @@ const GAMES = {
     className: 'Numbers',
     component: <Numbers />
   }
-}
+};
 
 class Quiz extends Component {
   state = {
@@ -35,7 +35,7 @@ class Quiz extends Component {
         {
           Object.keys(GAMES).map((key, index) => {
             return (
-              <li className={GAMES[key].className} onClick={() => this._choose(GAMES[key])}>
+              <li key={index} className={GAMES[key].className} onClick={() => this._choose(GAMES[key])}>
                 {GAMES[key].displayName}
               </li>
             );
