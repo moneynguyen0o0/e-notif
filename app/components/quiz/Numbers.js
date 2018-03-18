@@ -156,12 +156,27 @@ class Testing extends Component {
     return Math.round(Math.random() * type.value);
   }
 
+  _onClickInput(value) {
+    const newValue = this.state.value + value;
+    this._handleChange(newValue);
+  }
+
   _onChangeInput(event) {
+    this._handleChange(event.target.value);
+  }
+
+  _onDeleteInput() {
+    const { value } = this.state;
+    
+    const newValue = value.slice(0, -1);
+    this.setState({ value: newValue });
+  }
+
+  _handleChange(value) {
     const { 
       core,
       number
     } = this.state;
-    const value = event.target.value;
 
     if (value === number.toString()) {
       this._generateQuetion();
@@ -193,6 +208,15 @@ class Testing extends Component {
       starTimer
     } = this.state;
 
+    const countable = [];
+
+    for (let i = 1; i < 10; i++) {
+      countable.push(<button onClick={() => this._onClickInput(i)}>{i}</button>);
+    }
+
+    countable.push(<button onClick={() => this._onClickInput(0)}>{0}</button>);
+    countable.push(<button onClick={() => this._onDeleteInput()}>Delete</button>);
+
     const mainContent = (
       <div className="Testing-main">
         { starTimer && <Timer onTimeup={() => this._timeup()} /> }
@@ -202,6 +226,9 @@ class Testing extends Component {
           </div>
         </div>
         <div className="Testing-core">{core}</div>
+        <div className="Testing-countable">
+          {countable}
+        </div>
       </div>
     );
 
