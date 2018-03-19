@@ -17,6 +17,19 @@ const GAMES = {
 };
 
 class Quiz extends Component {
+  render() {
+    return (
+      <div className="Quiz">
+        <Helmet title="Quizzz | ENotif" />
+        <div className="container">
+          <Game />
+        </div>
+      </div>
+    );
+  }
+}
+
+class Game extends Component {
   state = {
     game: null
   }
@@ -31,12 +44,13 @@ class Quiz extends Component {
     } = this.state;
 
     const gameListContent = (
-      <ul>
+      <ul className="clearfix">
         {
           Object.keys(GAMES).map((key, index) => {
             return (
-              <li key={index} className={GAMES[key].className} onClick={() => this._choose(GAMES[key])}>
-                {GAMES[key].displayName}
+              <li key={index} onClick={() => this._choose(GAMES[key])}>
+                <i className={GAMES[key].className} />
+                <span>{GAMES[key].displayName}</span>
               </li>
             );
           })
@@ -45,11 +59,8 @@ class Quiz extends Component {
     );
 
     return (
-      <div className="Quiz">
-        <Helmet title="Quizzz | ENotif" />
-        <div className="container">
-          { game ? game.component : gameListContent }
-        </div>
+      <div className="Game">
+        { game ? game.component : gameListContent }
       </div>
     );
   }

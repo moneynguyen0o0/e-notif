@@ -209,28 +209,32 @@ class ListenAndWrite extends Component {
       );
     }
 
+    const questionContent = (
+      <div className="ListenAndWrite-question">
+        <div className="ListenAndWrite-main">
+          <div className="ListenAndWrite-title">Quest {currentQuestIndex + 1}</div>
+          <div className="ListenAndWrite-hint">
+            { hint ? <div><i className="fa fa-info-circle" /> {hint}</div> : null }
+          </div>
+          <div className="ListenAndWrite-content">
+            <div className="ListenAndWrite-audio"><Audio key={currentQuestIndex} src={audio} /></div>
+            <div className="ListenAndWrite-text">
+              <input type="text" placeholder="Your answer..." value={inputValue} onChange={(e) => this._onChangeInput(e)} />
+            </div>
+          </div>
+        </div>
+        <div className="ListenAndWrite-controls">
+          <button className="ListenAndWrite-hintIcon" onClick={() => this._showHint()}><i className="fa fa-lightbulb-o" /></button>
+          { currentQuestIndex ? <button type="button" className="btn-default" onClick={() => this._onBack()}>Back</button> : null }
+          { currentQuestIndex === vocabularies.length - 1 ? <button type="button" className="btn-success" onClick={() => this._onFinish()}>Finish</button> : <button type="button" className="btn-info" onClick={() => this._onNext()}>Next</button> }
+        </div>
+      </div>
+    );
+
     return (
       <div className="ListenAndWrite">
         {
-          finish ? resultContent : <div className="ListenAndWrite-question">
-            <div className="ListenAndWrite-main">
-              <div className="ListenAndWrite-title">Quest {currentQuestIndex + 1}</div>
-              <div className="ListenAndWrite-hint">
-                { hint ? <div><i className="fa fa-info-circle" /> {hint}</div> : null }
-              </div>
-              <div className="ListenAndWrite-content">
-                <div className="ListenAndWrite-audio"><Audio key={currentQuestIndex} src={audio} /></div>
-                <div className="ListenAndWrite-text">
-                  <input type="text" placeholder="Your answer..." value={inputValue} onChange={(e) => this._onChangeInput(e)} />
-                </div>
-              </div>
-            </div>
-            <div className="ListenAndWrite-controls">
-              <button className="ListenAndWrite-hintIcon" onClick={() => this._showHint()}><i className="fa fa-lightbulb-o" /></button>
-              { currentQuestIndex ? <button type="button" className="btn-default" onClick={() => this._onBack()}>Back</button> : null }
-              { currentQuestIndex === vocabularies.length - 1 ? <button type="button" className="btn-success" onClick={() => this._onFinish()}>Finish</button> : <button type="button" className="btn-info" onClick={() => this._onNext()}>Next</button> }
-            </div>
-          </div>
+          finish ? resultContent : questionContent
         }
       </div>
     );

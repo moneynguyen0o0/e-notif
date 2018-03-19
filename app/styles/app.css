@@ -21,6 +21,15 @@ a {
   }
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style: none;
+  }
+}
+
 button, .button {
   padding: 15px 32px;
   text-align: center;

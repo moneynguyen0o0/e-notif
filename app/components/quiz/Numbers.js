@@ -4,19 +4,19 @@ import { getRandomInt } from '../../utils/NumberUtil';
 
 const TYPE_VALUE = {
   X: {
-    text: 'X',
+    text: '1 - 10',
     value: 10
   },
   XY: {
-    text: 'XY',
+    text: '10 - 100',
     value: 100
   },
   XYZ: {
-    text: 'XYZ',
+    text: '100 - 1000',
     value: 1000
   },
   XXYZ: {
-    text: 'XXYZ',
+    text: '1000 - 10000',
     value: 10000
   },
   RANDOM: {
@@ -167,13 +167,13 @@ class Testing extends Component {
 
   _onDeleteInput() {
     const { value } = this.state;
-    
+
     const newValue = value.slice(0, -1);
     this.setState({ value: newValue });
   }
 
   _handleChange(value) {
-    const { 
+    const {
       core,
       number
     } = this.state;

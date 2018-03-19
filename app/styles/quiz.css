@@ -1,11 +1,41 @@
-.ListenAndWrite {
-  &-question {
-    margin: 3em auto;
-    width: 75%;
-    padding: 40px;
-    background-color: #FFFFFF;
-  }
+.Game {
+  margin: 3em auto;
+  width: 80%;
+  padding: 2em 3em;
+  background-color: #FFFFFF;
 
+  ul {
+    li {
+      display: flex;
+      flex-direction: column;
+
+      float: left;
+      margin-right: 30px;
+      text-align: center;
+      cursor: pointer;
+
+      i {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        &.ListenAndWrite {
+          background-image: url('../images/headphones.svg');
+        }
+
+        &.Numbers {
+          background-image: url('../images/cubes.svg');
+        }
+      }
+    }
+  }
+}
+
+.ListenAndWrite {
   &-title {
     font-size: 3em;
     text-transform: uppercase;
@@ -61,9 +91,6 @@
   }
 
   &-result {
-    padding: 3em 4em;
-    background-color: #FFFFFF;
-
     &-mark {
       text-align: center;
       font-size: 5em;
