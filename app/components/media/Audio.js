@@ -3,11 +3,19 @@ import React, { Component, PropTypes } from 'react';
 export default class Audio extends Component {
   static propTypes = {
     src: PropTypes.string.isRequired,
+    autoPlay: PropTypes.bool,
     type: PropTypes.string
   }
 
   static defaultProps = {
-    type: 'audio/mpeg'
+    type: 'audio/mpeg',
+    autoPlay: false
+  }
+
+  componentDidMount() {
+    if (this.props.autoPlay) {
+      this._play();
+    }
   }
 
   _play() {
