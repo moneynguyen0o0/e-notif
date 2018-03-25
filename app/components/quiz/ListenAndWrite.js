@@ -217,7 +217,7 @@ class ListenAndWrite extends Component {
             { hint ? <div><i className="fa fa-info-circle" /> {hint}</div> : null }
           </div>
           <div className="ListenAndWrite-content">
-            <div className="ListenAndWrite-audio"><Audio key={currentQuestIndex} src={audio} /></div>
+            <div className="ListenAndWrite-audio"><Audio key={currentQuestIndex} src={audio} autoPlay /></div>
             <div className="ListenAndWrite-text">
               <input type="text" placeholder="Your answer..." value={inputValue} onChange={(e) => this._onChangeInput(e)} />
             </div>

@@ -1,4 +1,4 @@
-export const speech = (text, options) => {
+export const speech = (text, options = {}) => {
   if (window && 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window) {
     const msg = new SpeechSynthesisUtterance(text);
     const {

@@ -33,6 +33,13 @@
       }
     }
   }
+
+  @media screen and (max-width: 640px) {
+    width: 100%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+  }
 }
 
 .ListenAndWrite {
@@ -230,6 +237,129 @@
 
       &-rate {
         font-size: 2.5em;
+      }
+    }
+  }
+}
+
+.Numbers {
+  .Settings {
+    &-type {
+      &-item {
+        margin-bottom: 10px;
+        font-size: 1.125em;
+      }
+    }
+
+    &-action {
+      margin-top: 15px;
+      text-align: right;
+    }
+  }
+
+  .Testing {
+    &-controls {
+      text-align: center;
+
+      &Wrapper {
+        display: inline-block;
+        position: relative;
+        width: 225px;
+        min-height: 100px;
+        text-align: right;
+      }
+    }
+
+    &-scoreWrapper {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+
+      .Testing-score {
+        font-size: 3em;
+        color: #2ecc71;
+      }
+    }
+
+    &-timeWrapper {
+      display: inline-block;
+
+      .Timer {
+        font-size: 5em;
+        color: #e74c3c;
+      }
+    }
+
+    &-text {
+      text-align: center;
+
+      input {
+        width: 225px;
+        font-size: 2em;
+        text-align: center;
+      }
+    }
+
+    &-countable {
+      display: none;
+    }
+
+    &-result {
+      &-score {
+        text-align: center;
+
+        &--number {
+          font-size: 5em;
+          color: #2ecc71;
+        }
+      }
+
+      &-repeat {
+        margin-top: 15px;
+        text-align: center;
+
+        i {
+          font-size: 5em;
+          cursor: pointer;
+        }
+      }
+
+      &-replay {
+        margin-top: 15px;
+        text-align: center;
+      }
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    .Testing {
+      &-countable {
+        display: block;
+        text-align: center;
+
+        &Wrapper {
+          display: inline-block;
+          width: 225px;
+          margin-top: 15px;
+        }
+
+        &-zero {
+          padding-left: 69px;
+          padding-right: 69px;
+        }
+
+        &-delete {
+          padding-left: 30px;
+          padding-right: 30px;
+        }
+
+        button {
+          border-color: ghostwhite;
+
+          &:focus {
+            outline:0;
+          }
+        }
       }
     }
   }

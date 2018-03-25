@@ -25,6 +25,8 @@ const TYPE_VALUE = {
   }
 };
 
+const NUMBER_REGEX = /^[0-9\b]+$/;
+
 class Numbers extends Component {
   state = {
     settings: {
@@ -55,7 +57,11 @@ class Numbers extends Component {
     return (
       <div className="Numbers">
         {
-          finished ? <Settings onNext={(settings) => this._getSettings(settings)} /> : <Testing settings={settings} end={() => this._end()} />
+          finished ? (
+            <Settings onNext={(settings) => this._getSettings(settings)} />
+          ) : (
+            <Testing settings={settings} end={() => this._end()} />
+          )
         }
       </div>
     );
@@ -92,7 +98,7 @@ class Settings extends Component {
               };
 
               return (
-                <div key={index}>
+                <div className="Settings-type-item" key={index}>
                   <input type="radio" value={key} name="type" {...attr} /> {TYPE_VALUE[key].text}
                 </div>
               );
@@ -120,7 +126,7 @@ class Testing extends Component {
   }
 
   state = {
-    core: 0,
+    score: 0,
     ...defaultTestingState
   }
 
@@ -162,7 +168,11 @@ class Testing extends Component {
   }
 
   _onChangeInput(event) {
-    this._handleChange(event.target.value);
+    const value = event.target.value;
+
+    if (value === '' || NUMBER_REGEX.test(value)) {
+      this._handleChange(value);
+    }
   }
 
   _onDeleteInput() {
@@ -174,14 +184,14 @@ class Testing extends Component {
 
   _handleChange(value) {
     const {
-      core,
+      score,
       number
     } = this.state;
 
     if (value === number.toString()) {
       this._generateQuetion();
 
-      this.setState({ core: core + 1 });
+      this.setState({ score: score + 1 });
     } else {
       this.setState({ value });
     }
@@ -203,38 +213,48 @@ class Testing extends Component {
     const {
       value,
       timeup,
-      core,
-      number,
+      score,
       starTimer
     } = this.state;
 
     const countable = [];
 
     for (let i = 1; i < 10; i++) {
-      countable.push(<button onClick={() => this._onClickInput(i)}>{i}</button>);
+      countable.push(<button key={countable.length} className="btn-default" onClick={() => this._onClickInput(i)}>{i}</button>);
     }
 
-    countable.push(<button onClick={() => this._onClickInput(0)}>{0}</button>);
-    countable.push(<button onClick={() => this._onDeleteInput()}>Delete</button>);
+    countable.push(<button key={countable.length} className="Testing-countable-zero btn-default" onClick={() => this._onClickInput(0)}>{0}</button>);
+    countable.push(<button key={countable.length} className="Testing-countable-delete btn-default" onClick={() => this._onDeleteInput()}><i className="fa fa-arrow-left" /></button>);
 
     const mainContent = (
       <div className="Testing-main">
-        { starTimer && <Timer onTimeup={() => this._timeup()} /> }
-        <div className="Testing-content">
-          <div className="Testing-text">
-            <input type="text" placeholder="Your answer..." value={value} onChange={(e) => this._onChangeInput(e)} />
+        <div className="Testing-controls">
+          <div className="Testing-controlsWrapper">
+            <div className="Testing-scoreWrapper">
+              { score > 0 && <div className="Testing-score">{score}</div> }
+            </div>
+            <div className="Testing-timeWrapper">
+              { starTimer && <Timer onTimeup={() => this._timeup()} /> }
+            </div>
           </div>
         </div>
-        <div className="Testing-core">{core}</div>
+        <div className="Testing-text">
+          <input type="text" value={value} onChange={(e) => this._onChangeInput(e)} />
+        </div>
         <div className="Testing-countable">
-          {countable}
+          <div className="Testing-countableWrapper">
+            {countable}
+          </div>
         </div>
       </div>
     );
 
     const resultContent = (
       <div className="Testing-result">
-        <div className="Testing-result-number">{number}</div>
+        <div className="Testing-result-score">
+          <span className="Testing-result-score--text">Score:</span>
+          <span className="Testing-result-score--number">{score}</span>
+        </div>
         <div className="Testing-result-repeat">
           <i className="fa fa-volume-up" onClick={() => this._repeat()} />
         </div>
@@ -254,11 +274,12 @@ class Testing extends Component {
 
 class Timer extends Component {
   static propTypes = {
+    countdown: PropTypes.number,
     onTimeup: PropTypes.func.isRequired
   }
 
   state = {
-    count: 7
+    count: this.props.countdown || 7
   }
 
   componentDidMount() {
