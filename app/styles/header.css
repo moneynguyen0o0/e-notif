@@ -91,9 +91,11 @@
   position: relative;
 
   .SearchBar {
+    height: 52px;
+    
     input {
       width: 300px;
-      height: 52px;
+      height: 100%;
       background: #FFFFFF;
       border: none;
       font-size: 10pt;
@@ -105,9 +107,11 @@
     }
 
     button {
+      position: absolute;
+      right: 0;
       border: none;
       background: #FFFFFF;
-      height: 52px;
+      height: 100%;
       width: 52px;
       color: #34495e;
       font-size: 10pt;
